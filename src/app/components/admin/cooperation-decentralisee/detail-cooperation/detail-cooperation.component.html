@@ -1,0 +1,461 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+  <div class="col-md-1 col-sm-12"></div>
+  <div class="col-md-10 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">coopérations décentralisées</h4>
+        <h6 class="card-subtitle">Détail des coopérations décentralisées.
+          <button type="button" (click)="gotoListCooperation()" class="btn btn-inverse btn-sm" style="float: right;">
+            <i class="ti-menu"> </i>
+            Consulter la Liste des coopérations
+          </button>
+        </h6>
+        <hr>
+        <br>
+        <br>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-12" style="margin-top: -5%;">
+
+                <h4 class="card-title">Sources: Bénin</h4>
+                <h6 class="card-subtitle">Informations sur la souce..
+                </h6>
+                <hr>
+
+                <p>
+                  Dénomination :
+                  <strong style="margin-right: 20px;"> {{ (structureSubmit != null)? structureSubmit.denominationStructure : '#N/A'}} </strong>
+                  <br>
+                  <br> Sigle :
+                  <strong> {{ (structureSubmit != null)? structureSubmit.sigleStructure : '#N/A'}} </strong>
+                </p>
+                <p>
+                  Email :
+                  <strong style="margin-right: 20px;"> {{ (structureSubmit != null)? structureSubmit.emailStructure : '#N/A' }} </strong>
+                  <br> Contact(s) :
+                  <strong> {{ (structureSubmit != null)? structureSubmit.telStructure : '#N/A'}} </strong>
+                </p>
+                <p>
+                  Type :
+                  <strong style="margin-right: 20px;">
+                    {{ (structureSubmit != null && structureSubmit.typestructure != null)? structureSubmit.typestructure.libelle : '#N/A' }}
+                  </strong>
+                </p>
+                Domaines d'activité :
+                <strong>
+                  {{ (structureSubmit != null && structureSubmit.domaineActivites != null)? '('+structureSubmit.domaineActivites.length+')'
+                  : '#N/A' }} </strong>
+                <ul *ngIf="structureSubmit != null && structureSubmit.domaineActivites != null">
+                  <li style="font-weight: bold;" *ngFor="let domaine of structureSubmit.domaineActivites"> {{ domaine.libelle }}
+                  </li>
+                </ul>
+
+
+
+              </div>
+
+              <div class="col-md-6 col-sm-12" style="margin-top: -5%;">
+
+                <h4 class="card-title"> Partenaires Techniques Coopérant</h4>
+                <h6 class="card-subtitle">Liste des Partenaires Techniques Coopérant.</h6>
+                <hr>
+
+                <div class="col-md-6 col-sm-12">
+                  Type de coopération :
+                  <strong style="margin-right: 20px;">
+                    {{ (cooperationSubmit != null && cooperationSubmit.typeCooperation)? cooperationSubmit.typeCooperation.libelle: '#N/A' }}</strong>
+                </div>
+
+                <div class="table-responsive">
+                  <!-- Alert with rounded corner -->
+
+                  <table class="table table-striped border" style="width: 100%!important;">
+                    <thead>
+                      <tr>
+                        <th>Dénomination</th>
+                        <th>Sigle</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ptf of ptfsSubmit">
+                        <td> {{ ptf.denominationptf }}</td>
+                        <td> {{ ptf.sigleptf }}</td>
+                      </tr>
+                    </tbody>
+
+                  </table>
+                </div>
+
+              </div>
+
+            </div>
+            <br>
+            <br>
+
+
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                Année :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null && cooperationSubmit.exercice)? cooperationSubmit.exercice.libelle: '#N/A' }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                Référence(s) :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null)? cooperationSubmit.reference: '#N/A' }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                Libellé ou désignation :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null)? cooperationSubmit.libelle: '#N/A' }}</strong>
+              </div>
+            </div>
+
+            <br>
+            <br>
+
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                Montant en Devise :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null)? (formatNumber(cooperationSubmit.montantDevise)) : '#N/A' }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                Devise :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null && cooperationSubmit.deviseMonnaie)? cooperationSubmit.deviseMonnaie.libelle: '#N/A' }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                Montant (F CFA) :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null)? (formatNumber(cooperationSubmit.montant)): '#N/A' }}</strong>
+              </div>
+
+            </div>
+
+
+            <br>
+            <br>
+            <h4 class="card-title">Informateur </h4>
+            <h6 class="card-subtitle">Informations sur l'informateur.</h6>
+            <hr>
+
+            <div class="row">
+
+              <div class="col-md-6 col-sm-12">
+                Nom :
+                <strong style="margin-right: 20px;">
+                  {{ (informateur != null)? informateur.nom: '#N/A' }}</strong>
+              </div>
+
+            </div>
+            <br>
+            <div class="row">
+
+              <div class="col-md-6 col-sm-12">
+                Prénom(s) :
+                <strong style="margin-right: 20px;">
+                  {{ (informateur != null)? informateur.prenom: '#N/A' }}</strong>
+              </div>
+              <br>
+              <div class="col-md-6 col-sm-12">
+                Tél(s) :
+                <strong style="margin-right: 20px;">
+                  {{ (informateur != null)? informateur.tel: '#N/A' }}</strong>
+              </div>
+              <br>
+            </div>
+            <br>
+            <div class="row">
+
+              <div class="col-md-6 col-sm-12">
+                Email :
+                <strong style="margin-right: 20px;">
+                  {{ (informateur != null)? informateur.email: '#N/A' }}</strong>
+              </div>
+              <br>
+              <div class="col-md-6 col-sm-12">
+                Profession :
+                <strong style="margin-right: 20px;">
+                  {{ (informateur != null)? informateur.profession: '#N/A' }}</strong>
+              </div>
+
+            </div>
+            <br>
+
+            <div class="row">
+
+              <div class="col-md-12 col-sm-12">
+                Source de l'information :
+                <strong style="margin-right: 20px;">
+                  {{ (informateur != null && informateur.sourceInformation != null)? informateur.sourceInformation.denominationStructure :
+                  '#N/A' }} </strong>
+
+              </div>
+
+            </div>
+            <br>
+
+            <br>
+
+            <h4 class="card-title">Projets soumis</h4>
+            <h6 class="card-subtitle">Liste des projets soumis.</h6>
+            <hr>
+
+            <div class="table-responsive">
+              <!-- Alert with rounded corner -->
+
+              <table class="table table-striped border" style="width: 100%!important;">
+                <thead>
+                  <tr>
+                    <th>Réf.</th>
+                    <th>Désignation</th>
+                    <th>Maturité</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let projetsous of projetIdeesSoumis">
+                    <td> {{ projetsous.reference }}</td>
+                    <td> {{ projetsous.libelle }}</td>
+                    <td> {{ projetsous.niveaumaturite != null ? projetsous.niveaumaturite.libelle : '' }}</td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+
+            <br>
+            <br>
+
+            <h4 class="card-title">Projets élus</h4>
+            <h6 class="card-subtitle">Liste des projets élus.</h6>
+            <hr>
+
+            <div class="table-responsive">
+              <!-- Alert with rounded corner -->
+
+              <table class="table table-striped border" style="width: 100%!important;">
+                <thead>
+                  <tr>
+                    <th>Réf.</th>
+                    <th>Désignation</th>
+                    <th>Maturité</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let projetelus of projetIdeesElus">
+                    <td> {{ projetelus.reference }}</td>
+                    <td> {{ projetelus.libelle }}</td>
+                    <td> {{ projetelus.niveaumaturite != null ? projetelus.niveaumaturite.libelle : '' }}</td>
+
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+
+
+            <br>
+            <br>
+            <div class="row">
+
+              <div class="col-md-6 col-sm-12">
+                Défis :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null )? cooperationSubmit.defis: '#N/A' }}</strong>
+              </div>
+              <br>
+              <div class="col-md-6 col-sm-12">
+                Résultats :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null )? cooperationSubmit.resultats: '#N/A' }}</strong>
+              </div>
+
+            </div>
+
+            <br>
+            <br>
+            <div class="row">
+
+              <div class="col-md-6 col-sm-12">
+                Difficultés :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null )? cooperationSubmit.difficultes: '#N/A' }}</strong>
+              </div>
+              <br>
+              <div class="col-md-6 col-sm-12">
+                Observations :
+                <strong style="margin-right: 20px;">
+                  {{ (cooperationSubmit != null )? cooperationSubmit.observation: '#N/A' }}</strong>
+              </div>
+              <br>
+            </div>
+            <br>
+
+            <hr>
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+
+                <h4 class="card-title">Pièces jointes</h4>
+                <h6 class="card-subtitle">Liste des Pièces jointes.</h6>
+                <hr>
+                <div class="table-responsive">
+
+                  <table class="table table-striped border">
+                    <thead>
+                    <tr>
+                      <th> Date archivage</th>
+                      <th> Nom de la pièce</th>
+                      <th> Réf. Pièce</th>
+                      <th>
+                        <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                                style="float: right;" (click)="showModalPiece()"><i class="ti-plus"> </i></button>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngIf="filesCooperation.length == 0">
+                      <td style="text-align: center;" colspan="4"> Aucune pièce</td>
+                    </tr>
+                    <tr *ngFor="let file of filesCooperation let i=index">
+                      <td>
+                        {{ file.createdAt | date:'dd-MM-yyyy' }}
+                      </td>
+                      <td>
+                        {{ file.namePiece }}
+                      </td>
+                      <td>
+                        {{ file.refPiece }}
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-circle  btn-sm" style="float: right;"
+                                (click)="showModalPieceInfo(file)"><i class="ti-info"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                                (click)="showMessageClosePiece(i, file)"><i class="ti-close"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+<!--gestion de gestion des pièces jointes-->
+<nz-modal [(nzVisible)]="isVisibleFile" nzTitle="Formulaire d'ajoute de pièce " [(nzCancelText)]="btnFermerText"
+          (nzOnCancel)="handleCancelReponse()" [nzClosable]="false"
+          (nzOnOk)="submitFormFile()" [nzOkText]="'Enregistrer'">
+
+  <form class="mt-4" [formGroup]="validateFormFile">
+    <!-- Alert with rounded corner -->
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Nom de la pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="namePiece" id="namePiece" class="form-control"
+               oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain
+          *ngIf="validateFormFile.get('namePiece')?.dirty && validateFormFile.get('namePiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="refPiece" id="refPiece" class="form-control"
+               oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain
+          *ngIf="validateFormFile.get('refPiece')?.dirty && validateFormFile.get('refPiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Emplacement physique</h5>
+        <textarea rows="3" nz-input formControlName="refEmplacement"
+                  oninput="this.value = this.value.toUpperCase()"></textarea>
+
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Résumé du contenu </h5>
+        <nz-form-control>
+          <textarea rows="3" nz-input formControlName="resumePiece"></textarea>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <input type="file"
+             id="file" #fileInput
+             (change)="handleFileInput($event)">
+    </div>
+
+  </form>
+
+</nz-modal>
+
+
+<!--information sur une pièce -->
+<nz-modal [(nzVisible)]="isVisiblePieceInfo" nzTitle="Informations sur la pièce"
+          [nzClosable]="false" (nzOnOk)="handleCancelPieceInfo()"
+          [nzCancelText] = "null"  [nzOkText]="'OK'">
+
+  <div *ngIf="pieceInfo != null">
+    <p>
+      <span> Nom de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.fileName : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.refPiece : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de l'emplacement physique : </span> <strong> {{ pieceInfo.resumePiece != null ?
+      pieceInfo.refEmplacement : '#N/A' }} </strong>
+    </p>
+    <p>
+      <span> Résumé du contenu : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.resumePiece :
+      '#N/A'}} </strong>
+    </p>
+    <p>
+      <span> Date de sauvegarde de la pièce : </span> <strong> {{ pieceInfo.createdAt != null ? (pieceInfo.createdAt |
+      date:'dd MM yyyy') : '#N/A'}} </strong>
+    </p>
+    <p>
+      <button type="button" class="btn btn-primary btn-sm"
+              (click)="downloadFile(pieceInfo.fullFileName)"><i class="ti-download"></i> cliquer ici pour télécharger la pièce
+      </button>
+    </p>
+    <br>
+  </div>
+
+</nz-modal>

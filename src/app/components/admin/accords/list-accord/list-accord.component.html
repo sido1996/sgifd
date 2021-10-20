@@ -1,0 +1,80 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <div class="col-md-12 col-sm-12">
+
+        <div class="material-card card">
+            <div class="card-body">
+                <h4 class="card-title">Liste des accords</h4>
+                <h6 class="card-subtitle">
+                    Liste des requêtes de accords de coopération <br>
+                    <hr>
+                </h6>
+
+                <div class="table-responsive">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+                        </div>
+                        <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter" placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped border" style="width: 100%!important;" [svData]="accordList" #sv="svDataTable" [svRowsOnPage]="5">
+                        <thead>
+                            <tr>
+                                <th> Réf. </th>
+                                <th> Date de signature </th>
+                                <th> Nbre projets </th>
+                                <th> Montant (F CFA) </th>
+                                <th> Statut </th>
+                                <th> Date Fin </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let accord of sv.data | filter:filter">
+                                <td> {{ accord.reference }}</td>
+                                <td> {{ accord.dateSignature|date:'dd-MM-yyyy' }}</td>
+                                <td class="text-center"> <strong>{{ (accord.projetProgrammeIdees != null)?
+                accord.projetProgrammeIdees.length : '0'}}</strong></td>
+
+                                <td class="text-center"> <strong>{{ formatNumber(accord.montant) }}</strong></td>
+
+                                <td> {{ (accord.statusAccord != null) ? accord.statusAccord.libelle : 'N/A' }}</td>
+                                <td> {{ accord.dateFinAccord|date:'dd-MM-yyyy' }}</td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="ouvrirModifier(accord.id)"><i class="ti-pencil"></i> </button>
+                                    <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="deleteAccord(accord)"> <i class="ti-close"></i> </button>
+                                    <button type="button" class="btn btn-primary btn-circle  btn-sm" (click)="ouvrirDetail(accord.id)">
+                  <i class="ti-info"></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                        <tfoot>
+
+                            <tr>
+                                <td colspan="7">
+                                    <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

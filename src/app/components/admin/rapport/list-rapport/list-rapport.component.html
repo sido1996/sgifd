@@ -1,0 +1,104 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-1 col-sm-12"> </div>
+  <div class="col-md-10 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Liste des rapports</h4>
+        <hr>
+
+        <div > Me voici </div>
+
+        <button (click)="generatePdf()">Ouvrir rapport </button>
+
+        <div class="table-responsive" id="element-to-print">
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter" placeholder="Rechercher"
+                   aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <nz-table #editRowTable nzBordered [nzData]="rapports">
+            <thead>
+            <tr>
+              <th> Nom du fichier physique</th>
+              <th> Libellé du rapport</th>
+              <th> Nbre de paramètres</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let rapport of editRowTable.data | filter:filter; let i=index">
+              <td> {{ rapport.nom }}</td>
+              <td> {{ rapport.libelle }}</td>
+              <td style="text-align: center;"> {{ rapport.rapportParams != null ?
+                rapport.rapportParams.length : '0'}}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="deleteRapport(rapport)"><i class="ti-close"></i></button>
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="ouvrirModifier(rapport.id)"><i class="ti-pencil"></i></button>
+                <button type="button" class="btn btn-primary btn-circle  btn-sm" (click)="ouvrirEditer(rapport.id)">
+                  <i class="ti-file"></i></button>
+              </td>
+            </tr>
+            </tbody>
+          </nz-table>
+
+         <!-- <table class="table table-striped border" style="width: 100%!important;" [svData]="rapports" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th> Nom du fichier physique</th>
+              <th> Libellé du rapport</th>
+              <th> Nbre de paramètres</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="rapports.length == 0">
+              <td colspan="4" class="text-center">Aucun rapport n'est afficher.</td>
+            </tr>
+            <tr *ngFor="let rapport of sv.data | filter:filter">
+              <td> {{ rapport.nom }}</td>
+              <td> {{ rapport.libelle }}</td>
+              <td style="text-align: center;"> {{ rapport.rapportParams != null ?
+                rapport.rapportParams.length : '0'}}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="deleteRapport(rapport)"><i class="ti-close"></i></button>
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="ouvrirModifier(rapport.id)"><i class="ti-pencil"></i></button>
+                <button type="button" class="btn btn-primary btn-circle  btn-sm" (click)="ouvrirEditer(rapport.id)">
+                  <i class="ti-file"></i></button>
+              </td>
+            </tr>
+
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="4">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->

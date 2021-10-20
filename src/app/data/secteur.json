@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "libelle": "PRIMAIRE"
+  },
+  {
+    "id": 2,
+    "libelle": "SECONDAIRE"
+  },
+  {
+    "id": 3,
+    "libelle": "TERTIAIRE"
+  }
+]

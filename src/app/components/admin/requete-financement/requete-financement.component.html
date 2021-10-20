@@ -1,0 +1,339 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" style="background: #2CA07A;overflow: auto;">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="/admin/requete-financement">
+                        <i class="ti-pulse" style="font-size: 14px!important;"></i>
+                        <span class="hide-menu" style="font-size: 15px!important;">
+                          Tableau de bord</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-settings" style="font-size: 14px!important;"></i>
+                        <span class="hide-menu" style="font-size: 15px!important;">Paramètres</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/type-appreciation']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Type appréciation</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/devise-monaie']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Devises Monnaies</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/devise-monaie-hist']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Configuration des devises</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/exercice']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Exercices</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['parametre/envergure']" class="sidebar-link">
+                                <i class="mdi mdi-octagram"></i>
+                                <span class="hide-menu"> Envergures</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/grand-secteur']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Grand secteur </span></a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/secteur']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Secteurs</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['parametre/sous-secteur']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Sous secteurs</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/niveau-maturite']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Niveaux maturités</span></a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a [routerLink]="['parametre/objectif-odd']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Objectifs DD</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['parametre/piliers-pag']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Piliers PAG</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['parametre/axe-prioritaire']" class="sidebar-link">
+                                <i class="mdi mdi-octagram"></i>
+                                <span class="hide-menu"> Axes prioritaires</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/nature-financement']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Nature financement </span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/nature-assistance']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Nature assistance </span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['parametre/type-ressources-interieures']" class="sidebar-link">
+                                <i class="mdi mdi-octagram"></i>
+                                <span class="hide-menu"> Types de ressources</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/type-cooperation']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Type coopération</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/cible']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Cibles ODD  </span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/list-projet-idee']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Liste des projets  </span></a>
+                        </li>
+                        <!--    <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="ti-control-shuffle" style="font-size: 14px!important;"></i>
+                                <span class="hide-menu" style="font-size: 15px!important;">Projets - programmes</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                              <li class="sidebar-item">
+                                <a class="sidebar-link" [routerLink]="['parametre/categorie-projet']">
+                                  <i class="ti-angle-right"></i>
+                                  <span class="hide-menu"> Catégories de projet</span></a>
+                              </li>
+                              <li class="sidebar-item">
+                                <a class="sidebar-link" [routerLink]="['parametre/niveau-maturite']">
+                                  <i class="ti-angle-right"></i>
+                                  <span class="hide-menu"> Niveaux maturités</span></a>
+                              </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/nouveau-projet-idee']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Nouveau</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/list-projet-idee']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Liste des projets</span></a>
+                                </li>
+                            </ul>
+                        </li>-->
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="ti-control-shuffle" style="font-size: 14px!important;"></i>
+                                <span class="hide-menu" style="font-size: 15px!important;">Repertoire PTF</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/pays']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Pays</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/categorie-ptf']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Catégories PTF</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/regroupement-club-ptf']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Regroupements PTF</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/ptf-fournisseur-bailleur-donateur']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Liste des PTF</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="ti-control-shuffle" style="font-size:
+                  14px!important;"></i>
+                                <span class="hide-menu" style="font-size: 15px!important;">Structures & org.</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/domaine-activite']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Domaines d'activité</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/type-structure']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Types structures</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/structure']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Liste des structures</span></a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <!--Menu zonnage-->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="ti-control-shuffle" style="font-size: 14px!important;"></i>
+                                <span class="hide-menu" style="font-size: 15px!important;">Localités</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/pays']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Pays</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/departement']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Départements</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/commune']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Communes</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/arrondissement']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Arrondissements</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-control-shuffle" style="font-size: 14px!important;"></i>
+                        <span class="hide-menu" style="font-size: 15px!important;">Gestion des requêtes</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a [routerLink]="['nouvelle-requete']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Nouvelle requête</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['list-requete']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Requêtes en cours</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['list-cloture']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Requêtes archivées </span></a>
+                        </li>
+                    </ul>
+
+                </li>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb border-bottom">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <h5 class="font-medium text-uppercase mb-0">gestion des requêtes de financement
+                </h5>
+                <a (click)="navigateAdminUrl()" class="btn btn-sm btn-info mt-2 text-white btn-rounded center">
+                    <i class="ti-control-skip-backward"> </i> Retour
+                </a>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0">
+                        <li class="breadcrumb-item"><a [routerLink]="['admin']">SGIFD</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Requêtes de financement
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="page-content container-fluid">
+
+
+        <router-outlet>
+        </router-outlet>
+
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer class="footer text-center">
+        © 2019 SGIFD. Designed and Developed by <a href="https://wrappixel.com/">FAVIEM</a>.
+    </footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+
+
+    <img src="../../assets/images/footer_img.png" alt="">
+
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->

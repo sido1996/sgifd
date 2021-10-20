@@ -1,0 +1,160 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire</h4>
+        <h6 class="card-subtitle">Historisation des devises de monnaies.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <nz-form-item>
+            <nz-form-control>
+              <h5> Devise de monaie <span class="text-danger">*</span></h5>
+              <nz-select nzShowSearch nzAllowClear
+                         id="departement" formControlName="devisemonnaie">
+                <nz-option *ngFor="let devisemonnaie of devisemonnaieList" [nzLabel]="devisemonnaie.libelle"
+                           [nzValue]="devisemonnaie.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('devisemonnaie')?.dirty && validateForm.get('devisemonnaie')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <h5> Date conversion <span class="text-danger">*</span></h5>
+              <nz-date-picker  formControlName="dateConversion"></nz-date-picker>
+              <nz-form-explain *ngIf="validateForm.get('dateConversion')?.dirty && validateForm.get('dateConversion')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <h5> Montant équivalent (f cfa)<span class="text-danger">*</span></h5>
+              <input nz-input formControlName="montantEquivalent" id="montantEquivalent" class="form-control"
+                     oninput="this.value = this.value.toUpperCase()">
+              <nz-form-explain *ngIf="validateForm.get('montantEquivalent')?.dirty && validateForm.get('montantEquivalent')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <h5> Observations </h5>
+
+              <textarea rows="3" nz-input formControlName="libelle"></textarea>
+
+              <nz-form-explain *ngIf="validateForm.get('libelle')?.dirty && validateForm.get('libelle')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+                    style="margin-left: 10px;"><i class="ti-check"> </i> {{ btnTitle }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Historisation des devises de monnaies</h4>
+        <h6 class="card-subtitle">
+          Répertoire des devises de monnaies configurés <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+          <!-- Alert with rounded corner -->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+            <i class="ti-info-alt"></i> {{messageNotificationTable}}
+            <button type="button" class="close" (click)="closeNotificationTable()">
+              <span>×</span></button>
+          </div>
+
+          <table id="zero_config" class="table table-striped border" style="width: 100%!important;"
+                 [svData]="devisemonnaiehistList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th>
+                <sv-default-sorter by="deviseMonaie.libelle"> Devise monnaie</sv-default-sorter>
+              </th>
+              <th>
+                <sv-default-sorter by="dateConversion"> Date conversion</sv-default-sorter>
+              </th>
+              <th>
+                <sv-default-sorter by="montantEquivalent"> Montant (f cfa)</sv-default-sorter>
+              </th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let devisemonnaiehist of sv.data | filter:filter">
+              <td> {{ devisemonnaiehist.deviseMonaie.libelle }}</td>
+              <td> {{ devisemonnaiehist.dateConversion|date:'dd MMM yyyy' }}</td>
+              <td> {{ devisemonnaiehist.montantEquivalent }}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(devisemonnaiehist)"
+                >
+                  <i class="ti-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(devisemonnaiehist)">
+                  <i class="ti-close"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="3">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

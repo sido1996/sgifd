@@ -1,0 +1,191 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" style="background: #2CA07A;">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link waves-effect waves-dark" href="javascript:void(0)">
+                        <i class="ti-pulse" style="font-size: 14px!important;"></i>
+                        <span class="hide-menu" style="font-size: 15px!important;">Tableau de bord</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-settings" style="font-size: 14px!important;"></i>
+                        <span class="hide-menu" style="font-size: 15px!important;">Paramètres</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/exercice']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Exercices</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/type-cooperation']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Type cooperation</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" [routerLink]="['parametre/promoteur']">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Promoteurs</span></a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="ti-control-shuffle" style="font-size: 14px!important;"></i>
+                                <span class="hide-menu" style="font-size: 15px!important;">Repertoire PTF</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/pays']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Pays</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/categorie-ptf']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Catégories PTF</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/regroupement-club-ptf']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Regroupements PTF</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['parametre/ptf-fournisseur-bailleur-donateur']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Liste des PTF</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="ti-control-shuffle" style="font-size: 14px!important;"></i>
+                                <span class="hide-menu" style="font-size: 15px!important;">Projets & Idées</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['categorie-projet-param']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Catégories de projet</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['niveau-maturite-param']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Niveaux maturités</span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['nouveau-projet-idee-param']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Nouveau projet ou idée </span></a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" [routerLink]="['projet-idee-param']">
+                                        <i class="ti-angle-right"></i>
+                                        <span class="hide-menu"> Liste des projets & idées</span></a>
+                                </li>
+
+                            </ul>
+                        </li>-->
+
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-control-shuffle" style="font-size: 14px!important;"></i>
+                        <span class="hide-menu" style="font-size: 15px!important;">Gestion des PPP</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a [routerLink]="['nouveau-ppp']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Nouveau</span></a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a [routerLink]="['list-ppp']" class="sidebar-link">
+                                <i class="ti-angle-right"></i>
+                                <span class="hide-menu"> Liste des PPP</span></a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb border-bottom">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <h5 class="font-medium text-uppercase mb-0">gestion des partenarit public-prive</h5>
+                <a (click)="navigateAdminUrl()" class="btn btn-sm btn-info mt-2 text-white btn-rounded center">
+                    <i class="ti-control-skip-backward"> </i> Retour
+                </a>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0">
+                        <li class="breadcrumb-item"><a [routerLink]="['admin']">SGIFD</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">PPP</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="page-content container-fluid">
+
+
+        <router-outlet>
+        </router-outlet>
+
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer class="footer text-center">
+        © 2019 SGIFD. Designed and Developed by <a href="https://wrappixel.com/">FAVIEM</a>.
+    </footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+
+    <img src="../../assets/images/footer_img.png" alt="">
+
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->

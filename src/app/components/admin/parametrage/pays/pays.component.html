@@ -1,0 +1,208 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire</h4>
+        <h6 class="card-subtitle">Enregistrement et modification des pays.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Pays <span class="text-danger">*</span> </h5>
+              <nz-form-control>
+                <input nz-input formControlName="libelle" id="libelle" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('libelle')?.dirty && validateForm.get('libelle')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <nz-form-item>
+              <nz-form-control>
+                <h5> Continent <span class="text-danger">*</span></h5>
+                <nz-select nzShowSearch nzAllowClear
+                           id="continent" formControlName="continent">
+                  <nz-option *ngFor="let continent of continentList" [nzLabel]="continent.libelle"
+                             [nzValue]="continent.id"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateForm.get('continent')?.dirty && validateForm.get('continent')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+                    style="margin-left: 10px;"><i class="ti-check"> </i> {{ btnTitle }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="col-md-8 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Pays</h4>
+        <h6 class="card-subtitle">
+          Liste des pays <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+            <i class="ti-info-alt"></i> {{messageNotificationTable}}
+            <button type="button" class="close" (click)="closeNotificationTable()">
+              <span>×</span></button>
+          </div>
+          <table class="table table-striped border" style="width: 100%!important;" [svData]="paysList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th>  <sv-default-sorter by="libelle"> Nom pays </sv-default-sorter> </th>
+              <th>
+                <sv-default-sorter by="pays.libelle"> Continent</sv-default-sorter>
+              </th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let pays of sv.data | filter:filter">
+              <td> {{ pays.libelle }}</td>
+              <td> {{ pays.continent != null? pays.continent.libelle : '#N/A' }}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(pays)"
+                >
+                  <i class="ti-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(pays)">
+                  <i class="ti-close"></i>
+                </button>
+              </td>
+            </tr>
+
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="2">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <div class="col-md-8 col-sm-12">
+
+      <div class="material-card card">
+        <div class="card-body">
+          <h4 class="card-title">Départements</h4>
+          <h6 class="card-subtitle">
+            Liste des départements <br>
+            <hr>
+          </h6>
+
+          <div class="table-responsive">
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+              </div>
+              <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                     placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+              <div class="input-group-append">
+                <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+              </div>
+            </div>
+
+            <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+              <i class="ti-info-alt"></i> {{messageNotificationTable}}
+              <button type="button" class="close" (click)="closeNotificationTable()">
+                <span>×</span></button>
+            </div>
+
+            <table id="zero_config" class="table table-striped border" style="width: 100%!important;"
+                   [svData]="departementList" #sv="svDataTable" [svRowsOnPage]="5">
+              <thead>
+              <tr>
+                <th>
+                  <sv-default-sorter by="libelle"> Libellé</sv-default-sorter>
+                </th>
+                <th>
+                  <sv-default-sorter by="pays.libelle"> Pays</sv-default-sorter>
+                </th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let departement of sv.data | filter:filter">
+                <td> {{ departement.libelle }}</td>
+                <td> {{ departement.pays.libelle }}</td>
+                <td style="text-align: center;">
+                  <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(departement)"
+                  >
+                    <i class="ti-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(departement)">
+                    <i class="ti-close"></i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+
+              <tfoot>
+
+              <tr>
+                <td colspan="3">
+                  <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                </td>
+              </tr>
+              </tfoot>
+
+            </table>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

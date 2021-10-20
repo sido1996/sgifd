@@ -1,0 +1,147 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-1 col-sm-12">
+  </div>
+  <div class="col-md-10 col-sm-12">
+
+    <nz-card nzTitle="Détail d'un utilisateur" *ngIf="userAction != null">
+
+      <div class="row">
+        <div class="col-md-6">
+          <img src="../../assets/images/users/varun.jpg" alt="user" class="rounded-circle" width="56">
+        </div>
+        <div class="col-md-6">
+          <button type="button" (click)="gotoListUtilisateurs()" class="btn btn-inverse btn-sm"
+                  style="float: right;"><i class="ti-menu"> </i> Consulter la Liste des utilisateurs
+          </button>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+
+        <div class="col-md-6">
+          <span> Nom </span> <strong> {{ userAction.firstName !=null ? userAction.firstName : '#N/A'}}</strong>
+        </div>
+        <div class="col-md-6">
+          <span> Prénom(s) </span> <strong> {{ userAction.lastName !=null ? userAction.lastName : '#N/A' }}</strong>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+        <div class="col-md-6">
+          <span> Tél </span> <strong> {{ userAction.tel !=null ? userAction.tel : '#N/A' }}</strong>
+        </div>
+        <div class="col-md-6">
+          <span> Email </span> <strong> {{ userAction.email !=null ? userAction.email : '#N/A' }}</strong>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+
+        <div class="col-md-6 col-sm-12" *ngIf="userAction.structureBeneficiaire != null">
+          <span> Structure d'appartenance </span> <strong>
+          {{ userAction.structureBeneficiaire != null ? userAction.structureBeneficiaire.denominationStructure :
+          '#N/A'}}</strong>
+
+        </div>
+
+        <div class="col-md-6 col-sm-12" *ngIf="userAction.ptf != null">
+          <span> Structure d'appartenance </span> <strong>
+          {{ userAction.ptf != null ? userAction.ptf.denominationptf :
+          '#N/A'}}</strong>
+
+        </div>
+
+        <div class="col-md-3">
+          <span> Rôle </span> <strong> {{ userAction.roles[0].name }}</strong>
+        </div>
+
+        <div class="col-md-3">
+          <span> Login </span> <strong> {{ userAction.username }}</strong>
+        </div>
+
+      </div>
+
+      <br><br>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <br>
+          <h5 class="card-title">Spécification des accès aux modules</h5>
+          <span>Précision des modules d'accès par l'utilisateur</span>
+          <hr>
+
+          <div class="table-responsive">
+            <!-- Alert with rounded corner -->
+
+            <table class="table table-striped border" style="width: 100%!important;">
+              <thead>
+              <tr>
+                <th>N°</th>
+                <th>Modules</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngIf="moduleUserListSelected.length ==0">
+                <td colspan="2" class="text-center center"> Aucun module n'est lié à ce compte</td>
+              </tr>
+              <tr *ngFor="let moduleUser of moduleUserListSelected let i=index">
+                <td> {{ i+1 }}</td>
+                <td> {{ moduleUser.name }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <br>
+    <!--  <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+          <br>
+          <h5 class="card-title">Spécification des accréditations</h5>
+          <span>Précision des accréditations aux fonctionnalités</span>
+          <hr>
+
+          <div class="table-responsive">
+
+            <table class="table table-striped border" style="width: 100%!important;">
+              <thead>
+              <tr>
+                <th>N°</th>
+                <th>Fonctionnalité</th>
+                <th>Accréditations</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngIf="moduleUserListSelected.length ==0">
+                <td colspan="3" class="text-center center"> Aucune fonctionnalité n'est liée à ce compte</td>
+              </tr>
+              <tr *ngFor="let accreditationUser of accreditatedUserList let i=index">
+                <td> {{ i+1 }}</td>
+                <td> {{ accreditationUser.fonctionnaliteUser.name }}</td>
+                <td>
+                  <ul *ngFor="let actionUser of accreditationUser.actionOfFonctionnalites">
+                    <li> {{ actionUser.name }}</li>
+                  </ul>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>-->
+
+    </nz-card>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

@@ -1,0 +1,175 @@
+/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype'),
+       url('/assets/fonts/Montserrat/Montserrat-Bold.ttf') format('truetype');
+}
+
+body { font-family: Montserrat, Roboto, "Helvetica Neue", sans-serif; }
+
+.page-wrapper {
+  display: block!important;
+}
+.ant-calendar-picker {
+  width: 100%!important;
+}
+.left-sidebar {
+  background: #1a7c5c!important;
+}
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.img-margin-top {
+  margin-top: 25px;
+}
+
+.img-menu-icon-size {
+  height: 90px;
+  width: 100px;
+  box-shadow: unset!important;
+}
+
+@media (max-width: 768px) {
+  .img-margin-top{
+    margin-top: 0;
+  }
+  .img-menu-icon-size {
+    height: 50px;
+    width: 60px;
+  }
+  .img-130-150 {
+    height: 50px!important;width: 60px!important;
+  }
+  .title-site {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 30px!important;
+  }
+  .left-menu-home-margin {
+    padding: 0!important;
+    margin-left: 0!important;
+  }
+
+  .min-height-356-px {
+    min-height: 356px;
+  }
+}
+
+.heigth-width-180 {
+  height: 180px!important;
+  width: 180px!important;
+}
+
+.heigth-width-70 {
+  height: 70px!important;
+  width: 70px!important;
+}
+
+.heigth-width-100 {
+  height: 100px!important;
+  width: 100px!important;
+}
+
+.min-height-200 {
+  min-height: 270px;
+  max-height: 270px;
+}
+
+.margin-left-125 {
+  margin-left: 125px;
+}
+
+.img-130-150 {
+  height: 150px;width: 170px;
+}
+
+.title-site {
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 48px;
+}
+.left-menu-home-margin {
+  padding: 20px 140px;
+  margin-left: 4%;
+  text-align: center!important;
+}
+
+.margin-left-25 {
+  margin-left: 25%;
+}
+.margin-top-1 {
+  margin-top: 1%;
+}
+
+.min-height-356-px {
+  min-height: 356px;
+}
+
+/* à personnaliser dans le module projet */
+/*.ant-popover-inner-content {
+  padding: 12px 16px;
+  color: rgba(0, 0, 0, 0.65);
+  background: #dbf6e0;
+}
+.ant-popover {
+  width: 50%!important;
+}*/
+
+.icon-resize-top-10-moin {
+  margin-top: -10px!important;
+}
+
+
+.ant-select-dropdown-menu-item {
+  white-space: unset!important;
+}
+
+
+.p-datatable .p-sortable-column.p-highlight {
+  background: #f8f9fa!important;
+  color: #00796B!important;
+}
+
+.p-datatable .p-sortable-column.p-highlight:hover .p-sortable-column-icon {
+  color: #00796B!important;
+}
+.p-datatable .p-sortable-column.p-highlight .p-sortable-column-icon {
+  color: #00796B!important;
+}
+.pi {
+  font-size: 12px!important;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  text-align: left;
+  padding: 1rem 1rem;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  font-weight: 600;
+  color: #00796B!important;
+  background: #dadee1;
+  /* transition: box-shadow 0.2s;*/
+}
+
+.p-datatable .p-sortable-column:focus {
+  box-shadow: unset!important;
+}
+
+
+/* datatable prime-ng*/
+
+body .ui-table .ui-table-thead > tr > th {
+  padding: 0.571em 0.857em;
+  border: 1px solid #c8c8c8;
+  font-weight: 700;
+  color: #ffffff!important;
+  background-color: #45d0a2!important;
+}
+
+.text-align-right {text-align: right!important;}

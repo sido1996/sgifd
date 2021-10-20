@@ -1,0 +1,247 @@
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <img src="assets/images/logo-rb.png" style="width: 200px;height: 120px;margin-top: 40%;padding-left: 15%;" alt="">
+            <h4 style="color: white;text-transform: uppercase;text-align: center;">
+                Ministère de l'Économie et des Finances</h4>
+            <h1 style="color: white;font-weight: bold;margin-top: 10%;text-align: center;">DGFD</h1>
+            <h4 style="color: white;text-transform: uppercase;text-align: center;">
+                Direction générale du financement du développement</h4>
+            <br>
+            <a [routerLink]="['']" style="margin-left: 32%;" class="btn btn-sm btn-success text-white btn-rounded center">
+                <i class="ti ti-home"> </i> Accueil
+            </a>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb border-bottom">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <h5 class="font-medium text-uppercase mb-0">Compte utilisateur</h5>
+                <a (click)="navigateAdminUrl()" class="btn btn-sm btn-info mt-2 text-white btn-rounded center">
+                    <i class="ti-control-skip-backward"> </i> Retour
+                </a>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0">
+                        <li class="breadcrumb-item"><a [routerLink]="['admin']">SGIFD</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Mon compte</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="page-content container-fluid">
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row">
+
+            <div class="col-sm-12 col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mt-4 center text-center">
+                            <img src="../../assets/images/users/varun.jpg" alt="user" class="rounded-circle" width="150">
+                            <h4 class="card-title mt-2">{{ user != null ? user.lastName + ' ' + user.firstName : '#N/A'}}</h4>
+                            <h6 class="card-subtitle" *ngIf="user != null && user.structureBeneficiaire">
+                                {{ user.structureBeneficiaire.denominationStructure }}</h6>
+                            <h6 class="card-subtitle" *ngIf="user != null && user.ptf">
+                                {{ user.ptf.denominationptf }}</h6>
+                            <div class="row text-center justify-content-md-center">
+                                <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-settings"></i> <span
+                  class="font-medium"> {{user != null && user.moduleUsers != null ? user.moduleUsers.length : '0'}}</span></a>
+                                </div>
+                                <div class="col-4">
+                                    <a href="javascript:void(0)" class="link">
+                                        <i class="icon-wrench"></i> <span class="font-medium"> {{user != null && user.accreditatedUsers != null ? user.accreditatedUsers.length : '0'}}</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <hr>
+                    </div>
+                    <div class="card-body">
+                        <small class="text-muted">Email address</small>
+                        <h6>{{ user != null ? user.email : '#N/A'}}</h6>
+                        <small class="text-muted pt-4 db">Phone</small>
+                        <h6>{{ user != null ? user.tel : '#N/A'}}</h6>
+                        <br>
+                        <h6 class="center text-center">
+                            <span class="badge {{ user.accountStatus==false ? 'badge-danger' : 'badge-success' }} badge-pill" style="font-size: 12px;font-weight: bold;">
+                {{ user.accountStatus==false ? 'compte désactivé' : 'compte activé' }}</span>
+
+                        </h6>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 col-md-7">
+                <div class="card">
+                    <div class="card-body">
+
+                        <form class="mt-4" [formGroup]="validateFormUser">
+                            <!-- Alert with rounded corner -->
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <nz-form-item>
+                                        <nz-form-control>
+                                            <h5> Nom
+                                                <span class="text-danger">*</span>
+                                            </h5>
+                                            <input type="text" nz-input formControlName="firstName" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                            <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                                            <nz-form-explain *ngIf="validateFormUser.get('firstName')?.dirty && validateFormUser.get('firstName')?.errors">
+                                                Ce champs est obligatoire !
+                                            </nz-form-explain>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nz-form-item>
+                                        <nz-form-control>
+                                            <h5> Prénom(s)
+                                                <span class="text-danger">*</span>
+                                            </h5>
+                                            <input type="text" nz-input formControlName="lastName" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                            <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                                            <nz-form-explain *ngIf="validateFormUser.get('lastName')?.dirty && validateFormUser.get('lastName')?.errors">
+                                                Ce champs est obligatoire !
+                                            </nz-form-explain>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nz-form-item>
+                                        <nz-form-control>
+                                            <h5> Tél
+                                                <span class="text-danger">*</span>
+                                            </h5>
+                                            <input type="text" nz-input formControlName="tel" class="form-control">
+                                            <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                                            <nz-form-explain *ngIf="validateFormUser.get('tel')?.dirty && validateFormUser.get('tel')?.errors">
+                                                Ce champs est obligatoire !
+                                            </nz-form-explain>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nz-form-item>
+                                        <nz-form-control>
+                                            <h5> Email
+                                                <span class="text-danger">*</span>
+                                            </h5>
+                                            <input type="email" nz-input formControlName="email" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                            <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                                            <nz-form-explain *ngIf="validateFormUser.get('email')?.dirty && validateFormUser.get('email')?.errors">
+                                                Ce champs est obligatoire !
+                                            </nz-form-explain>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nz-form-item>
+                                        <nz-form-control>
+                                            <h5> Login
+                                                <span class="text-danger">*</span>
+                                            </h5>
+                                            <input type="text" nz-input formControlName="username" class="form-control">
+                                            <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                                            <nz-form-explain *ngIf="validateFormUser.get('username')?.dirty && validateFormUser.get('username')?.errors">
+                                                Le login doit comporter au moin cinq (05) caractères !
+                                            </nz-form-explain>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nz-form-item>
+                                        <nz-form-control>
+                                            <h5> Mot de passe
+                                                <span class="text-danger">*</span>
+                                            </h5>
+                                            <input type="password" nz-input formControlName="password" class="form-control" minlength="6" maxlength="20">
+                                            <nz-form-explain *ngIf="validateFormUser.get('password')?.dirty && validateFormUser.get('password')?.errors">
+                                                Le mot de passe doit contenir huit (08) caractères au minimum, au moin une lettre majuscule, au moin une lettre minuscule, au moin un (01) chiffre et un des caractères spéciaaux $ @ % * + - _ !
+                                            </nz-form-explain>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <nz-form-item>
+                                        <nz-form-control>
+                                            <h5> Confirmation du mot de passe
+                                                <span class="text-danger">*</span>
+                                            </h5>
+                                            <input type="password" nz-input formControlName="confirmationpwd" class="form-control" minlength="6" maxlength="20">
+                                            <nz-form-explain *ngIf="validateFormUser.get('confirmationpwd')?.dirty && validateFormUser.get('confirmationpwd')?.errors">
+                                                Le mot de passe doit contenir huit (08) caractères au minimum, au moin une lettre majuscule, au moin une lettre minuscule, au moin un (01) chiffre et un des caractères spéciaaux $ @ % * + - _ !
+                                            </nz-form-explain>
+                                        </nz-form-control>
+                                    </nz-form-item>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-sm" (click)="submitForm()" [disabled]="validateFormUser.invalid">
+                    <i class="ti-check"> </i> Enrégistrer
+                  </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

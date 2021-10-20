@@ -1,0 +1,895 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title text-uppercase">Détail d'un projet</h4>
+        <h6 class="card-subtitle">Affichage des informations sur le projet sélectionné.
+          <!--  <a class="btn btn-inverse btn-sm" style="float: right;" [routerLink]="['../../list-projet-en-cours']">
+                <i class="ti-menu"> </i> Liste des Projets en cours</a>-->
+          <button (click)="closeConfirmation()" class="btn btn-primary btn-sm"
+                  style="text-align: right;" *ngIf="projetSubmit != null && user!= null && isAdmin == true">
+            <i class="ti-close"> </i> Clôturer
+          </button>
+        </h6>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="card">
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="col-md-3 col-sm-12">
+                    <span> Catégorie <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.categorieProjet != null ? projetSubmit.categorieProjet.libelle : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-9 col-sm-12">
+                    <span> Intitulé <br></span>
+                    <strong>
+                      {{ projetSubmit != null ? projetSubmit.libelle : 'N.A' }}
+                    </strong>
+                  </div>
+
+                </div>
+                <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Année de collecte <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.annee != null ? projetSubmit.annee.libelle : 'N.A' }}
+                    </strong>
+                  </div>
+                  <div class="col-md-3 col-sm-12">
+                    <span> Envergure <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.envergure != null ? projetSubmit.envergure.libelle : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Référence <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.reference != null ? projetSubmit.reference : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Document programmatique <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.documentProgrammatique != null ? projetSubmit.documentProgrammatique?.libelle : 'N.A' }}
+                    </strong>
+                  </div>
+
+                </div>
+                <br><br>
+                <div class="row">
+                  <div class="col-md-6">
+                      <span> Objectif général <br></span>
+                      <strong>
+                        {{ projetSubmit != null && projetSubmit.objectifgeneral != null ? projetSubmit.objectifgeneral : 'N.A' }}
+                      </strong>
+                  </div>
+                  <div class="col-md-6">
+                      <span>Référence(s) des marchés <br></span>
+                      <strong>
+                        {{ projetSubmit != null && projetSubmit.referencesMarche != null ? projetSubmit.referencesMarche : 'N.A' }}
+                      </strong>
+                  </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Date de signature de l'accord <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.dateSignatureAccord ? (projetSubmit.dateSignatureAccord | date:'dd-MM-yyyy') : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Date d'approbation <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.dateApprobation ? (projetSubmit.dateApprobation | date:'dd-MM-yyyy') : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Date de ractification <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.dateRactification ? (projetSubmit.dateRactification | date:'dd-MM-yyyy') : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Date de mise en vigueur <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.dateMiseEnVigueur ? (projetSubmit.dateMiseEnVigueur | date:'dd-MM-yyyy') : 'N.A' }}
+                    </strong>
+                  </div>
+
+                </div>
+                <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Date de démarrage <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.dateDemarrage ? (projetSubmit.dateDemarrage | date:'dd-MM-yyyy') : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Durée du projet (nombre de mois) <br></span>
+                    <strong>
+                      {{ projetSubmit != null ? getPeriodeAnneeMois(projetSubmit.dureeProjet) : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Date de clôture prévue <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.dateAchevementPrevue ? (projetSubmit.dateAchevementPrevue | date:'dd-MM-yyyy') : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Les années concernées : </span>
+                    <br>
+                    <strong *ngIf="projetSubmit != null && projetSubmit.dureeAnnees != null">
+                     <span *ngFor="let annee of projetSubmit.dureeAnnees; last as isLast">
+                        <b>{{ annee?.libelle }}</b>
+                        <span *ngIf="!isLast">, &nbsp;  </span>
+                      </span>
+                    </strong>
+                    <strong *ngIf="projetSubmit != null && projetSubmit.dureeAnnees == null">
+                      N.A
+                    </strong>
+                  </div>
+
+                </div>
+
+                <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Niveau de maturité <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.niveaumaturite != null ? projetSubmit.niveaumaturite.libelle : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-3 col-sm-12">
+                    <span> Types de coopération </span>
+                    <br>
+                    <strong *ngIf="projetSubmit != null && projetSubmit.typeCooperations != null">
+                     <span *ngFor="let type of projetSubmit.typeCooperations; last as isLast">
+                        <b>{{ type?.libelle }}</b>
+                        <span *ngIf="!isLast">, &nbsp;  </span>
+                      </span>
+                    </strong>
+                    <strong *ngIf="projetSubmit != null && projetSubmit.typeCooperations == null">
+                      N.A
+                    </strong>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <span> Structure de tutelle <br></span>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.structureSousTutelle != null ? projetSubmit.structureSousTutelle.denominationStructure :
+                      'N.A' }}
+                    </strong>
+                  </div>
+                </div>
+                <br><br>
+               <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <span> Coût global du projet en francs CFA <br></span>
+                    <strong>
+                      {{ projetSubmit != null ? formatNumber(projetSubmit.coutGlobalProjet) : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <span> Type(s) de ressource financière intérieure <br></span>
+                    <strong *ngIf="projetSubmit != null && projetSubmit.typeRessourceInterieures != null">
+                     <span *ngFor="let type of projetSubmit.typeRessourceInterieures; last as isLast">
+                        <b>{{ type?.libelle }}</b>
+                        <span *ngIf="!isLast">, &nbsp;  </span>
+                      </span>
+                    </strong>
+                    <strong *ngIf="projetSubmit != null && projetSubmit.typeRessourceInterieures == null">
+                      N.A
+                    </strong>
+                  </div>
+               </div>
+                <br><br>
+
+                 <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <span> Contrepartie des ressources financières intérieures en francs CFA <br></span>
+                    <strong>
+                      {{ projetSubmit != null ? formatNumber(projetSubmit.contrePartieNationale) : 'N.A' }}
+                    </strong>
+                  </div>
+                   <div class="col-md-6 col-sm-12">
+                     <span> Coût total des ressources financières extérieures des P.T.F en francs CFA <br></span>
+                     <strong>
+                       {{ projetSubmit != null ? formatNumber(projetSubmit.coutTotalRessourcesExterieures) : 'N.A' }}
+                     </strong>
+                   </div>
+                </div>
+                 <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-12 col-sm-12">
+
+                    <nz-tabset>
+                      <nz-tab nzTitle="Secteurs impactés par le projet">
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th>Grand secteur</th>
+                            <th>Secteur</th>
+                            <th>Sous - secteur</th>
+                            <!-- <th>Action</th> -->
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let data of secteurImpactesList let i=index">
+                            <td> {{data.grandSecteur != null ? data.grandSecteur.libelle : 'N.A'}}</td>
+                            <td> {{data.secteur != null ? data.secteur.libelle : 'N.A'}}</td>
+                            <td> {{data.sousSecteur != null ? data.sousSecteur.libelle : 'N.A'}}</td>
+                          </tr>
+                          <tr *ngIf="secteurImpactesList == null || secteurImpactesList.length == 0">
+                            <td class="text-center" colspan="3">
+                              Aucun enregistrement dans la table !
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </nz-tab>
+                      <nz-tab nzTitle="Localisation géographique du projet">
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th>Département</th>
+                            <th>Commune</th>
+                            <th>Arrondissement</th>
+                            <th>Zonne ou localité</th>
+                          </tr>
+                          </thead>
+                          <tbody *ngIf="localisationList != null">
+                          <tr *ngIf="localisationList == null || localisationList.length == 0">
+                            <td class="text-center" colspan="4"> Aucune localisation</td>
+                          </tr>
+                          <tr *ngFor="let data of localisationList let i=index">
+                            <td> {{data.departement != null ? data.departement.libelle : 'N.A'}}</td>
+                            <td> {{data.commune != null ? data.commune.libelle : 'N.A'}}</td>
+                            <td> {{data.arrondissement != null ? data.arrondissement.libelle : 'N.A'}}</td>
+                            <td> {{data.zoneLocalite != null ? data.zoneLocalite.libelle : 'N.A'}}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </nz-tab>
+                    </nz-tabset>
+
+                  </div>
+                </div>
+
+                <br>
+                <br>
+                <div class="row" *ngIf="projetSubmit != null">
+                  <div class="col-md-12">
+                    <nz-tabset>
+                      <nz-tab nzTitle="Structures ou Agences d'exécution">
+                        <strong *ngIf="projetSubmit != null && projetSubmit.structureAgenceExecution != null">
+                     <span *ngFor="let structure of projetSubmit.structureAgenceExecution; last as isLast">
+                        <b>{{ structure?.denominationStructure }}</b>
+                        <span *ngIf="!isLast">, &nbsp;  </span>
+                      </span>
+                        </strong>
+                        <strong *ngIf="projetSubmit != null && projetSubmit.structureAgenceExecution == null">
+                          N.A
+                        </strong>
+                      </nz-tab>
+                      <nz-tab nzTitle="Cibles ODD ">
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th>ODD</th>
+                            <th>Cible</th>
+                          </tr>
+                          </thead>
+                          <tbody *ngIf="projetSubmit.cibles != null">
+                          <tr *ngIf="projetSubmit.cibles == null || projetSubmit.cibles.length == 0">
+                            <td class="text-center" colspan="4"> Aucune cible n'est spécifiée </td>
+                          </tr>
+                          <tr *ngFor="let data of projetSubmit.cibles let i=index">
+                            <td> {{ data.odd != null ? data.odd ?.libelle : 'N.A'}}</td>
+                            <td> {{data != null ? data.libelle : 'N.A'}}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </nz-tab>
+                      <nz-tab nzTitle="Axes prioritaires PAG ">
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th>Pilier PAG</th>
+                            <th>Axe prioritaire</th>
+                          </tr>
+                          </thead>
+                          <tbody *ngIf="projetSubmit.axePrioritaires != null">
+                          <tr *ngIf="projetSubmit.axePrioritaires == null || projetSubmit.axePrioritaires.length == 0">
+                            <td class="text-center" colspan="4"> Aucune axe n'est spécifiée </td>
+                          </tr>
+                          <tr *ngFor="let data of projetSubmit.axePrioritaires let i=index">
+                            <td> {{ data.pilierPAG != null ? data.pilierPAG ?.libelle : 'N.A'}}</td>
+                            <td> {{data != null ? data.libelle : 'N.A'}}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </nz-tab>
+                    </nz-tabset>
+                  </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-6 col-sm-12">
+                    <span> Objectifs spécifiques :</span>
+                    <br>
+                    <strong>
+                      {{ projetSubmit != null ? projetSubmit.objectifs : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <span> Difficultés :</span>
+                    <br>
+                    <strong>
+                      {{ projetSubmit != null ? projetSubmit.difficultes : 'N.A' }}
+                    </strong>
+                  </div>
+                </div>
+
+                <br>
+                <div class="row">
+
+                  <div class="col-md-6 col-sm-12">
+                    <span> Solution envisagée :</span>
+                    <br>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.solutionEnvisagee != null ? projetSubmit.solutionEnvisagee : 'N.A' }}
+                    </strong>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <span> Réalisation audit :</span>
+                    <br>
+                    <strong>
+                      {{ projetSubmit != null && projetSubmit.realisationAudit != null ? projetSubmit.realisationAudit : 'N.A' }}
+                    </strong>
+                  </div>
+
+                </div>
+
+                <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-12 col-sm-12">
+
+                    <nz-tabset>
+                      <nz-tab nzTitle="Récap du suivi financier des ressources intérieures" *ngIf="isPTF == false">
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th> N°</th>
+                            <th> Année</th>
+                            <th> Type Ressource Inter</th>
+                            <th> Montant programmé (F CFA)</th>
+                            <th> Montant ordonnancé (F CFA)</th>
+                            <th> Montant engagé (F CFA)</th>
+                          </tr>
+                          </thead>
+                          <tbody *ngIf="ressourceInterieureAnnuelleList != null">
+                          <tr *ngIf="ressourceInterieureAnnuelleList.length == 0">
+                            <td class="text-center" colspan="6">Aucune ressource n'est afficher.</td>
+                          </tr>
+                          <tr *ngFor="let ressource of ressourceInterieureAnnuelleList let i=index">
+                            <td> {{ i + 1 }}</td>
+                            <td> {{ ressource != null && ressource.annee != null ? ressource.annee.libelle : 'N.A' }}</td>
+                            <td> {{ ressource != null && ressource.typeRessourceInterieure != null ? ressource.typeRessourceInterieure.libelle : 'N.A' }}</td>
+                            <td> {{ ressource != null ? formatNumber(ressource.montantRessourceProgrammer) : 'N.A' }}</td>
+                            <td> {{ ressource != null ? formatNumber(ressource.montantRessourceOrdonnancer) : 'N.A' }}</td>
+                            <td> {{ ressource != null ? formatNumber(ressource.montantRessourceEngager) : 'N.A' }}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" style="font-weight: bold;"> TOTAL</td>
+                            <td style="font-weight: bold;"> {{ formatNumber(cumulTotalInterieure.programmerInterieure) }}</td>
+                            <td style="font-weight: bold;"> {{ formatNumber(cumulTotalInterieure.ordonnancerInterieure) }}</td>
+                            <td style="font-weight: bold;"> {{ formatNumber(cumulTotalInterieure.engagerInterieure) }}</td>
+                          </tr>
+
+                          </tbody>
+
+                        </table>
+                      </nz-tab>
+                      <nz-tab nzTitle="Récap du suivi financier des ressources extérieures des PTF">
+                        <div class="table-responsive">
+                          <!-- Alert with rounded corner -->
+
+                          <table class="table table-striped border" style="width: 100%!important;">
+                            <thead>
+                            <tr>
+                              <th>N°</th>
+                              <th>P.T.F</th>
+                              <th>Montant sollicité(francs CFA)</th>
+                              <th>Montant Approuvé(Devise)</th>
+                              <th>Montant Décaissé(Devise)</th>
+                              <th>Montant Consommé(Fcfa)</th>
+                              <th>Nature financement</th>
+                              <th>Infos</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngIf="ressourcesExterieureList == null || ressourcesExterieureList.length == 0">
+                              <td class="text-center" colspan="8"> Aucune ressource extérieure</td>
+                            </tr>
+                              <tr *ngFor="let ressource of ressourcesExterieureList let i=index">
+                                <td> {{ i + 1 }}</td>
+                                <td> {{ ressource.ptfBailleurFrs.sigleptf }}</td>
+                                <td> {{ formatNumber(ressource.montantRessourceProgrammer) }}</td>
+                                <td> {{ formatNumber(getTotalEngagerByOneRessource(ressource.ressourceExterieureAnnuelles)) }}</td>
+                                <td> {{ formatNumber(getTotalDecaisserByOneRessource(ressource.ressourceExterieureAnnuelles)) }}</td>
+                                <td> {{ formatNumber(getTotalConsommeByOneRessource(ressource.ressourceExterieureAnnuelles)) }}</td>
+                                <td> {{ ressource.natureFinancement.libelle }}</td>
+                                <td style="text-align: center;">
+                                  <button (click)="choiceRessourceExterieure(ressource)" class="btn btn-info btn-circle  btn-sm"
+                                          type="button">
+                                    <i class="ti-info"></i>
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                            <tfoot *ngIf="ressourcesExterieureList.length > 0">
+                            <tr>
+                              <td colspan="2" style="font-weight: bold;"> TOTAL</td>
+                              <td colspan="1" style="font-weight: bold;"> {{ formatNumber(getTotalMontantRessourceExterieure()) }}</td>
+                              <td colspan="5" style="font-weight: bold;"></td>
+                            </tr>
+                            </tfoot>
+                          </table>
+
+                        </div>
+
+                        <hr *ngIf="ressourceExterieure != null">
+
+                        <div *ngIf="ressourceExterieure != null" class="row">
+                          <div class="col-md-3 col-sm-12">
+                            P.T.F <br>
+                            <strong>{{ ressourceExterieure.ptfBailleurFrs.denominationptf }}</strong>
+                          </div>
+                          <div class="col-md-3 col-sm-12">
+                            Nature financement <br>
+                            <strong>{{ ressourceExterieure.natureFinancement != null ? ressourceExterieure.natureFinancement.libelle : 'N.A'
+                              }}</strong>
+                          </div>
+                          <div class="col-md-3 col-sm-12">
+                            Type assistance <br>
+                            <strong>{{ ressourceExterieure.natureAssistance != null ? ressourceExterieure.natureAssistance.libelle : 'N.A'
+                              }}</strong>
+                          </div>
+                          <div class="col-md-3 col-sm-12">
+                            Montant Sollicité (francs cfa) <br>
+                            <strong>{{ formatNumber(ressourceExterieure.montantRessourceProgrammer) }}</strong>
+                          </div>
+                        </div>
+
+                        <div *ngIf="ressourceExterieure != null" class="row">
+
+                          <div class="col-md-12 col-sm-12">
+                            <br>
+                            <h5> Récap du suivi financier des ressources extérieures </h5>
+                            <hr>
+
+                            <div class="table-responsive">
+
+                              <table #sv="svDataTable" [svData]="ressourceExterieure.ressourceExterieureAnnuelles"
+                                     [svRowsOnPage]="5" class="table table-striped border"
+                                     style="width: 100%!important;">
+                                <thead>
+                                <tr>
+                                  <th> N°</th>
+                                  <th> Année</th>
+                                  <th> Montant programmé ({{ressourceExterieure.deviseMonnaie.libelle}})
+                                    <!-- (f cfa) +{{ (ressource.deviseMonnaie != null)?  ressource.deviseMonnaie.libelle : 'N.A' }}+-->
+                                  </th>
+                                  <!-- <th> Devise </th> -->
+                                  <th> Montant approuvé ({{ressourceExterieure.deviseMonnaie.libelle}})
+                                    <!-- (f cfa) -->
+                                  </th>
+                                  <!-- <th> Devise </th> -->
+                                  <th> Montant décaissé ({{ressourceExterieure.deviseMonnaie.libelle}})
+                                    <!-- (f cfa) -->
+                                  </th>
+                                  <!-- <th> Devise </th> -->
+                                  <th> Montant décaissé (f cfa)</th>
+                                  <th> Montant consommé (f cfa)</th>
+                                  <!-- <th *ngIf="ressourceExterieure != null && ressourceExterieure.isStatusClose==true">Actions</th> -->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngIf="ressourceExterieure.ressourceExterieureAnnuelles.length == 0">
+                                  <td class="text-center" colspan="10">Aucune ressource n'est afficher.</td>
+                                </tr>
+                                <tr *ngFor="let ressource of sv.data | filter:filter let i=index">
+                                  <td> {{ i + 1 }}</td>
+                                  <td> {{ ressource.annee.libelle }}</td>
+                                  <td> {{ formatNumber(ressource.montantRessourceProgrammer) }}</td>
+                                  <td> {{ formatNumber(ressource.montantRessourceApprouver) }}</td>
+                                  <td> {{ formatNumber(ressource.montantRessourceDecaisser) }}</td>
+                                  <td> {{ formatNumber(ressource.montantRessourceDecaisserFcfa) }}</td>
+                                  <td> {{ formatNumber(ressource.montantConsommeFcfa) }}</td>
+
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="font-weight: bold;"> TOTAL</td>
+                                  <td
+                                    style="font-weight: bold;"> {{ formatNumber(cumulTotalExterieure.programmerExterieure) }}</td>
+                                  <td
+                                    style="font-weight: bold;"> {{ formatNumber(cumulTotalExterieure.engagerExterieure) }}</td>
+                                  <td
+                                    style="font-weight: bold;"> {{ formatNumber(cumulTotalExterieure.ordonnancerExterieure) }}</td>
+                                  <td
+                                    style="font-weight: bold;"> {{ formatNumber(cumulTotalExterieure.ordonnancerExterieureFcfa) }}</td>
+                                  <td style="font-weight: bold;"> {{ formatNumber(cumulTotalExterieure.consommeFcfa) }}</td>
+                                  <td></td>
+                                </tr>
+
+                                </tbody>
+
+                                <tfoot>
+
+                                <tr>
+                                  <td colspan="8">
+                                    <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                                  </td>
+                                </tr>
+                                </tfoot>
+
+                              </table>
+
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </nz-tab>
+                    </nz-tabset>
+
+                  </div>
+                </div>
+
+                <br>
+                <br>
+                <div class="row">
+
+                  <div class="col-md-12 col-sm-12">
+
+                    <nz-tabset>
+                      <nz-tab nzTitle="Les conditions suspensives du financement">
+
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th>N°</th>
+                            <th>Conditions suspensives du financement du projet</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngIf="conditionsuspensiveList == null || conditionsuspensiveList.length == 0">
+                            <td class="text-center" colspan="2"> Aucune condition suspensive</td>
+                          </tr>
+                          <tr *ngFor="let conditionSus of conditionsuspensiveList let i=index">
+                            <td>{{ i + 1 }}</td>
+                            <td> {{ conditionSus.libelle }}</td>
+                          </tr>
+                          </tbody>
+
+                        </table>
+                      </nz-tab>
+                      <nz-tab nzTitle="Les conditions suspensives du premier décaissement">
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th>N°</th>
+                            <th>Conditions suspensives du premier décaissement</th>
+                            <th>Etat</th>
+                          </tr>
+                          </thead>
+                          <tbody *ngIf="conditionSuspensiveDecaissementsList != null">
+                          <tr
+                            *ngIf="conditionSuspensiveDecaissementsList == null || conditionSuspensiveDecaissementsList.length == 0">
+                            <td class="text-center" colspan="3"> Aucune condition suspensive du premier décaissement</td>
+                          </tr>
+                          <tr *ngFor="let condition of conditionSuspensiveDecaissementsList let i=index">
+                            <td> {{ i + 1 }}</td>
+                            <td> {{ condition.libelle }}</td>
+                            <td> {{ condition.etat }}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </nz-tab>
+                      <nz-tab nzTitle="Les prorogations du projet">
+                        <table class="table table-striped border" style="width: 100%!important;">
+                          <thead>
+                          <tr>
+                            <th>Motif</th>
+                            <th>Date début</th>
+                            <th>Nombre de mois</th>
+                            <th>Date de fin</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngFor="let prorogationProjet of prorogationProjetSubmit">
+                            <td> {{ prorogationProjet.motif }}</td>
+                            <td> {{ prorogationProjet.dateDebut | date:'dd-MM-yyyy' }}</td>
+                            <td> {{ prorogationProjet.nbreMois }}</td>
+                            <td> {{ prorogationProjet.dateFin | date:'dd-MM-yyyy' }}</td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </nz-tab>
+                    </nz-tabset>
+
+                  </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div class="row">
+                  <div class="col-md-12 col-sm-12">
+
+                    <nz-tabset>
+                      <nz-tab nzTitle="Archive documentaire (Pièces jointes)">
+                        <table class="table table-striped border">
+                          <thead>
+                          <tr>
+                            <th> Date archivage</th>
+                            <th> Nom de la pièce</th>
+                            <th> Réf. Pièce</th>
+                            <th>
+                              <button (click)="showModalPiece()" class="btn btn-primary btn-circle  btn-sm" style="float: right;"
+                                      type="button" *ngIf="projetSubmit != null && projetSubmit.close == false &&  projetSubmit.valide == true">
+                                <i class="ti-plus"> </i>
+                              </button>
+                            </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <tr *ngIf="filesProjet.length == 0">
+                            <td colspan="4" style="text-align: center;"> Aucune pièce</td>
+                          </tr>
+                          <tr *ngFor="let file of filesProjet let i=index">
+                            <td>
+                              {{ file.createdAt | date:'dd-MM-yyyy' }}
+                            </td>
+                            <td>
+                              {{ file.namePiece }}
+                            </td>
+                            <td>
+                              {{ file.refPiece }}
+                            </td>
+                            <td>
+                              <button (click)="showModalPieceInfo(file)" class="btn btn-info btn-circle  btn-sm" style="float: right;"
+                                      type="button" *ngIf="projetSubmit != null && projetSubmit.close == false &&  projetSubmit.valide == true">
+                                <i class="ti-info"></i>
+                              </button>
+                              <button (click)="showMessageClosePiece(i, file)" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                                      type="button" *ngIf="projetSubmit != null && projetSubmit.close == false &&  projetSubmit.valide == true">
+                                <i class="ti-close"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </nz-tab>
+                      <nz-tab nzTitle="Les conditions suspensives du premier décaissement">
+
+                        <div class="row" *ngIf="projetSubmit != null && projetSubmit.close == false &&  projetSubmit.valide == true">
+                          <div class="col-md-12 col-sm-12">
+                            <nz-form-item>
+                              <h5> Joindre un accord</h5>
+                              <nz-form-control>
+                                <nz-select (ngModelChange)="joindreAccord()" [(ngModel)]="acrd" style="width: 100%;">
+                                  <nz-option *ngFor="let a of accordList" [nzLabel]="a.reference+' '+a.intitule"
+                                             [nzValue]="a"></nz-option>
+                                </nz-select>
+                              </nz-form-control>
+                            </nz-form-item>
+                          </div>
+                        </div>
+
+                        <br>
+
+                        <div class="table-responsive">
+
+                          <table #sv="svDataTable" [svData]="accordAssociesList"
+                                 [svRowsOnPage]="5" class="table table-striped border" style="width: 100%!important;">
+                            <thead>
+                            <tr>
+                              <th> Réf.</th>
+                              <th> Date de signature</th>
+                              <th> Nbre projets</th>
+                              <th> Montant (F CFA)</th>
+                              <th> Statut</th>
+                              <th> Date Fin</th>
+                              <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let accord of sv.data | filter:filter">
+                              <td> {{ accord.reference }}</td>
+                              <td> {{ accord.dateSignature|date:'dd-MM-yyyy' }}</td>
+                              <td class="text-center">
+                                <strong>{{ (accord.projetProgrammeIdees != null) ? accord.projetProgrammeIdees.length : '0'}}</strong>
+                              </td>
+
+                              <td class="text-center">
+                                <strong>{{ formatNumber(accord.montant) }}</strong>
+                              </td>
+
+                              <td> {{ (accord.statusAccord != null) ? accord.statusAccord.libelle : 'N/A' }}</td>
+                              <td> {{ accord.dateFinAccord|date:'dd-MM-yyyy' }}</td>
+                              <td style="text-align: center;">
+                                <button (click)="enleverAccord(accord.id)" class="btn btn-danger btn-circle  btn-sm"
+                                        type="button"  *ngIf="projetSubmit != null && projetSubmit.close == false &&  projetSubmit.valide == true">
+                                  <i class="ti-close"></i>
+                                </button>
+                              </td>
+                            </tr>
+
+                            </tbody>
+
+                            <tfoot>
+
+                            <tr>
+                              <td colspan="7">
+                                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                              </td>
+                            </tr>
+                            </tfoot>
+
+                          </table>
+                        </div>
+
+                      </nz-tab>
+                    </nz-tabset>
+
+                  </div>
+                </div>
+
+                <br>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--gestion de gestion des pièces jointes-->
+<nz-modal (nzOnCancel)="handleCancelReponse()" (nzOnOk)="submitFormFile()" [(nzCancelText)]="btnFermerText"
+          [(nzVisible)]="isVisibleFile" [nzClosable]="false" [nzOkText]="'Enregistrer'"
+          nzTitle="Formulaire d'ajoute de pièce ">
+
+  <form [formGroup]="validateFormFile" class="mt-4">
+    <!-- Alert with rounded corner -->
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Nom de la pièce
+          <span class="text-danger">*</span>
+        </h5>
+        <input class="form-control" formControlName="namePiece" id="namePiece" nz-input
+               oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain *ngIf="validateFormFile.get('namePiece')?.dirty && validateFormFile.get('namePiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Pièce
+          <span class="text-danger">*</span>
+        </h5>
+        <input class="form-control" formControlName="refPiece" id="refPiece" nz-input
+               oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain *ngIf="validateFormFile.get('refPiece')?.dirty && validateFormFile.get('refPiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Emplacement physique</h5>
+        <textarea formControlName="refEmplacement" nz-input oninput="this.value = this.value.toUpperCase()"
+                  rows="3"></textarea>
+
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Résumé du contenu </h5>
+        <nz-form-control>
+          <textarea formControlName="resumePiece" nz-input rows="3"></textarea>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <input #fileInput (change)="handleFileInput($event)" id="file" type="file">
+    </div>
+
+  </form>
+
+</nz-modal>
+
+<!--information sur une pièce -->
+<nz-modal (nzOnOk)="handleCancelPieceInfo()" [(nzVisible)]="isVisiblePieceInfo" [nzCancelText]="null"
+          [nzClosable]="false" [nzOkText]="'OK'" nzTitle="Informations sur la pièce">
+
+  <div *ngIf="pieceInfo != null">
+    <p>
+      <span> Nom de la pièce : </span>
+      <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.fileName : 'N.A' }} </strong>
+    </p>
+    <p>
+      <span> Réf de la pièce : </span>
+      <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.refPiece : 'N.A' }} </strong>
+    </p>
+    <p>
+      <span> Réf de l'emplacement physique : </span>
+      <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.refEmplacement : 'N.A' }} </strong>
+    </p>
+    <p>
+      <span> Résumé du contenu : </span>
+      <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.resumePiece : 'N.A'}} </strong>
+    </p>
+    <p>
+      <span> Date de sauvegarde de la pièce : </span>
+      <strong> {{ pieceInfo.createdAt != null ? (pieceInfo.createdAt | date:'dd MM yyyy') : 'N.A'}} </strong>
+    </p>
+    <p>
+      <button (click)="downloadFile(pieceInfo.fullFileName)" class="btn btn-primary btn-sm" type="button">
+        <i class="ti-download"></i> cliquer ici pour télécharger la pièce
+      </button>
+    </p>
+    <br>
+  </div>
+
+</nz-modal>

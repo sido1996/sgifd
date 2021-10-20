@@ -1,0 +1,202 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <img src="assets/images/logo-rb.png"
+           style="width: 200px;height: 120px;margin-top: 40%;padding-left: 15%;" alt="">
+      <h4 style="color: white;text-transform: uppercase;text-align: center;">
+        Ministère de l'Économie et des Finances</h4>
+      <br>
+      <h1 style="color: white;font-weight: bold;margin-top: 10%;text-align: center;" >DGFD</h1>
+      <h4 style="color: white;text-transform: uppercase;text-align: center;">
+        Direction Générale du Financement du Développement</h4>
+      <br><br><br><br><br>
+      <a [routerLink]="['']" style="margin-left: 32%;"
+         class="btn btn-sm btn-success text-white btn-rounded center">
+        <i class="ti ti-home"> </i> Accueil
+      </a>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper" style="margin-top: 2%;">
+
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="page-content container-fluid" style="padding-bottom: 40px;padding-top: 70px;">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row" style="margin-top: -6%;">
+      <div class="col-md-3"></div>
+      <div class="col-md-5">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="auth-box">
+              <div>
+                <div class="logo">
+                  <div nz-row style="margin-top: -4%;">
+                    <div nz-col nzSpan="3">
+                      <img src="assets/images/logos/logo-sgifd.PNG" class="text-center"
+                           style="height: 100px;" alt="homepage"/>
+                    </div>
+                    <div nz-col nzSpan="21" style="padding: 5px;">
+                      <h5 class="font-medium mb-3"
+                       style="text-transform: uppercase;margin-left: 55px;margin-top: 6%;">
+                        Système de Gestion de l'Information sur le Financement
+                        du Développement</h5>
+                    </div>
+                  </div>
+
+                  <hr>
+                  <h1 class="font-medium mb-3 text-center" style="margin-top: -1%;" *ngIf="isFirstLogin == false">
+                    Connectez-vous</h1>
+                  <h1 class="font-medium mb-3 text-center" style="margin-top: -1%;" *ngIf="isFirstLogin == true">
+                    Réinitialisation </h1>
+                </div>
+                <!-- Form -->
+                <div class="row">
+                  <div class="col-12">
+                    <form class="form-horizontal mt-3" id="loginform"
+                          [formGroup]="validateForm"  *ngIf="isFirstLogin == false">
+                      <!-- Alert with rounded corner -->
+                      <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded"
+                           *ngIf="isNotificationForm == true">
+                        <i class="ti-info-alt"></i> {{messageNotificationForm}}
+                        <button type="button" class="close" (click)="closeNotificationForm()">
+                          <span>×</span></button>
+                      </div>
+
+                      <nz-form-item>
+                        <nz-form-control>
+                          <nz-input-group [nzPrefix]="prefixUser">
+                            <input type="text" nz-input formControlName="usernameOrEmail" placeholder="Login">
+                          </nz-input-group>
+                          <nz-form-explain
+                            *ngIf="validateForm.get('usernameOrEmail').dirty && validateForm.get('usernameOrEmail').errors">
+                            SVP entrer votre Login !
+                          </nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control>
+                          <nz-input-group [nzPrefix]="prefixLock">
+                            <input type="password" nz-input formControlName="password" placeholder="Mot de passe">
+                          </nz-input-group>
+                          <nz-form-explain
+                            *ngIf="validateForm.get('password').dirty && validateForm.get('password').errors">SVP entrer
+                            votre mot de passe!
+                          </nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+
+                      <nz-form-item>
+                        <nz-form-control>
+                       <!--   <label nz-checkbox formControlName="remember">
+                            <span>Se souvenir de moi</span>
+                          </label>-->
+
+                          <a href="#" class="text-right f-w-600 float-right"
+                          style="color: #1a7c5c;" [routerLink]="['/password-request']">
+                            Mot de passe oublié?</a>
+
+                        </nz-form-control>
+                      </nz-form-item>
+
+                      <div class="form-group text-center">
+                        <div class="col-xs-12 pb-3">
+                          <button class="btn btn-block btn-lg btn-success" [disabled]="validateForm.invalid"
+                                  style="background: #2CA07A;" (click)="connexion()">Connexion
+                          </button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                    <form class="form-horizontal mt-3" id="loginform"
+                          [formGroup]="validateFormNewPassword"  *ngIf="isFirstLogin == true">
+                      <!-- Alert with rounded corner -->
+                      <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded"
+                           *ngIf="isNotificationForm == true">
+                        <i class="ti-info-alt"></i> {{messageNotificationForm}}
+                        <button type="button" class="close" (click)="closeNotificationForm()">
+                          <span>×</span></button>
+                      </div>
+                      <nz-form-item>
+                        <nz-form-control>
+                          <nz-input-group [nzPrefix]="prefixLockPassword">
+                            <input type="password" nz-input formControlName="password" placeholder="Mot de passe">
+                          </nz-input-group>
+                          <nz-form-explain
+                            *ngIf="validateFormNewPassword.get('password').dirty && validateFormNewPassword.get('password').errors">SVP entrer
+                            votre mot de passe!
+                          </nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+                      <nz-form-item>
+                        <nz-form-control>
+                          <nz-input-group [nzPrefix]="prefixLockConfirm">
+                            <input type="password" nz-input formControlName="confirmPassword" placeholder="Confirmation du mot de passe">
+                          </nz-input-group>
+                          <nz-form-explain
+                            *ngIf="validateFormNewPassword.get('confirmPassword').dirty && validateFormNewPassword.get('confirmPassword').errors">SVP entrer
+                            votre mot de passe!
+                          </nz-form-explain>
+                        </nz-form-control>
+                      </nz-form-item>
+
+                      <div class="form-group text-center">
+                        <div class="col-xs-12 pb-3">
+                          <button class="btn btn-block btn-lg btn-success" [disabled]="validateFormNewPassword.invalid"
+                                  style="background: #2CA07A;" (click)="reinitialiser()">Réinitialiser mon mot de passe
+                          </button>
+                        </div>
+                      </div>
+
+                    </form>
+
+                    <ng-template #prefixUser><i class="anticon anticon-user" type="user"></i></ng-template>
+                    <ng-template #prefixLock><i class="anticon anticon-lock" type="lock"></i></ng-template>
+                    <ng-template #prefixLockPassword><i class="anticon anticon-lock" type="lock"></i></ng-template>
+                    <ng-template #prefixLockConfirm><i class="anticon anticon-lock" type="lock"></i></ng-template>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+            <img src="../../assets/images/footer_img.png" alt=""
+                 style="width: 300px;height: 10px;margin-right: auto;margin-left: 15%;margin-bottom: -12%;">
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->

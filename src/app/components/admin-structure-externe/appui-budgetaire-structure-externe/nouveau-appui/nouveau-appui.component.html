@@ -1,0 +1,183 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <div class="col-md-1 col-sm-12">
+    </div>
+    <div class="col-md-10 col-sm-12">
+        <nz-card nzTitle="Formulaire des Appuis Budgétaires">
+
+            <!--  <h6 class="card-subtitle">Enregistrement des Bourses de Formation.</h6> -->
+            <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+                <!-- Alert with rounded corner -->
+                <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+                    <i class="ti-info-alt"></i> {{messageNotificationForm}}
+                    <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span>
+            </button>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <h5> Année
+                                    <span class="text-danger">*</span>
+                                </h5>
+                                <nz-select nzShowSearch nzAllowClear id="annee" formControlName="annee">
+                                    <nz-option *ngFor="let annee of exerciceList" [nzLabel]="annee.libelle" [nzValue]="annee">
+                                    </nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="validateForm.get('annee')?.dirty && validateForm.get('annee')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <h5> Appui budgetaire en
+                                    <span class="text-danger">*</span>
+                                </h5>
+                                <nz-select nzShowSearch nzAllowClear id="typeAppuiBudgetaire" formControlName="typeAppuiBudgetaire">
+                                    <nz-option *ngFor="let appui of typeAppuiBudgetaireList" [nzLabel]="appui.libelle" [nzValue]="appui">
+                                    </nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="validateForm.get('typeAppuiBudgetaire')?.dirty && validateForm.get('typeAppuiBudgetaire')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <h5> Nature financement <span class="text-danger">*</span></h5>
+                            <nz-form-control>
+                                <nz-select nzShowSearch nzAllowClear id="natureFinancement" formControlName="natureFinancement">
+                                    <nz-option *ngFor="let natureFinancement of naturefinancementList" [nzLabel]="natureFinancement.libelle" [nzValue]="natureFinancement"></nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="validateForm.get('natureFinancement')?.dirty && validateForm.get('natureFinancement')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <h5> PTFs
+                                    <span class="text-danger">*</span>
+                                </h5>
+                                <nz-select nzShowSearch nzAllowClear id="ptf" formControlName="ptfBailleurFrs">
+                                    <nz-option *ngFor="let ptf of ptfList" [nzLabel]="ptf.denominationptf" [nzValue]="ptf">
+                                    </nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="validateForm.get('ptfBailleurFrs')?.dirty && validateForm.get('ptfBailleurFrs')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <h5> Montant en Devise
+                                    <span class="text-danger">*</span>
+                                </h5>
+                                <input nz-input type="number" formControlName="montantDevise" class="form-control" oninput="this.value= this.value.toUpperCase()">
+                                <nz-form-explain *ngIf="validateForm.get('montantDevise')?.dirty && validateForm.get('montantDevise')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <h5> Devise <span class="text-danger">*</span></h5>
+                            <nz-form-control>
+                                <nz-select nzShowSearch nzAllowClear formControlName="deviseMonnaie">
+                                    <nz-option *ngFor="let devise of devisemonaieList" [nzLabel]="devise.libelle" [nzValue]="devise"></nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="validateForm.get('deviseMonnaie')?.dirty && validateForm.get('deviseMonnaie')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <h5> Montant (F CFA) </h5>
+                                <input type="number" nz-input formControlName="montant" class="form-control">
+                                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                                <nz-form-explain *ngIf="validateForm.get('montant')?.dirty && validateForm.get('montant')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                    <!--  <div class="col-md-6 col-sm-12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <h5> Structure Bénéficiaire<span class="text-danger">*</span></h5>
+                                <nz-select nzShowSearch nzAllowClear formControlName="structureBeneficiaire">
+                                    <nz-option *ngFor="let structureBeneficiaire of structureList" [nzLabel]="structureBeneficiaire.denominationStructure" [nzValue]="structureBeneficiaire"></nz-option>
+                                </nz-select>
+                                <nz-form-explain *ngIf="validateForm.get('structureBeneficiaire')?.dirty && validateForm.get('structureBeneficiaire')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div> -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <nz-form-item>
+                            <nz-form-control>
+                                <h5> Observations
+                                    <span class="text-danger">*</span>
+                                </h5>
+                                <textarea nz-input formControlName="observation" class="form-control" oninput="this.value = this.value.toUpperCase()" rows="4"></textarea>
+                                <nz-form-explain *ngIf="validateForm.get('observation')?.dirty && validateForm.get('observation')?.errors">
+                                    Ce champs est obligatoire !
+                                </nz-form-explain>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+
+                <div style="float: right;margin-top: 15px;padding: 5px;">
+                    <button type="button" (click)="gotoListAppuiBudgetaire()" class="btn btn-inverse btn-sm">
+                        <i class="ti-menu"> </i>
+                             Consulter la Liste 
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 10px;" [disabled]="validateForm.invalid">
+                        <i class="ti-check"> </i> 
+                            Enrégistrer
+                    </button>
+                </div>
+            </form>
+
+        </nz-card>
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

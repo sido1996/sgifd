@@ -1,0 +1,79 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Fonds spécifiques </h4>
+        <h6 class="card-subtitle">
+          Liste des fonds spécifiques  <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <table class="table table-striped border" style="width: 100%!important;" [svData]="fondspecifiqueList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th>  Réf. </th>
+              <th>  Type  </th>
+              <th>  Montant devise  </th>
+              <th>  Devise monnaie </th>
+              <th>  Nbre PTF  </th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let fond of sv.data | filter:filter">
+              <td> {{ fond.reference }}</td>
+              <td> {{ (fond.typeFondSpecifique != null)? fond.typeFondSpecifique.libelle: '#N/A' }}</td>
+              <td class="text-center"> <strong>{{ fond.montantDevise }}</strong></td>
+              <td> {{ (fond.deviseMonnaie != null)? fond.deviseMonnaie.libelle: '#N/A' }}</td>
+              <td class="text-center"> {{ fond.ptfBailleurFrs.length }}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm"
+                        (click)="ouvrirModifier(fond.id)"><i class="ti-pencil"></i> </button>
+                <button type="button" class="btn btn-danger btn-circle  btn-sm"
+                        (click)="deleteFondSpecifique(fond)"> <i class="ti-close"></i> </button>
+                <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                        (click)="ouvrirDetail(fond.id)">
+                  <i class="ti-info"></i></button>
+              </td>
+            </tr>
+
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="6">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

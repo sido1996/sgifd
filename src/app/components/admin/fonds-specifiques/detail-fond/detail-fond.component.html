@@ -1,0 +1,357 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+  <div class="col-md-1 col-sm-12"></div>
+  <div class="col-md-10 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire d'enregistrement</h4>
+        <h6 class="card-subtitle">Enregistrement des fonds specifiques.
+            <button type="button" (click)="gotoListFonds()" class="btn btn-inverse btn-sm" style="float: right;">
+              <i class="ti-menu"> </i>
+              Consulter la Liste des coopérations
+            </button>
+        </h6>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Données </h4>
+                <h6 class="card-subtitle">Information sur les données du fond spécifique.</h6>
+                <hr>
+
+                  <div class="row">
+
+                    <div class="col-md-3 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Année : </span>
+                      <strong> {{ fondSpecifiqueSubmit.exercice.libelle }} </strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Référence(s) : </span>
+                      <strong> {{ fondSpecifiqueSubmit.reference }} </strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                        <span> Type fond spécifique : </span>
+                        <strong> {{ fondSpecifiqueSubmit.typeFondSpecifique.libelle }} </strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Montant devise : </span>
+                      <strong> {{ (formatNumber(fondSpecifiqueSubmit.montantDevise)) }} </strong>
+                    </div>
+                  </div>
+
+                  <br><br>
+
+                  <div class="row">
+
+                    <div class="col-md-3 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                        <span> Devise : </span>
+                        <strong> {{ fondSpecifiqueSubmit.deviseMonnaie.libelle }} </strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                        <span> Montant (francs CFA) : </span>
+                        <strong> {{ (formatNumber(fondSpecifiqueSubmit.montantFcfa))}} </strong>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                        <span> Libellé ou désignation : </span>
+                        <strong> {{ fondSpecifiqueSubmit.libelle }} </strong>
+                    </div>
+                  </div>
+
+                  <br><br>
+
+                  <div class="row">
+
+                    <div class="col-md-4 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Grand Secteur : </span>
+                      <strong> {{ fondSpecifiqueSubmit.grandSecteur.libelle }} </strong>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Secteur : </span>
+                      <strong> {{ fondSpecifiqueSubmit.secteur.libelle }} </strong>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Sous Secteurs : </span><br>
+                     <strong>
+                          {{ (fondSpecifiqueSubmit != null && fondSpecifiqueSubmit.sousSecteurs != null)? '('+fondSpecifiqueSubmit.sousSecteurs.length+')' : '#N/A' }} </strong>
+                        <ul *ngIf="fondSpecifiqueSubmit != null && fondSpecifiqueSubmit.sousSecteurs != null">
+                         <li style="font-weight: bold;margin-bottom: 10px;" *ngFor="let sousSecteur of fondSpecifiqueSubmit.sousSecteurs"> {{ sousSecteur.libelle }}</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <br>
+
+                  <div class="row">
+
+                    <div class="col-md-6 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                        <span> Objectif(s) : </span>  <br>
+                        <strong> {{ fondSpecifiqueSubmit.objectifs }} </strong>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Observations : </span>  <br>
+                       <strong> {{ fondSpecifiqueSubmit.observations }} </strong>
+                    </div>
+
+                  </div>
+
+                  <br>
+
+                  <div class="row">
+
+                    <div class="col-md-6 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                        <span> Difficultés : </span>  <br>
+                        <strong> {{ fondSpecifiqueSubmit.difficultes }} </strong>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12" *ngIf="fondSpecifiqueSubmit != null">
+                      <span> Solutions Envisagées : </span>  <br>
+                       <strong> {{ fondSpecifiqueSubmit.solutionsEnvisagees }} </strong>
+                    </div>
+
+                  </div>
+
+                  <br>  <br>
+
+                  <div class="row">
+
+                    <div class="col-md-12 col-sm-12">
+
+                      <h5> Liste des projets impactés </h5>
+                      <hr>
+
+                      <table class="table table-striped border" style="width: 100%!important;">
+                        <thead>
+                          <tr>
+                            <th>Réf</th>
+                            <th>Intitulé</th>
+                            <th>Niveau maturité</th>
+                            <th>Montant</th>
+                            <th>Devise</th>
+                            <th>Montant en francs CFA</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let detailFondS of detailFondSpecifiqueSubmit">
+                            <td> {{detailFondS.projetProgramme.reference}}</td>
+                            <td> {{detailFondS.projetProgramme.libelle}}</td>
+                            <td> {{detailFondS.projetProgramme.niveaumaturite.libelle}}</td>
+                            <td> {{formatNumber(detailFondS.montantDevise)}}</td>
+                            <td> {{detailFondS.deviseMonnaie.libelle}}</td>
+                            <td> {{formatNumber(detailFondS.montantFcfa)}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                    </div>
+                  </div>
+
+
+                  <br>  <br>
+
+
+
+                        <h4 class="card-title"> Fournisseurs de coopération</h4>
+                        <h6 class="card-subtitle">Liste des Fournisseurs de coopération.
+                        </h6>
+                        <hr>
+                        <div class="table-responsive">
+                          <!-- Alert with rounded corner -->
+
+                          <table class="table table-striped border" style="width: 100%!important;">
+                            <thead>
+                              <tr>
+                                <th>Dénomination</th>
+                                <th>Sigle</th>
+                                <th>Catégorie</th>
+                                <th>Pays</th>
+                                <th>Contact(s)</th>
+
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let ptf of ptfsSubmit">
+                                <td> {{ ptf.denominationptf }}</td>
+                                <td> {{ ptf.sigleptf }}</td>
+                                <td> {{ ptf.categorieptf.libelle }}</td>
+                                <td> {{ ptf.pays.libelle }}</td>
+                                <td> {{ ptf.telptf }}</td>
+                              </tr>
+                            </tbody>
+
+                          </table>
+                        </div>
+
+
+                <h4 class="card-title">Pièces jointes</h4>
+                <h6 class="card-subtitle">Liste des Pièces jointes.</h6>
+                <hr>
+                <div class="table-responsive">
+
+                  <table class="table table-striped border">
+                    <thead>
+                    <tr>
+                      <th> Date archivage</th>
+                      <th> Nom de la pièce</th>
+                      <th> Réf. Pièce</th>
+                      <th>
+                        <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                                style="float: right;" (click)="showModalPiece()"><i class="ti-plus"> </i></button>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngIf="filesFondSpecifique.length == 0">
+                      <td style="text-align: center;" colspan="4"> Aucune pièce</td>
+                    </tr>
+                    <tr *ngFor="let file of filesFondSpecifique let i=index">
+                      <td>
+                        {{ file.createdAt | date:'dd-MM-yyyy' }}
+                      </td>
+                      <td>
+                        {{ file.namePiece }}
+                      </td>
+                      <td>
+                        {{ file.refPiece }}
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-circle  btn-sm" style="float: right;"
+                                (click)="showModalPieceInfo(file)"><i class="ti-info"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                                (click)="showMessageClosePiece(i, file)"><i class="ti-close"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <div class="col-md-12 col-sm-12">
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+<!--gestion de gestion des pièces jointes-->
+<nz-modal [(nzVisible)]="isVisibleFile" nzTitle="Formulaire d'ajoute de pièce " [(nzCancelText)]="btnFermerText"
+          (nzOnCancel)="handleCancelReponse()" [nzClosable]="false"
+          (nzOnOk)="submitFormFile()" [nzOkText]="'Enregistrer'">
+
+  <form class="mt-4" [formGroup]="validateFormFile">
+    <!-- Alert with rounded corner -->
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Nom de la pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="namePiece" id="namePiece" class="form-control"
+               oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain
+          *ngIf="validateFormFile.get('namePiece')?.dirty && validateFormFile.get('namePiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="refPiece" id="refPiece" class="form-control"
+               oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain
+          *ngIf="validateFormFile.get('refPiece')?.dirty && validateFormFile.get('refPiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Emplacement physique</h5>
+        <textarea rows="3" nz-input formControlName="refEmplacement"
+                  oninput="this.value = this.value.toUpperCase()"></textarea>
+
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Résumé du contenu </h5>
+        <nz-form-control>
+          <textarea rows="3" nz-input formControlName="resumePiece"></textarea>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <input type="file"
+             id="file" #fileInput
+             (change)="handleFileInput($event)">
+    </div>
+
+  </form>
+
+</nz-modal>
+
+
+<!--information sur une pièce -->
+<nz-modal [(nzVisible)]="isVisiblePieceInfo" nzTitle="Informations sur la pièce"
+          [nzClosable]="false" (nzOnOk)="handleCancelPieceInfo()"
+          [nzCancelText] = "null"  [nzOkText]="'OK'">
+
+  <div *ngIf="pieceInfo != null">
+    <p>
+      <span> Nom de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.fileName : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.refPiece : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de l'emplacement physique : </span> <strong> {{ pieceInfo.resumePiece != null ?
+      pieceInfo.refEmplacement : '#N/A' }} </strong>
+    </p>
+    <p>
+      <span> Résumé du contenu : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.resumePiece :
+      '#N/A'}} </strong>
+    </p>
+    <p>
+      <span> Date de sauvegarde de la pièce : </span> <strong> {{ pieceInfo.createdAt != null ? (pieceInfo.createdAt |
+      date:'dd MM yyyy') : '#N/A'}} </strong>
+    </p>
+    <p>
+      <button type="button" class="btn btn-primary btn-sm"
+              (click)="downloadFile(pieceInfo.fullFileName)"><i class="ti-download"></i> cliquer ici pour télécharger la pièce
+      </button>
+    </p>
+    <br>
+  </div>
+
+</nz-modal>

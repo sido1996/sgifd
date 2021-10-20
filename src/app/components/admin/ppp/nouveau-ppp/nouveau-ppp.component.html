@@ -1,0 +1,584 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <div class="col-md-1 col-sm-12"> </div>
+    <div class="col-md-10 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Formulaire d'enregistrement</h4>
+                <h6 class="card-subtitle">Enregistrement des PPP.</h6>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Données </h4>
+                                <h6 class="card-subtitle">Information sur les données du PPP.</h6>
+                                <hr>
+                                <form class="mt-4" [formGroup]="validateFormPPP">
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Catégorie
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <nz-select id="categorie" formControlName="categorie" [(ngModel)]="selectedValue" nzShowSearch nzAllowClear>
+                                                        <nz-option nzLabel="SIMPLE PARTENARIAT PUBLIC-PRIVE" nzValue="PPP"></nz-option>
+                                                        <nz-option nzLabel="PARTENARIAT PUBLIC-PRIVE SUR INVESTISSEMENT" nzValue="PPP-IDE"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('categorie')?.dirty && validateFormPPP.get('categorie')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Année du Partenariat </h5>
+                                                    <nz-select nzShowSearch nzAllowClear id="anneePartenariat" formControlName="anneePartenariat">
+                                                        <nz-option *ngFor="let annee of exerciceList" [nzLabel]="annee.libelle" [nzValue]="annee"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('anneePartenariat')?.dirty && validateFormPPP.get('anneePartenariat')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+
+
+
+                                            <nz-card style="width:100%;" nzTitle="SELECTION DU PROJET">
+
+                                                <!-- <div class="row"> -->
+                                                <h4 class="card-title">Projet</h4>
+                                                <h6 class="card-subtitle">Informations sur le projet.
+                                                    <button type="button" class="btn btn-success btn-circle  btn-sm" style="float: right;" (click)="showModalProjetList()">
+                                                      <i class="ti-pencil"></i>
+                                                     </button>
+                                                    <ng-container>
+                                                        <nz-popconfirm [nzTitle]="'Êtes vous sûr d\'effacer ?'" (nzOnConfirm)="errorProjet()" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+
+                                                            <button type="button" nz-popconfirm class="btn btn-info btn-circle  btn-sm" style="float: right;">
+                                                              <i class="ti-eraser"></i>
+                                                            </button>
+
+                                                        </nz-popconfirm>
+                                                    </ng-container>
+                                                </h6>
+                                                <hr>
+                                                <!-- </div> -->
+
+                                                <div class="row" *ngIf="projetSubmit != null">
+                                                    <hr>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        N° :
+                                                        <strong>{{ projetSubmit.id }}</strong>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        Année de collecte :
+                                                        <strong>{{ projetSubmit.annee.libelle }}</strong>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        Intitulé :
+                                                        <strong>{{ projetSubmit.libelle }}</strong>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="row" *ngIf="projetSubmit != null">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        Date démarrage :
+                                                        <strong>{{ projetSubmit.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        Date clôture prévue :
+                                                        <strong>{{ projetSubmit.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                                                    </div>
+                                                    <!--  <div class="col-md-4 col-sm-12">
+                                                        Secteur :
+                                                        <strong>{{ projetSubmit.secteur.libelle }}</strong>
+                                                    </div> -->
+                                                </div>
+                                                <br>
+                                                <div class="row" *ngIf="projetSubmit != null">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        Objectif général :
+                                                        <strong>{{ projetSubmit.objectifgeneral }}</strong>
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-12">
+                                                        Coût global (francs CFA) :
+                                                        <strong>{{ projetSubmit.coutGlobalProjet }}</strong>
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <span> Types de coopération : <strong>
+                                                          {{ (projetSubmit.typeCooperations != null && projetSubmit.typeCooperations.length > 0)? '('+projetSubmit.typeCooperations.length+')': '0' }} </strong>
+                                                         </span>
+                                                        <ul *ngIf="projetSubmit.typeCooperations != null && projetSubmit.typeCooperations.length > 0">
+                                                            <li style="font-weight: bold;" *ngFor="let typeCooperation of  projetSubmit.typeCooperations"> {{ typeCooperation.libelle }}
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                                <br>
+                                                <div class="row" *ngIf="projetSubmit != null">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        Coût total des ressources extérieures prévu (francs CFA) :
+                                                        <strong>{{ projetSubmit.coutTotalRessourcesExterieures}} </strong>
+                                                    </div>
+                                                </div>
+
+                                                <br>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <div class="table-responsive" *ngIf="projetSubmit != null">
+
+                                                            <h5>Liste des ressources extérieures du projet</h5>
+
+                                                            <table class="table table-striped border" style="width: 100%!important;">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> N°</th>
+                                                                        <th> P.T.F</th>
+                                                                        <th> Nature financement</th>
+                                                                        <th> Montant prévu (F CFA)</th>
+                                                                        <!-- <th> Montant engager (F CFA)</th> -->
+                                                                        <!--  <th>Actions</th> -->
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngIf="projetSubmit.ressourceExterieures.length == 0">
+                                                                        <td colspan="6" class="text-center">Aucune ressource n'est afficher.</td>
+                                                                    </tr>
+                                                                    <tr *ngFor="let ressource of projetSubmit.ressourceExterieures | filter:filter let i=index">
+                                                                        <td> {{ i+1 }}</td>
+                                                                        <td> {{ ressource.ptfBailleurFrs.denominationptf }}</td>
+                                                                        <td> {{ ressource.natureFinancement.libelle }}</td>
+                                                                        <td> {{ formatNumber(ressource.montantRessourceProgrammer) }}</td>
+                                                                        <!-- <td> {{ getTotalEngagerByOneRessource(ressource.ressourceExterieureAnnuelles) }}</td> -->
+                                                                        <!--  <td style="text-align: center;">
+                                                                            <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="choiceRessourceExterieure(ressource)">
+                                                                              <i class="ti-info"></i>
+                                                                             </button>
+                                                                        </td> -->
+                                                                    </tr>
+
+                                                                </tbody>
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </nz-card>
+                                        </div>
+                                    </div>
+
+                                    <br>
+                                    <br>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Référence(s)
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <input nz-input formControlName="libelle" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('libelle')?.dirty && validateFormPPP.get('libelle')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Observations
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <input nz-input formControlName="observations" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('observations')?.dirty && validateFormPPP.get('observations')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Type de Coopération </h5>
+                                                    <nz-select nzShowSearch nzAllowClear id="typeCooperation" formControlName="typeCooperation">
+                                                        <nz-option *ngFor="let typeCooperation of typeCooperationList" [nzLabel]="typeCooperation.libelle" [nzValue]="typeCooperation"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('typeCooperation')?.dirty && validateFormPPP.get('typeCooperation')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Montant en Devise<span class="text-danger">*</span>
+                                                    </h5>
+                                                    <input nz-input type="number" formControlName="montantDevise" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('montantDevise')?.dirty && validateFormPPP.get('montantDevise')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Devise <span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="deviseMonnaie">
+                                                        <nz-option *ngFor="let devise of deviseMonaieList" [nzLabel]="devise.libelle" [nzValue]="devise"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('deviseMonnaie')?.dirty && validateFormPPP.get('deviseMonnaie')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Montant théorique (F CFA) <span class="text-danger">*</span></h5>
+                                                    <input type="number" nz-input formControlName="montantTheorique" class="form-control">
+                                                    <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                                                    <nz-form-explain *ngIf="validateFormPPP.get('montantTheorique')?.dirty && validateFormPPP.get('montantTheorique')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+
+                                    <h4 class="card-title">Promoteurs</h4>
+                                    <h6 class="card-subtitle">Liste des promoteurs du partenariat.
+
+                                        <button type="button" class="btn btn-success btn-circle  btn-sm" style="float: right;" (click)="showModalPromoteurList()">
+                                          <i class="ti-plus"></i>
+                                        </button>
+                                    </h6>
+                                    <hr>
+
+                                    <div class="table-responsive">
+                                        <!-- Alert with rounded corner -->
+
+                                        <table class="table table-striped border" style="width: 100%!important;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nom</th>
+                                                    <th>Téléphone</th>
+                                                    <th>Email</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let promoteur of promoteursSubmit">
+                                                    <td> {{ promoteur.nomcomplet }}</td>
+                                                    <td> {{ promoteur.tel }}</td>
+                                                    <td> {{ promoteur.email }}</td>
+                                                    <td style="text-align: center;">
+                                                        <ng-container>
+                                                            <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer ?'" (nzOnConfirm)="enleverPromoteur(promoteur)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+
+                                                                <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                                                   <i class="ti-close"></i>
+                                                                 </button>
+
+                                                            </nz-popconfirm>
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+                                    <br>
+                                    <br>
+
+
+                                    <h4 class="card-title">Prévisions et réalisations</h4>
+                                    <h6 class="card-subtitle">Liste des Prévisions et réalisations.
+
+                                        <button type="button" class="btn btn-success btn-circle  btn-sm" style="float: right;" (click)="showModalPrevivionRealisationNew()">
+                                          <i class="ti-pencil"></i>
+                                        </button>
+                                    </h6>
+                                    <hr>
+
+                                    <div class="table-responsive">
+                                        <!-- Alert with rounded corner -->
+
+                                        <table class="table table-striped border" style="width: 100%!important;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Annee</th>
+                                                    <th>Montant théorique</th>
+                                                    <th>Montant réalisation</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let previvion of previvionRealisationSubmit">
+                                                    <td> {{ previvion.annee.libelle }}</td>
+                                                    <td> {{ formatNumber(previvion.montantTheorique) }}</td>
+                                                    <td> {{ formatNumber(previvion.montantRealisation) }}</td>
+                                                    <td style="text-align: center;">
+                                                        <ng-container>
+                                                            <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer ?'" (nzOnConfirm)="enleverPrevivionRealisation(previvion)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+
+                                                                <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                                                   <i class="ti-close"></i>
+                                                                </button>
+
+                                                            </nz-popconfirm>
+                                                        </ng-container>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </form>
+
+                                <div class="col-md-12 col-sm-12">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <a nz-button nzType="default" [routerLink]="['../list-ppp']">
+                                                <i nz-icon type="left"> </i> Liste des PPP</a>
+
+                                            <button nz-button nzType="primary" style="margin-left: 10px;" (click)="enregistrerPPP()" [disabled]="validateFormPPP.invalid
+                                                || promoteursSubmit.length == 0 || previvionRealisationSubmit.length == 0">
+                                                  Enregistrer un PPP
+                                             </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+<!--gestion des Promoteur-->
+<nz-modal [(nzVisible)]="isVisibleModalPromoteurList" nzTitle="Choisir un promoteur" (nzOnCancel)='handleCancel()' [nzWidth]="700" [nzClosable]="false" [nzOkDisabled]="false" [nzOkText]="null">
+
+    <div class="table-responsive">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-info" type="button">
+          <i class="ti-pencil"></i>
+        </button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="button">
+          <i class="ti-search"></i>
+        </button>
+            </div>
+        </div>
+
+        <table class="table table-striped border" style="width: 100%!important;" [svData]="promoteurList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+                <tr>
+                    <th>
+                        <sv-default-sorter by="libelle"> Nom</sv-default-sorter>
+                    </th>
+                    <th>
+                        <sv-default-sorter by="tel"> Téléphone</sv-default-sorter>
+                    </th>
+                    <th>
+                        <sv-default-sorter by="email">Email</sv-default-sorter>
+                    </th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of sv.data | filter:filter">
+                    <td> {{ data.nomcomplet }}</td>
+                    <td> {{ data.tel}}</td>
+                    <td> {{ data.email }}</td>
+                    <td style="text-align: center;">
+                        <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="choisirUnPromoteur(data)">
+              <i class="ti-check"></i>
+            </button>
+                    </td>
+                </tr>
+            </tbody>
+
+            <tfoot>
+
+                <tr>
+                    <td colspan="5">
+                        <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+    </div>
+</nz-modal>
+
+
+<!--/* List projet */-->
+<nz-modal [(nzVisible)]="isVisibleModalProjetList" nzTitle="Choisir un projet" (nzOnCancel)='handleCancel()' [nzWidth]="1000" [nzClosable]="false" [nzOkDisabled]="false" [nzOkText]="null">
+
+    <div class="table-responsive">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-info" type="button">
+          <i class="ti-pencil"></i>
+        </button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter" placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="button">
+          <i class="ti-search"></i>
+        </button>
+            </div>
+        </div>
+
+        <table class="table table-striped border" style="width: 100%!important;" [svData]="projetList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+                <tr>
+                    <th> N°Enreg</th>
+                    <th> Référence(s)</th>
+                    <th> Intitulé </th>
+                    <th> Cout global (F CFA) </th>
+                    <th> Date démarrage</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="projetList.length == 0">
+                    <td colspan="7" class="text-center">Aucun projet n'est afficher.</td>
+                </tr>
+                <tr *ngFor="let projet of sv.data | filter:filter">
+                    <td> {{ projet.id }}</td>
+                    <td> {{ projet.reference }}</td>
+                    <td> {{ projet.libelle }}</td>
+                    <td> {{ projet.coutGlobalProjet }}</td>
+                    <td> {{ projet.dateDemarrage|date:'dd-MMM-yyyy' }}</td>
+                    <td style="text-align: center;">
+                        <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="choisirUnProjet(projet)">
+              <i class="ti-check"></i>
+            </button>
+                    </td>
+                </tr>
+
+            </tbody>
+
+            <tfoot>
+
+                <tr>
+                    <td colspan="7">
+                        <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+
+</nz-modal>
+
+<!--Nouveau Previvion Realisation-->
+<nz-modal [(nzVisible)]="isVisibleModalPrevivionRealisationNew" nzTitle="Créer une Prévivion Réalisation" (nzOnCancel)="handleCancel()" [nzWidth]="450" [nzFooter]=null [nzClosable]="false" [nzOkDisabled]="false">
+
+    <form class="mt-4" nz-form [formGroup]="validateFormPrevivionRealisation" (ngSubmit)="enregistrerPrevivionRealisation()">
+
+        <nz-form-item>
+            <nz-form-control>
+                <h5> Année </h5>
+                <nz-select nzShowSearch nzAllowClear id="annee" formControlName="annee">
+                    <nz-option *ngFor="let annee of exerciceList" [nzLabel]="annee.libelle" [nzValue]="annee"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateFormPrevivionRealisation.get('annee')?.dirty && validateFormPrevivionRealisation.get('annee')?.errors">
+                    Ce champs est obligatoire !
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-control>
+                <h5> Montant théorique
+                    <span class="text-danger">*</span>
+                </h5>
+                <input nz-input type="number" formControlName="montantTheorique" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateFormPrevivionRealisation.get('montantTheorique')?.dirty && validateFormPrevivionRealisation.get('montantTheorique')?.errors">
+                    Ce champs est obligatoire !
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-control>
+                <h5> Montant réalisation
+                    <span class="text-danger">*</span>
+                </h5>
+                <input nz-input type="number" formControlName="montantRealisation" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateFormPrevivionRealisation.get('montantRealisation')?.dirty && validateFormPrevivionRealisation.get('montantRealisation')?.errors">
+                    Ce champs est obligatoire !
+                </nz-form-explain>
+            </nz-form-control>
+        </nz-form-item>
+
+
+
+        <nz-form-item>
+            <nz-form-control>
+                <div style="float: right;">
+                    <button type="button" (click)="handleCancel()" class="btn btn-inverse btn-sm">
+            <i class="ti-close">
+            </i>
+            Fermer
+          </button>
+                    <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateFormPrevivionRealisation.invalid" style="margin-left: 10px;">
+            <i class="ti-check"> </i> Enregistrer
+          </button>
+                </div>
+
+            </nz-form-control>
+        </nz-form-item>
+    </form>
+</nz-modal>
