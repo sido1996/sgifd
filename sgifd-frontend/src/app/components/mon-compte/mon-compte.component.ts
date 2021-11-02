@@ -45,11 +45,11 @@ export class MonCompteComponent implements OnInit {
         [Validators.required,]],
       email: [this.user != null ? this.user.email : null,
         [Validators.required,]],
-      password: [null, [Validators.required, Validators.maxLength(20),
+      password: [this.user != null ? "Test@2021" : null, [Validators.required, Validators.maxLength(20),
         Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$')]],
       username: [this.user != null ? this.user.username : null,
         [Validators.required, Validators.minLength(4)]],
-      confirmationpwd: [null, [Validators.required,  Validators.maxLength(20),
+      confirmationpwd: [this.user != null ? "Test@2021" : null, [Validators.required,  Validators.maxLength(20),
         Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[-+!*$@%_])([-+!*$@%_\\w]{8,15})$')]],
     });
   }
@@ -81,7 +81,13 @@ export class MonCompteComponent implements OnInit {
         this.user.firstName = formData.firstName;
         this.user.lastName = formData.lastName;
         this.user.tel = formData.tel;
-        this.user.password = formData.password;
+
+        if(formData.password != "Test@2021"){
+          this.user.password = formData.password;
+
+        }
+
+
         this.userService.updateAccount(this.user).subscribe(
           (data: UserSystem) => {
             this.modalService.info({
@@ -108,5 +114,8 @@ export class MonCompteComponent implements OnInit {
   createMessage(type: string, msg: string): void {
     this.message.create(type, msg);
   }
+  navigateAdminUrl(): void {
+    this.router.navigate(['admin']);
+}
 
 }
