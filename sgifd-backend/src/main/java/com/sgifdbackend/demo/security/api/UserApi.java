@@ -57,7 +57,10 @@ public class UserApi {
         User singIn = null;
 
         if (user.getId() == null) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        	if(user.getPassword() != null ) {
+        		user.setPassword(passwordEncoder.encode(user.getPassword()));
+        	}
+            
             singIn = new User(user.getId(), user.getUsername(), user.getFirstName(), user.getLastName(), user.getTel(), user.getEmail(), user.getPassword(), user.getProfession(),
                     user.getRoles(), user.getAccreditatedUsers(), user.getModuleUsers(),
                     user.getStructureBeneficiaire(), user.getPtf(), user.getAccountStatus());
@@ -168,7 +171,10 @@ public class UserApi {
         }
 
         User userTemoin = userDao.findById(user.getId()).get();
-        userTemoin.setPassword(passwordEncoder.encode(user.getPassword()));
+        if(user.getPassword() != null) {
+            userTemoin.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        }
         userTemoin.setUsername(user.getUsername());
         userTemoin.setFirstName(user.getFirstName());
         userTemoin.setLastName(user.getLastName());
@@ -187,7 +193,10 @@ public class UserApi {
 
         User userTemoin = userDao.findById(userPrincipal.getId()).get();
 
-        userTemoin.setPassword(passwordEncoder.encode(newpassword));
+        if(newpassword != null) {
+            userTemoin.setPassword(passwordEncoder.encode(newpassword));
+        }
+
         userTemoin.setFirstLogin(false);
         User newuser = userDao.saveAndFlush(userTemoin);
 
