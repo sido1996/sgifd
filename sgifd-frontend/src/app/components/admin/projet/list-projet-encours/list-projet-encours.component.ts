@@ -1,0 +1,170 @@
+import { Component, OnInit } from '@angular/core';
+import {Exercice} from '../../../../models/Exercice';
+import {ProjetProgramme} from '../../../../models/ProjetProgramme';
+import {User} from '../../../../models/User';
+import {FormBuilder} from '@angular/forms';
+import {Router} from '@angular/router';
+import {TokenStorage} from '../../../../utils/token.storage';
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
+import {ExerciceService} from '../../../../services/exercice.service';
+import {ProjetProgrammeService} from '../../../../services/projet-programme.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ProjetProgrammeIdee} from "../../../../models/ProjetProgrammeIdee";
+import {ProjetIdee} from "../../../../models/ProjetIdee";
+import {ProjetProgrammeFinalise} from "../../../../models/ProjetProgrammeFinalise";
+
+@Component({
+  selector: 'app-list-projet-encours',
+  templateUrl: './list-projet-encours.component.html',
+  styleUrls: ['./list-projet-encours.component.css']
+})
+export class ListProjetEncoursComponent implements OnInit {
+
+  exercice: Exercice = null;
+
+  exerciceList: Array<Exercice> = [];
+  projetencoursList : Array<ProjetProgrammeFinalise> = [];
+
+  user: User = null;
+  filter: any;
+
+  isChargment: boolean = false;
+  isSearching: boolean = false;
+
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private tokenStorage: TokenStorage,
+              private modalService: NzModalService,
+              private exerciceService: ExerciceService,
+              private projetProgrammeService: ProjetProgrammeService,
+              private message: NzMessageService,) {
+    this.user = JSON.parse(this.tokenStorage.getCurrentUser());
+  }
+
+  ngOnInit() {
+    this.getListExercice();
+  }
+
+  getListExercice(): void {
+    this.exerciceService.list().subscribe(
+      (data: Array<Exercice>) => {
+        this.exerciceList = data;
+      },
+      (error: HttpErrorResponse) => {
+        console.log('Echec !');
+      });
+  }
+
+  makeListeProjet(): void {
+    if(this.exercice != null) {
+      this.isChargment = true;
+      this.filter = null;
+      this.projetencoursList = [];
+      this.projetProgrammeService.listEnCours(this.exercice.id).subscribe(
+        (data: Array<ProjetProgrammeFinalise>) => {
+          console.log(data);
+          this.projetencoursList = data;
+          this.isChargment = false;
+        },
+        (error: HttpErrorResponse) => {
+          console.log('Echec !');
+          this.isChargment = false;
+        });
+    }
+  }
+
+  deleteProjet(projet: ProjetProgramme): void {
+    this.modalService.error({
+      nzTitle: 'Confirmation',
+      nzContent: '<p> Confirmez - vous la suppression du projet N°Enreg. : <b>'+ projet.id+'</b>' +
+        ' portant la référence : <b>'+projet.reference+'</b> de l\'année de collecte : <b>'+projet.annee.libelle+'</b> ?</p>',
+      nzOkText: 'Oui',
+      nzOkType    : 'danger',
+      nzCancelText: 'Non',
+      nzOnOk      : () => this.deleteOneProjet(projet),
+      nzOnCancel: () => console.log('cancel')
+    });
+  }
+
+  deleteOneProjet(projet: ProjetProgramme): void {
+    projet.deleteBy = this.user.username;
+    this.projetProgrammeService.delete(projet).subscribe(
+      (data: ProjetProgrammeFinalise) => {
+        //this.getList();
+        this.projetencoursList.splice(this.indexOfElement(data.id), 1);
+      },
+      (error: HttpErrorResponse) => {
+        console.log('Echec !');
+        //this.notificationTable('danger', 'Echec de la suppression !');
+      });
+  }
+
+  indexOfElement(id: number): number {
+    let index = - 1;
+    index = this.projetencoursList.findIndex(p => p.id === id);
+    return index;
+  }
+
+
+  ouvrirModifier(id: number): void {
+    this.projetProgrammeService.getById(id).subscribe(
+      (data: any) => {
+        //this.getList();
+        this.tokenStorage.saveCurrentProjet(data);
+        this.router.navigate(['admin/projet/enregistrer-projet']);
+      },
+      (error: HttpErrorResponse) => {
+        console.log('Echec !');
+        //this.notificationTable('danger', 'Echec de la suppression !');
+      });
+  }
+
+  ouvrirDetailSuivi(id: number): void {
+    this.router.navigate(['admin/projet/detail-projet-suivi/'+id]);
+  }
+
+  ouvrirGererFinancement(id: number): void {
+    this.router.navigate(['admin/projet/suivi-financier/'+id]);
+  }
+
+  /* Debut méthode format monnetaire */
+  formatNumber(num: number) : string {
+    return num != null && num != undefined ? num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ') :  '0';
+  }
+  /* Fin méthode format monnetaire */
+
+  filtreGlobalList(): void {
+    if(this.filter != null && this.filter != '') {
+      this.projetencoursList = [];
+      this.exercice = null;
+      this.isChargment = true;
+      let resultSplit = (this.filter.trim()).replace(/[&\/\\#\-\_,+()$~%.":*?<>{}]/g, ' ');
+      console.log(resultSplit);
+      let resultSplitBefore = resultSplit.split(' ');
+      let resultSpliteAfter = "";
+      if(resultSplitBefore.length > 0) {
+        resultSplitBefore.forEach((r, index) => {
+          if(r != '') {
+            //if(index != (resultSplitBefore.length - 1)) {
+            resultSpliteAfter += "AND libelle LIKE '%"+ r.replace("'", "''") + "%' ";
+            // }
+          }
+        });
+      }
+      this.projetProgrammeService.verifierDoublonByLibelle(resultSpliteAfter)
+        .subscribe((data: ProjetProgrammeFinalise[]) => {
+          console.log(data);
+          if(data != null && data.length > 0) {
+            this.projetencoursList = data;
+            this.projetencoursList = [...this.projetencoursList];
+          }
+          this.isChargment = false;
+        }, err => {
+          console.log(err);
+          this.isChargment = false;
+          this.projetencoursList = [...this.projetencoursList];
+        });
+    }
+  }
+
+}

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="14_RCD" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="318506d5-3742-4e13-ba7f-6f3a56986dfd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="annee_Debut" class="java.lang.String"/>
+	<parameter name="annee_Fin" class="java.lang.String"/>
+	<parameter name="logoEntete" class="java.lang.String"/>
+	<parameter name="logoFooter" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT sRequete1.ANNEE, sRequete1.TYPE_COOPERATION, MONTANT
+FROM
+( SELECT t_annee.libelle ANNEE, t_type_cooperation.libelle TYPE_COOPERATION
+	FROM t_type_cooperation, t_annee
+WHERE t_type_cooperation.status = false
+AND t_annee.status = false
+	) sRequete1 LEFT JOIN
+(
+SELECT a.libelle ANNEE, t.libelle TYPE_COOPERATION, SUM(c.montant) MONTANT
+FROM t_cooperation_decentralisee c, t_type_cooperation t, t_annee a
+WHERE  c.exercice_id = a.id
+AND   c.type_cooperation_id = t.id
+GROUP BY a.libelle, t.libelle
+		) sRequete2 ON sRequete1.ANNEE = sRequete2.ANNEE AND sRequete1.TYPE_COOPERATION = sRequete2.TYPE_COOPERATION
+		WHERE  sRequete1.ANNEE BETWEEN $P{annee_Debut} AND  $P{annee_Fin}]]>
+	</queryString>
+	<field name="annee" class="java.lang.String"/>
+	<field name="type_cooperation" class="java.lang.String"/>
+	<field name="montant" class="java.lang.Double"/>
+	<summary>
+		<band height="555" splitType="Stretch">
+			<line>
+				<reportElement x="315" y="169" width="109" height="1" forecolor="#009999" uuid="46460c1a-349c-407c-a62c-02ab807e7495"/>
+			</line>
+			<staticText>
+				<reportElement x="373" y="31" width="396" height="44" uuid="b868bc23-2636-48cf-9ceb-96e2ac2d4360"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTION GENERALE DU FINANCEMENT DU DEVELOPPEMENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="182" width="114" height="20" uuid="033e5d7e-dcb6-4eb7-b626-e729fb020877"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[PERIODE  DE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="482" y="86" width="161" height="1" forecolor="#009999" uuid="a4039a7a-7f42-4a23-86e6-73a5e883190e"/>
+			</line>
+			<staticText>
+				<reportElement x="410" y="183" width="16" height="20" uuid="948ee993-95c0-46a5-9d55-aa7e9c15bcbd"/>
+				<text><![CDATA[A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="136" y="140" width="528" height="23" uuid="334bab7d-9fed-46d6-ab17-005e27b9513f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVOLUTION DU FINANCEMENT DE LA COOPERATION DECENTRALISEE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="345" y="182" width="60" height="20" uuid="6b8cc36a-325a-4cb0-b450-20df3ec8a2a6"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{annee_Debut}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="442" y="182" width="100" height="20" uuid="a39182c6-ea42-4b88-92f9-01e6899fc44f"/>
+				<textFieldExpression><![CDATA[$P{annee_Fin}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="10" width="337" height="89" uuid="437c38e1-f721-4949-aa50-a7312a43da91"/>
+				<imageExpression><![CDATA["D:\\PROJETs\\Spring-boot\\mpd\\src\\main\\resources\\rapports\\logo\\logo-mpd.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="207" y="540" width="364" height="3" uuid="16da3837-3bfe-4993-8858-c87ec7d75ad2"/>
+				<imageExpression><![CDATA["D:\\PROJETs\\Spring-boot\\mpd\\src\\main\\resources\\rapports\\logo\\footer_img.png"]]></imageExpression>
+			</image>
+			<crosstab>
+				<reportElement x="0" y="217" width="802" height="293" uuid="4a52412a-eaf6-4b08-b8dd-1911835ce817"/>
+				<rowGroup name="type_cooperation" width="70" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{type_cooperation}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#008B8B" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="37" forecolor="#FFFFFF" uuid="b316cd6d-f6ce-4226-aab4-27e4ceb48dc7"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="9"/>
+									<paragraph leftIndent="5" rightIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{type_cooperation}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="6" width="70" height="25" uuid="4fa58a8e-df66-4603-8f3e-dd76609cf925"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="annee" height="39" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{annee}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#008B8B" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="9" y="4" width="50" height="30" forecolor="#FFFFFF" uuid="c65e0d1a-7405-4079-ab41-75afffcde096"/>
+								<textElement verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{annee}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="7" y="4" width="55" height="30" uuid="2dfd2f41-ebc1-4f9a-97e1-a69c63918899"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="montantMeasure" class="java.lang.Double" calculation="Sum">
+					<measureExpression><![CDATA[$F{montant}]]></measureExpression>
+				</measure>
+				<crosstabCell width="73" height="38">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0">
+							<reportElement style="Crosstab Data Text" x="8" y="7" width="59" height="25" uuid="35e3dc51-d722-44c4-aaf6-4c698ed033d5"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="73" height="36" rowTotalGroup="type_cooperation">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0">
+							<reportElement style="Crosstab Data Text" x="5" y="6" width="62" height="25" uuid="a6c9a251-c314-4ceb-b06c-023ed92e780e"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="73" height="38" columnTotalGroup="annee">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0">
+							<reportElement style="Crosstab Data Text" x="7" y="6" width="55" height="25" uuid="ed030d6b-7a8d-4e21-9054-ea0270e734d8"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="73" height="36" rowTotalGroup="type_cooperation" columnTotalGroup="annee">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0">
+							<reportElement style="Crosstab Data Text" x="7" y="6" width="55" height="25" uuid="d0090080-a995-419e-beb7-0da22e5d389c"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,164 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <!-- <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Module</h4>
+        <h6 class="card-subtitle">Configuration des modules.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <nz-form-item>
+            <nz-form-control>
+              <h5> Module <span class="text-danger">*</span></h5>
+              <nz-select nzShowSearch nzAllowClear
+                         id="name" formControlName="name">
+                <nz-option *ngFor="let moduleUser of moduleUserList" [nzLabel]="moduleUser.name"
+                           [nzValue]="moduleUser.name"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <h5> Fonctionnalités <span class="text-danger">*</span></h5>
+              <nz-select nzShowSearch nzAllowClear nzMode="multiple"
+                         formControlName="fonctionnaliteUsers">
+                <nz-option *ngFor="let fonctionnalite of fonctionnaliteUserList" [nzLabel]="fonctionnalite.name"
+                           [nzValue]="fonctionnalite.id"></nz-option>
+              </nz-select>
+              <nz-form-explain *ngIf="validateForm.get('fonctionnaliteUsers')?.dirty && validateForm.get('fonctionnaliteUsers')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-control>
+          </nz-form-item>
+
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+                    style="margin-left: 10px;"><i class="ti-check"> </i> {{ btnTitle }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
+
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Modules du systèmes</h4>
+        <h6 class="card-subtitle">
+          Liste des modules du système <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+          <!-- Alert with rounded corner -->
+      <!--    <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>-->
+
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+            <i class="ti-info-alt"></i> {{messageNotificationTable}}
+            <button type="button" class="close" (click)="closeNotificationTable()">
+              <span>×</span></button>
+          </div>
+
+         <!-- <table id="zero_config" class="table table-striped border" style="width: 100%!important;"
+                 [svData]="moduleUserList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th>
+                 Module
+              </th>
+              &lt;!&ndash; <th>
+                  Nbre fonctionnalité
+              </th>
+              <th>Actions</th>&ndash;&gt;
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let moduleUser of sv.data | filter:filter">
+              <td> {{ moduleUser.name }}</td>
+             &lt;!&ndash;  <td> {{ moduleUser.fonctionnaliteUsers != null ?
+                moduleUser.fonctionnaliteUsers.length : 0 }}</td> &ndash;&gt;
+              &lt;!&ndash; <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(moduleUser)"
+                >
+                  <i class="ti-pencil"></i>
+                </button>
+              </td> &ndash;&gt;
+            </tr>
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="1">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>-->
+
+          <p-table #dt [paginator]="true" [rowsPerPageOptions]="[10,25,50]" [rows]="10"
+                   [showCurrentPageReport]="true" [value]="moduleUserList"
+                   currentPageReportTemplate="Affichage de {first} à {last} dans {totalRecords} éléments">
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="name">Module
+                  <p-sortIcon field="name"></p-sortIcon>
+                </th>
+              </tr>
+              <tr class="title-filter-table">
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'name', 'contains')" nz-input placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template let-moduleUser pTemplate="body">
+              <tr>
+                <td>{{ moduleUser.name }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

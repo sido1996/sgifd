@@ -1,0 +1,327 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-1 col-sm-12"></div>
+  <div class="col-md-10 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h5 class="card-title text-uppercase">édition de rapport</h5>
+        <hr>
+
+        <div *ngIf="rapport != null">
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-5">
+              <p>
+                Nom du fichier : <b>{{ rapport.nom }}</b>
+              </p>
+            </div>
+            <div class="col-md-5">
+              <p>
+                Libellé : <b>{{ rapport.libelle }}</b>
+              </p>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <form [formGroup]="thirdForm">
+                <h5> Spécifier les valeurs des paramètres du rapport. </h5> <br>
+                <div formArrayName="rapportParams">
+                  <div>
+                    <table style="width: 100%;">
+                      <thead style="border: 1px solid #4c5667;">
+                      <tr>
+                        <th style="padding: 10px;">Clé</th>
+                        <th style="padding: 10px;">Valeur</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let data of paramsForms.controls; let i=index" [formGroupName]="i"
+                          style="border: 1px solid #4c5667;">
+                        <td>
+                          <span style="margin-left: 15px;">
+                            {{ data.get('libelle').value }}
+                          </span>
+                        </td>
+                        <td>
+                          <nz-form-item style="margin-top: 20px;margin-right: 15px;"
+                                        *ngIf="data.get('estChampsDeSaisie').value">
+                            <nz-form-control nzErrorTip="Ce champs est obligatoire !">
+                              <input nz-input formControlName="valeur" class="form-control">
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='ANNEE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of exerciceList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='GRAND_SECTEUR'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of grandsecteurList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='NATURE_ASSISTANCE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of natureassistanceList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='NATURE_FINANCEMENT'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of naturefinancementList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='CATEGORIE_PTF'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of categorieptfList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='SECTEUR'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of secteurList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='REPERTOIRE_PTF'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of ptfList" [nzLabel]="option.denominationptf"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.sigleptf :
+                                            (data.get('selectionRetourneLibelle').value ? option.denominationptf : option.denominationptf))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='PILIER_PAG'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of pilierpagList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.code :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='OBJECTIF_DEVELOPPEMENT_DURABLE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of pilierpagList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.code :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='CIBLE_PRIORITAIRE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of cibleList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.code :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='AXE_PRIORITAIRE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of axeprioritaireList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.code :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='PAYS'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of paysList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='TYPE_STRUCTURE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of typestructureList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='REPERTOIRE_STRUCTURE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of structureList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.sigleStructure :
+                                            (data.get('selectionRetourneLibelle').value ? option.denominationStructure : option.denominationStructure))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='TYPE_ACCORD'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of typeaccordList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='TYPE_COOPERATION'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of typecooperationList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                          <nz-form-item *ngIf="!data.get('estChampsDeSaisie').value &&
+                            data.get('fonctionnaliteName').value ==='TYPE_FOND_SPECIFIQUE'"
+                                        style="margin-top: 20px;margin-right: 15px;">
+                            <nz-form-control>
+                              <nz-select formControlName="valeur" nzShowSearch nzAllowClear>
+                                <nz-option *ngFor="let option of typefondspecifiqueList" [nzLabel]="option.libelle"
+                                           [nzValue]="data.get('selectionRetourneId').value ? option.id :
+                                            (data.get('selectionRetourneCode').value ? option.libelle :
+                                            (data.get('selectionRetourneLibelle').value ? option.libelle : option.libelle))">
+                                </nz-option>
+                              </nz-select>
+                            </nz-form-control>
+                          </nz-form-item>
+
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+              <button type="button" (click)="editerRapport()" class="btn btn-inverse btn-sm">
+                <i class="ti-printer"> </i>
+                ÉDITER LE RAPPORT
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

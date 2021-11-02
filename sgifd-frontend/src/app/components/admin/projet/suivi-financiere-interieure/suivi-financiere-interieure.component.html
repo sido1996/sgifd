@@ -1,0 +1,302 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Suivi des ressources de financement de projet</h4>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <nz-card nzTitle="RECHERCHE DU PROJET A SUIVRE" style="width:100%;">
+
+                  <div class="row">
+                    <!-- <div class="col-md-9 col-sm-12">
+                       <nz-form-item>
+                         <h5> Numéro d'enregistrement du projet </h5>
+                         <nz-form-control>
+                           <input type="number" nz-input placeholder="Entrer le numéro d'enregistrement du projet" [(ngModel)]="numEnregProjet" />
+                         </nz-form-control>
+                       </nz-form-item>
+                     </div>
+                     <div class="col-md-3 col-sm-12">
+                       <h5>cliquer ici</h5>
+                       <button type="button" class="btn btn-primary btn-circle  btn-sm" (click)="getRessourceInterieureByProjet()">
+                         <i class="ti-search"></i>
+                       </button>
+                     </div>-->
+                    <div class="col-md-12 col-sm-12">
+                      <h5> Entrer le numéro d'enregistrement du projet et cliquer sur le bouton de recherche</h5>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                      <div class="input-group mb-3" style="margin-top: 5px;">
+
+                        <input [(ngModel)]="numEnregProjet" aria-describedby="basic-addon1" aria-label=""
+                               class="form-control" type="number">
+                        <div class="input-group-append">
+                          <button (click)="getRessourceInterieureByProjet()"
+                                  [disabled]="numEnregProjet ==null || numEnregProjet == 0"
+                                  class="btn btn-success"
+                                  type="button"><i class="ti-search"></i></button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div *ngIf="projetSuivi != null" class="row">
+                    <hr>
+                    <div class="col-md-4 col-sm-12">
+                      Année de collecte :
+                      <strong>{{ projetSuivi.annee.libelle }}</strong>
+                    </div>
+                    <div class="col-md-8 col-sm-12">
+                      Intitulé :
+                      <strong>{{ projetSuivi.libelle }}</strong>
+                    </div>
+                  </div>
+                  <br>
+                  <div *ngIf="projetSuivi != null" class="row">
+                    <div class="col-md-4 col-sm-12">
+                      Date démarrage :
+                      <strong>{{ projetSuivi.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                      Date clôture prévue :
+                      <strong>{{ projetSuivi.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                      Coût global (francs CFA) :
+                      <strong>{{ formatNumber(projetSuivi.coutGlobalProjet) }}</strong>
+                    </div>
+                  </div>
+                  <br>
+                  <div *ngIf="projetSuivi != null" class="row">
+                    <div class="col-md-4 col-sm-12"  *ngIf="projetSuivi.secteurImpactes != null">
+                      Secteurs :
+                      <span *ngFor="let secteur of projetSuivi.secteurImpactes; last as isLast">
+                        <b>{{ secteur.secteur?.libelle }}</b>
+                        <span *ngIf="!isLast">, &nbsp;  </span>
+                      </span>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12" *ngIf="typeRessourceInterieureList != null">
+                      Type(s) de ressource(s) intérieure(s) :
+                      <span *ngFor="let type of typeRessourceInterieureList; last as isLast">
+                        <b>{{ type.libelle }}</b>
+                        <span *ngIf="!isLast">, &nbsp;  </span>
+                      </span>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                      Document programmatique :
+                      {{ projetSuivi.documentProgrammatique?.libelle }}
+                    </div>
+
+                  </div>
+
+                </nz-card>
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+      <br>
+
+      <div style="padding-right: 30px;padding-left: 30px;">
+        <nz-tabset>
+          <nz-tab nzTitle="Gestion des Ressources financières intérieures">
+
+            <div *ngIf="projetSuivi != null" class="row">
+              <div class="col-md-6 col-sm-12">
+                Coût total des ressources intérieures prévu (francs CFA) :
+                <strong>{{ formatNumber(projetSuivi.contrePartieNationale) }}</strong>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                Coût total engagé (francs CFA) :
+                <strong>{{ formatNumber(cumulTotal.engager) }}</strong>
+              </div>
+            </div>
+            <br>
+            <div *ngIf="projetSuivi != null" class="row">
+              <div class="col-md-6 col-sm-12">
+                Coût total restant (francs CFA) :
+                <strong>
+                  {{ formatNumber(projetSuivi.contrePartieNationale - cumulTotal.engager) }}</strong>
+              </div>
+            </div>
+            <br>
+
+            <nz-card nzTitle="GESTION DU SUIVI FINANCIER" style="width:100%;" *ngIf="projetSuivi != null && projetSuivi.close == false">
+              <form [formGroup]="validateFormRessource" class="mt-4" nz-form >
+                <div class="row">
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <h5> Année </h5>
+                      <nz-form-control>
+                        <nz-select formControlName="annee">
+                          <nz-option *ngFor="let e of exerciceConcernesList" [nzLabel]="e.libelle"
+                                     [nzValue]="e.id"></nz-option>
+                        </nz-select>
+                        <nz-form-explain
+                          *ngIf="validateFormRessource.get('annee')?.dirty && validateFormRessource.get('annee')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <h5> Type ressource interieure </h5>
+                      <nz-form-control>
+                        <nz-select formControlName="typeRessourceInterieure">
+                          <nz-option *ngFor="let e of typeRessourceInterieureList" [nzLabel]="e.libelle"
+                                     [nzValue]="e.id"></nz-option>
+                        </nz-select>
+                        <nz-form-explain
+                          *ngIf="validateFormRessource.get('typeRessourceInterieure')?.dirty && validateFormRessource.get('typeRessourceInterieure')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <h5> Montant programmé (f cfa)</h5>
+                      <nz-form-control>
+                        <input formControlName="montantRessourceProgrammer" min="0" nz-input
+                               oninput="this.value = this.value.toUpperCase()"
+                               type="number">
+                      </nz-form-control>
+                      <nz-form-explain
+                        *ngIf="validateFormRessource.get('montantRessourceProgrammer')?.dirty && validateFormRessource.get('montantRessourceProgrammer')?.errors">
+                        Ce champs est obligatoire !
+                      </nz-form-explain>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <h5> Montant ordonnancé (f cfa)</h5>
+                      <nz-form-control>
+                        <input formControlName="montantRessourceOrdonnancer" min="0" nz-input
+                               oninput="this.value = this.value.toUpperCase()"
+                               type="number">
+                      </nz-form-control>
+                      <nz-form-explain
+                        *ngIf="validateFormRessource.get('montantRessourceOrdonnancer')?.dirty && validateFormRessource.get('montantRessourceOrdonnancer')?.errors">
+                        Ce champs est obligatoire !
+                      </nz-form-explain>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <h5> Montant engagé (f cfa)</h5>
+                      <nz-form-control>
+                        <input formControlName="montantRessourceEngager" min="0" nz-input
+                               oninput="this.value = this.value.toUpperCase()"
+                               type="number">
+                      </nz-form-control>
+                      <nz-form-explain
+                        *ngIf="validateFormRessource.get('montantRessourceEngager')?.dirty && validateFormRessource.get('montantRessourceEngager')?.errors">
+                        Ce champs est obligatoire !
+                      </nz-form-explain>
+                    </nz-form-item>
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <br>
+                    <button (click)="enregistrerRessource()" [disabled]="validateFormRessource.invalid" nz-button
+                            nzType="primary" style="margin-right: 8px;margin-top: 5px;">
+                      <i class="anticon anticon-plus"> </i> Enregistrer
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </nz-card>
+            <br>
+            <div class="table-responsive">
+
+              <table #sv="svDataTable" [svData]="ressourceInterieureAnnuelleList"
+                     [svRowsOnPage]="5" class="table table-striped border"
+                     style="width: 100%!important;">
+                <thead>
+                <tr>
+                  <th> N°</th>
+                  <th> Année</th>
+                  <th> Ressource Interiéeure</th>
+                  <th> Montant programmé (F CFA)</th>
+                  <th> Montant ordonnancé (F CFA)</th>
+                  <th> Montant engagé (F CFA)</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngIf="ressourceInterieureAnnuelleList.length == 0">
+                  <td class="text-center" colspan="7">Aucune ressource n'est affichée.</td>
+                </tr>
+                <tr *ngFor="let ressource of sv.data | filter:filter let i=index">
+                  <td> {{ i + 1 }}</td>
+                  <td> {{ ressource != null && ressource.annee != null ? ressource.annee.libelle : 'N.A' }}</td>
+                  <td> {{ ressource != null && ressource.typeRessourceInterieure != null ? ressource.typeRessourceInterieure.libelle : 'N.A' }}</td>
+                  <td> {{ ressource != null ? formatNumber(ressource.montantRessourceProgrammer) : 'N.A' }}</td>
+                  <td> {{ ressource != null ? formatNumber(ressource.montantRessourceOrdonnancer) : 'N.A' }}</td>
+                  <td> {{ ressource != null ? formatNumber(ressource.montantRessourceEngager) : 'N.A' }}</td>
+                  <td style="text-align: center;">
+                    <button (click)="deleteRessource(ressource)" class="btn btn-danger btn-circle  btn-sm"
+                            type="button" *ngIf="projetSuivi != null && projetSuivi.close == false">
+                      <i class="ti-close"></i>
+                    </button>
+                    <button (click)="modifierAction(ressource)" *ngIf="projetSuivi != null && projetSuivi.close == false"
+                            class="btn btn-info btn-circle  btn-sm" type="button">
+                      <i class="ti-pencil"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3" style="font-weight: bold;"> TOTAL</td>
+                  <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.programmer) }}</td>
+                  <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.ordonnancer) }}</td>
+                  <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.engager) }}</td>
+                  <td></td>
+                </tr>
+
+                </tbody>
+
+                <tfoot>
+
+                <tr>
+                  <td colspan="6">
+                    <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                  </td>
+                </tr>
+                </tfoot>
+
+              </table>
+            </div>
+
+          </nz-tab>
+          <nz-tab nzTitle="Gestion des Ressources financières des PTFS (extérieures)">
+
+            <app-suivi-financiere-exterieure [projetSuivi]="projetSuivi" *ngIf="projetSuivi != null">
+
+            </app-suivi-financiere-exterieure>
+
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

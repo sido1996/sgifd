@@ -1,0 +1,172 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" style="background: #2CA07A;">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+
+      <img src="assets/images/logo-rb.png" style="width: 200px;height:
+        120px;margin-top: 25%;padding-left: 15%;" alt="">
+      <h5 style="color: white;text-transform: uppercase;text-align: center;">
+        Ministère de l'Économie et des Finances
+      </h5>
+      <h1 style="color: white;font-weight: bold;margin-top: 10%;text-align:
+        center;">DGFD
+      </h1>
+      <h5 style="color: white;text-transform: uppercase;text-align: center;">
+        Direction générale du financement du développement
+      </h5>
+
+      <img src="assets/images/logos/logo-sgifd.PNG" class="rounded-circle"
+        style="height: 110px;margin-left: 20%;margin-top: 5%;" alt="homepage" />
+      <br>
+      <br>
+      <a [routerLink]="['']" style="margin-left: 32%;" class="btn btn-sm
+        btn-success text-white btn-rounded center">
+        <i class="ti ti-home"></i> Accueil
+      </a>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb border-bottom">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+        <h5 class="font-medium text-uppercase mb-0">Administration</h5>
+      </div>
+      <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+        <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+          <ol class="breadcrumb mb-0 justify-content-end p-0">
+            <li class="breadcrumb-item">
+              <a href="index.html">SGIFD</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Administration</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="page-content container-fluid" style="margin-bottom: -25px;">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="card">
+          <button type="button" class="btn btn-primary btn-circle btn-xl
+            heigth-width-180 margin-left-25
+            margin-top-1">
+            <img src="assets/images/icons/icon6.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION AIDES ALIMENTAIRES ET AIDES EN CAPITALS</h5>
+            <a class="btn btn-primary btn-rounded waves-effect waves-light mt-3"
+              [routerLink]="['aide-secours-structure']">Accéder au module
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <button type="button" class="btn btn-warning btn-circle btn-xl
+            heigth-width-180 margin-left-25
+            margin-top-1">
+            <img src="assets/images/icons/icon11.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION DE LA COOPERATION DECENTRALISEE</h5>
+            <a class="btn btn-warning btn-rounded waves-effect waves-light mt-3" style="color: white;"
+              [routerLink]="['cooperation-decentralisee-structure']">Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <button type="button" class="btn btn-info btn-circle btn-xl
+            heigth-width-180 margin-left-25
+            margin-top-1">
+            <img src="assets/images/icons/icon13.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION ET SUIVI FINANCIER DES PROJETS</h5>
+            <a class="btn btn-info btn-rounded waves-effect waves-light mt-3" [routerLink]="['projet-structure']">
+              Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+
+     <!-- <div class="col-md-4">
+        <div class="card">
+          <button type="button" class="btn btn-info btn-circle btn-xl
+                heigth-width-180 margin-left-25
+                margin-top-1">
+            <img src="assets/images/icons/icon6.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION DES APPUIS BUDGETAIRES</h5>
+            <a class="btn btn-info btn-rounded waves-effect waves-light mt-3"
+              [routerLink]="['appui-budgetaire-structure']">
+              Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>-->
+
+    </div>
+
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">
+    © 2019 SGIFD. Designed and Developed by<a href="https://wrappixel.com/">FAVIEM</a>.
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+
+  <img src="../../assets/images/footer_img.png" alt="" style="margin-top: -2%;">
+  <!-- ============================================================== -->
+  <!-- End Page wrapper  -->
+  <!-- ============================================================== -->
+</div>

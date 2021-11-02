@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_Landscape_1" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d74de583-5494-47f8-af1f-3767e1fb54f9">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT DISTINCT p.sigleptf, p.denominationptf, p.telptf, 
+p.emailptf, p.adresseptf, p.adresseptf_etrangere,
+c.libelle AS categorie
+FROM public.t_ptfbailleur_frs p, public.t_categorieptf c
+WHERE p.categorieptf_id = c.id]]>
+	</queryString>
+	<field name="sigleptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigleptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="denominationptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="denominationptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="telptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="emailptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="emailptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="adresseptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="adresseptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="adresseptf_etrangere" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="adresseptf_etrangere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="categorie" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="categorie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_categorieptf"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="55" y="0" width="100" height="30" uuid="6cf9327c-905d-4598-bd5d-f2d4c79f1f01">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e26e55c-2a1c-40b8-ad3b-2484260e9f7b"/>
+				</reportElement>
+				<text><![CDATA[sigleptf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="0" width="100" height="30" uuid="a6523350-c634-422b-a50b-155a45ab39c3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30d42e9e-a0d8-48f3-bf17-72ed1519f525"/>
+				</reportElement>
+				<text><![CDATA[denominationptf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="0" width="100" height="30" uuid="08b2e743-6b76-4842-a4f1-725fe34ed47c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aea350c2-260e-42dd-8889-3e3164edcfd8"/>
+				</reportElement>
+				<text><![CDATA[telptf]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="698" y="0" width="100" height="30" uuid="ef1878fa-277a-4d44-814b-0ffbcb8fd1be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="71aa3bfb-7504-434b-825f-2108be438854"/>
+				</reportElement>
+				<text><![CDATA[emailptf]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="55" y="22" width="100" height="30" uuid="ef5d5f50-3eef-41fc-adc8-f90509069dd0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e26e55c-2a1c-40b8-ad3b-2484260e9f7b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{sigleptf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="32" width="100" height="30" uuid="a3ccaf89-10d2-4854-acb1-5fd857746774">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30d42e9e-a0d8-48f3-bf17-72ed1519f525"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{denominationptf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="33" width="100" height="30" uuid="620769f1-ba67-4e3f-acaf-de28b149e64f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aea350c2-260e-42dd-8889-3e3164edcfd8"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{telptf}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="698" y="41" width="100" height="30" uuid="6e0ef8ef-fab8-46dc-8160-029f1d43e8cb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="71aa3bfb-7504-434b-825f-2108be438854"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{emailptf}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

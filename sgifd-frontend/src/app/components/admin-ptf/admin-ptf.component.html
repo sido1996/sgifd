@@ -1,0 +1,146 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" style="background: #2CA07A;overflow: auto;">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+
+                <li class="sidebar-item">
+                    <a [routerLink]="['list-encours']" class="sidebar-link">
+                        <i class="ti-angle-right"></i>
+                        <span class="hide-menu"> Requêtes en cours</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a [routerLink]="['list-clotures']" class="sidebar-link">
+                        <i class="ti-angle-right"></i>
+                        <span class="hide-menu"> Requêtes clôturées</span>
+                    </a>
+                </li>
+                <!-- <li class="sidebar-item">
+                    <a [routerLink]="['list-projets-finances']" class="sidebar-link">
+                        <i class="ti-angle-right"></i>
+                        <span class="hide-menu"> Projets financés</span>
+                    </a>
+                </li> -->
+                <li class="sidebar-item">
+                    <a [routerLink]="['nouveau-projet-ptf']" class="sidebar-link">
+                        <i class="ti-angle-right"></i>
+                        <span class="hide-menu"> Enrégistrer projet</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a [routerLink]="['list-appuis-budgetaire']" class="sidebar-link">
+                        <i class="ti-angle-right"></i>
+                        <span class="hide-menu"> Appuis budgetaires</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a [routerLink]="['list-projets-finances']" class="sidebar-link">
+                        <i class="ti-angle-right"></i>
+                        <span class="hide-menu"> Rép. projets financés</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a [routerLink]="['finance-annuel-projet']" class="sidebar-link">
+                        <i class="ti-angle-right"></i>
+                        <span class="hide-menu"> Finan. annuelles de projet</span>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb border-bottom">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <!-- <h5 class="font-medium text-uppercase mb-0">gestion des requêtes de financement
+                    </h5> -->
+                <h5 class="font-medium text-uppercase mb-0">Espace PTF
+                </h5>
+                <a (click)="navigateAdminUrl()" class="btn btn-sm btn-info mt-2 text-white btn-rounded center">
+                    <i class="ti-control-skip-backward"> </i> Retour
+                </a>
+            </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0">
+                        <li class="breadcrumb-item">
+                            <a [routerLink]="['/admin-ptf']">SGIFD/PTF</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Espace PTF
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="page-content container-fluid">
+
+
+
+
+
+
+
+        <router-outlet>
+
+        </router-outlet>
+
+
+
+
+
+
+
+
+        <!-- ============================================================== -->
+        <!-- End PAge Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer class="footer text-center">
+        © 2019 SGIFD. Designed and Developed by
+        <a href="https://wrappixel.com/">FAVIEM</a>.
+    </footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+
+
+    <img src="../../assets/images/footer_img.png" alt="">
+
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->

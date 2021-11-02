@@ -1,0 +1,377 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Détail Projet Idée</h4>
+        <h6 class="card-subtitle"> Informations sur un projet.
+          <button type="button" (click)="gotoListFonds()" class="btn btn-inverse btn-sm" style="float: right;">
+            <i class="ti-menu"> </i>
+            Consulter la Liste des projets idée
+          </button>
+        </h6>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Informations </h4>
+                <h6 class="card-subtitle">Information sur les projets.</h6>
+                <hr>
+
+                  <div class="row" *ngIf="projetSubmit != null">
+                    <div class="col-md-3 col-sm-12">
+                      Catégorie :
+                              <strong>{{ projetSubmit.categorieProjet.libelle }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Année de collecte :
+                              <strong>{{ projetSubmit.annee.libelle }}</strong>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                      Intitulé :
+                              <strong>{{ projetSubmit.libelle }}</strong>
+                    </div>
+
+                  </div>
+                <br>
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-3 col-sm-12">
+                      Envergure :
+                              <strong>{{ projetSubmit.envergure.libelle }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Référence :
+                              <strong>{{ projetSubmit.reference }}</strong>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                      Objectif général :
+                              <strong>{{ projetSubmit.objectifgeneral }}</strong>
+                    </div>
+
+                  </div>
+                <br>
+
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-3 col-sm-12">
+                      Date de démarrage :
+                              <strong>{{ projetSubmit.dateDemarrage }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Durée du projet (nbre de mois) :
+                              <strong>{{ projetSubmit.dureeProjet }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Date de clôture prévue :
+                              <strong>{{ projetSubmit.dateAchevementPrevue }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      <span> Les années concernées :
+                        <strong>
+                          {{ (projetSubmit.dureeAnnees != null && projetSubmit.dureeAnnees.length > 0)? '('+projetSubmit.dureeAnnees.length+')'
+                          : '0' }} </strong>
+                      </span>
+                      <ul *ngIf="projetSubmit.dureeAnnees != null && projetSubmit.dureeAnnees.length > 0">
+                        <li style="font-weight: bold;" *ngFor="let annee of  projetSubmit.dureeAnnees"> {{ annee.libelle }}
+                        </li>
+                      </ul>
+                    </div>
+
+                  </div>
+                <br>
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-3 col-sm-12">
+                      Nombre de prorogation :
+                              <strong>{{ projetSubmit.nbreProrogation }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Grand secteur :
+                              <strong>{{ projetSubmit.grandSecteur.libelle }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Secteur :
+                              <strong>{{ projetSubmit.secteur.libelle }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+
+                      Sous Secteur :
+                              <strong>{{ projetSubmit.sousSecteur.libelle }}</strong>
+                    </div>
+
+                  </div>
+                <br>
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-3 col-sm-12">
+                      Niveau de maturité :
+                              <strong>{{ projetSubmit.niveaumaturite.libelle }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Coût global du projet :
+                              <strong>{{ projetSubmit.coutGlobalProjet }}</strong>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Types de ressources intérieures :
+                              <!-- <strong>{{ projetSubmit.typeRessourceInterieure.libelle }}</strong> -->
+                              <ul *ngIf="projetProgrammeIdee.typeRessourceInterieures != null">
+                                  <li style="font-weight: bold;" *ngFor="let type of  projetProgrammeIdee.typeRessourceInterieures">
+                                    <span> {{ type.libelle }} </span>
+                                  </li>
+                              </ul>
+                    </div>
+
+                    <div class="col-md-3 col-sm-12">
+                      Contrepartie nationale :
+                              <strong>{{ projetSubmit.contrePartieNationale }}</strong>
+                    </div>
+
+                  </div>
+                <br>
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-6 col-sm-12">
+                      <span> Types de coopération :
+                        <strong>
+                          {{ (projetSubmit.typeCooperations != null && projetSubmit.typeCooperations.length > 0)? '('+projetSubmit.typeCooperations.length+')'
+                          : '0' }} </strong>
+                      </span>
+                      <ul *ngIf="projetSubmit.typeCooperations != null && projetSubmit.typeCooperations.length > 0">
+                        <li style="font-weight: bold;" *ngFor="let typeCooperation of  projetSubmit.typeCooperations"> {{ typeCooperation.libelle }}
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                      Coût total des ressources extérieures des P.T.F :
+                              <strong>{{ projetSubmit.coutTotalRessourcesExterieures }}</strong>
+                    </div>
+
+                  </div>
+                <br>
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-6 col-sm-12">
+                      Structure sous tutelle :
+                              <strong>{{ projetSubmit.structureSousTutelle.denominationStructure }}</strong>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                      Structure ou Agence d'exécution :
+                              <strong>{{ projetSubmit.structureAgenceExecution.denominationStructure }}</strong>
+                    </div>
+
+                  </div>
+                <br>
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-6 col-sm-12">
+                      <span> Cibles ODD :
+                        <strong>
+                          {{ (projetSubmit.cibles != null && projetSubmit.cibles.length > 0)? '('+projetSubmit.typeCooperations.length+')'
+                          : '0' }} </strong>
+                      </span>
+                      <ul *ngIf="projetSubmit.cibles != null && projetSubmit.cibles.length > 0">
+                        <li style="font-weight: bold;" *ngFor="let cible of  projetSubmit.cibles">
+                          <span> {{ cible.odd.code+' : '+ cible.odd.libelle }} </span> <br>
+                          <span> {{ cible.code+' : '+ cible.libelle }}  </span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                      <span> Axes prioritaires PAG :
+                        <strong>
+                          {{ (projetSubmit.axePrioritaires != null && projetSubmit.axePrioritaires.length > 0)? '('+projetSubmit.typeCooperations.length+')'
+                          : '0' }} </strong>
+                      </span>
+                      <ul *ngIf="projetSubmit.axePrioritaires != null && projetSubmit.axePrioritaires.length > 0">
+                        <li style="font-weight: bold;" *ngFor="let axePrioritaire of  projetSubmit.axePrioritaires">
+                         <span> {{ axePrioritaire.pilierPAG.code+' : '+ axePrioritaire.pilierPAG.libelle }} </span> <br>
+                          <span> {{ axePrioritaire.code+' : '+ axePrioritaire.libelle }} </span>
+                        </li>
+                      </ul>
+                    </div>
+
+                  </div>
+                <br>
+                  <div class="row" *ngIf="projetSubmit != null">
+
+                    <div class="col-md-6 col-sm-12">
+                      Objectifs spécifiques :
+                              <strong>{{ projetSubmit.objectifs }}</strong>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12">
+                      Difficultés :
+                              <strong>{{ projetSubmit.difficultes }}</strong>
+                    </div>
+
+                  </div>
+                <br>
+
+                <div class="row" *ngIf="ressourcesExterieureList != null">
+
+                  <div class="col-md-12 col-sm-12">
+
+                    <h5> Les Ressources Exterieures </h5>
+                    <hr>
+
+                    <br>
+
+                    <div class="table-responsive">
+                      <!-- Alert with rounded corner -->
+
+                      <table class="table table-striped border" style="width: 100%!important;">
+                        <thead>
+                        <tr>
+                          <th>N°</th>
+                          <th>P.T.F</th>
+                          <th>Montant (francs CFA)</th>
+                          <th>Nature financement</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let ressource of ressourcesExterieureList let i=index">
+                          <td> {{ i+1 }}</td>
+                          <td> {{ ressource.ptfBailleurFrs.denominationptf }}</td>
+                          <td> {{ ressource.montantRessourceProgrammer }}</td>
+                          <td> {{ ressource.natureFinancement.libelle }}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot *ngIf="ressourcesExterieureList.length > 0">
+                        <tr>
+                          <td colspan="2"> TOTAL</td>
+                          <td colspan="1"> {{ getTotalMontantRessourceExterieure() }}</td>
+                          <td colspan="2"></td>
+                        </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+                <br><br>
+                <div class="row" *ngIf="conditionsuspensiveList != null">
+
+                  <div class="col-md-12 col-sm-12">
+
+                    <h5> Les conditions suspensives du projet </h5>
+                    <hr>
+
+                    <br>
+                    <div class="table-responsive">
+                      <!-- Alert with rounded corner -->
+
+                      <table class="table table-striped border" style="width: 100%!important;">
+                        <thead>
+                        <tr>
+                          <th>N°</th>
+                          <th>Conditions suspensives du financement</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let conditionSus of conditionsuspensiveList let i=index">
+                          <td>{{ i+1 }}</td>
+                          <td> {{ conditionSus.libelle }}</td>
+                        </tr>
+                        </tbody>
+
+                      </table>
+                    </div>
+
+                  </div>
+                </div>
+
+                <br><br>
+                <div class="row" *ngIf="conditionSuspensiveDecaissementsList != null">
+                  <div class="col-md-12 col-sm-12">
+
+                    <h4 class="card-title">Conditions suspensives du premier décaissement </h4>
+                    <hr>
+
+                    <div class="table-responsive">
+                      <!-- Alert with rounded corner -->
+                      <table class="table table-striped border" style="width: 100%!important;">
+                        <thead>
+                        <tr>
+                          <th>N°</th>
+                          <th>Conditions suspensives du premier décaissement</th>
+                          <th>Etat</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let condition of conditionSuspensiveDecaissementsList let i=index">
+                          <td> {{ i + 1 }}</td>
+                          <td> {{ condition.libelle }}</td>
+                          <td> {{ condition.etat }}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <br><br>
+                <div class="row" *ngIf="localisationList != null">
+
+                  <div class="col-md-12 col-sm-12">
+
+                    <h5> Localisation </h5>
+                    <hr>
+
+                    <table class="table table-striped border" style="width: 100%!important;">
+                      <thead>
+                      <tr>
+                        <th>Département</th>
+                        <th>Commune</th>
+                        <th>Arrondissement</th>
+                        <th>Zonne ou localité</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let data of localisationList let i=index">
+                        <td> {{data.arrondissement.commune.departement.libelle}}</td>
+                        <td> {{data.arrondissement.commune.libelle}}</td>
+                        <td> {{data.arrondissement.libelle}}</td>
+                        <td> {{data.libelle}}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+
+                <br><br>
+
+                <a nz-button nzType="default" [routerLink]="['../list-projet-en-cours']" style="margin-right: 10px;">
+                  <i nz-icon type="left"> </i>Liste des Projets
+                </a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

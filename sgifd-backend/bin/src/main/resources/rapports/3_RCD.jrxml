@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="3_RCD" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a7023068-f86a-43f6-9b24-5bf640082464">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="annee_Debut" class="java.lang.String"/>
+	<parameter name="annee_Fin" class="java.lang.String"/>
+	<parameter name="logoEntete" class="java.lang.String"/>
+	<parameter name="logoFooter" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT sRequete1.ANNEE, sRequete1.PTF, sRequete2.MONTANT
+FROM
+(SELECT a.libelle AS ANNEE, p.sigleptf AS PTF
+FROM t_ptfbailleur_frs p, t_annee a
+WHERE a.libelle  BETWEEN $P{annee_Debut} AND  $P{annee_Fin}) sRequete1 LEFT JOIN
+
+(SELECT  a.libelle AS ANNEE, p.sigleptf AS PTF, SUM(t.montant_ressource_decaisser_fcfa) AS MONTANT
+FROM t_ptfbailleur_frs p, t_annee, t_ressource_exterieure tr, t_annee a, t_ressource_exterieure_annuelle t
+WHERE t.annee_id = a.id
+AND tr.ptfbailleur_frs_id = p.id
+AND t.ressource_exterieure_id = tr.id
+GROUP BY a.libelle, p.sigleptf
+ORDER BY a.libelle ASC) sRequete2 ON sRequete1.ANNEE = sRequete2.ANNEE AND sRequete1.PTF = sRequete2.PTF
+ORDER BY sRequete1.ANNEE, sRequete1.PTF]]>
+	</queryString>
+	<field name="annee" class="java.lang.String"/>
+	<field name="ptf" class="java.lang.String"/>
+	<field name="montant" class="java.lang.Double"/>
+	<summary>
+		<band height="555" splitType="Stretch">
+			<staticText>
+				<reportElement x="373" y="31" width="396" height="44" uuid="37569d29-70a2-4493-b192-ffd1baefb193"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTION GENERALE DU FINANCEMENT DU DEVELOPPEMENT]]></text>
+			</staticText>
+			<line>
+				<reportElement x="482" y="86" width="161" height="1" forecolor="#009999" uuid="3730806d-3e5b-467b-8216-1b3359d4b5f0"/>
+			</line>
+			<image>
+				<reportElement x="10" y="10" width="337" height="89" uuid="92cc233d-8824-403c-9f4f-2a5abc952bf5"/>
+				<imageExpression><![CDATA["D:\\PROJETs\\Spring-boot\\mpd\\src\\main\\resources\\rapports\\logo\\logo-mpd.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="100" y="140" width="574" height="23" uuid="ac4054b6-92c6-4444-83dc-0f60b3e945fd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPARTITION DU FINANCEMENT DU SECTEUR PRIVE PAR ACTEUR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="324" y="169" width="109" height="1" forecolor="#009999" uuid="e3ec5a1c-f341-4ced-838c-831f7845f110"/>
+			</line>
+			<image>
+				<reportElement x="204" y="520" width="364" height="3" uuid="9de9dda6-3db8-4e9f-8ec1-f144a312f201"/>
+				<imageExpression><![CDATA["D:\\PROJETs\\Spring-boot\\mpd\\src\\main\\resources\\rapports\\logo\\footer_img.png"]]></imageExpression>
+			</image>
+			<elementGroup/>
+			<crosstab>
+				<reportElement x="0" y="225" width="802" height="278" uuid="79c87b36-6980-4a49-91e8-8f36806e916f"/>
+				<rowGroup name="ptf" width="70" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{ptf}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents backcolor="#008B8B" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="70" height="45" forecolor="#FFFFFF" uuid="0a259049-02bc-41e3-bf3f-c5406dcd289c"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="12" isBold="false"/>
+									<paragraph leftIndent="5"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{ptf}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents backcolor="#BFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="14" width="70" height="25" uuid="1d7eaa35-b5ac-4f4f-a24c-a1687442e02c"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="annee" height="30" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{annee}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents backcolor="#008B8B" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="6" y="0" width="60" height="30" forecolor="#FFFFFF" uuid="43dcba67-1b12-455f-9f93-03e355aa6e72"/>
+								<textElement verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{annee}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents backcolor="#BFFFFF" mode="Opaque">
+							<box>
+								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="13" y="0" width="50" height="30" uuid="e15b9790-538a-465b-992f-4837310ffe3a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[TOTAL]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="montantMeasure" class="java.lang.Double" calculation="Sum">
+					<measureExpression><![CDATA[$F{montant}]]></measureExpression>
+				</measure>
+				<crosstabCell width="72" height="45">
+					<cellContents>
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="68" height="45" uuid="272640a4-b833-44ba-aa48-d1f5ca59ca59"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font size="9"/>
+								<paragraph rightIndent="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="72" height="54" rowTotalGroup="ptf">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="0" y="8" width="68" height="39" uuid="1f49c455-a2d2-4c60-99ca-a08105837fee"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font size="9" isBold="true"/>
+								<paragraph rightIndent="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="77" height="45" columnTotalGroup="annee">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="5" y="0" width="69" height="45" uuid="a6894224-70ae-4013-89d6-4316159397ee"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font size="9" isBold="true"/>
+								<paragraph rightIndent="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="77" height="54" rowTotalGroup="ptf" columnTotalGroup="annee">
+					<cellContents backcolor="#BFFFFF" mode="Opaque">
+						<box>
+							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+						</box>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement style="Crosstab Data Text" x="5" y="8" width="69" height="39" uuid="c8c5844b-b04c-4375-9981-ba2348aeff4c"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font size="9" isBold="true"/>
+								<paragraph rightIndent="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{montantMeasure}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+			<textField>
+				<reportElement x="441" y="182" width="100" height="20" uuid="a17323b5-f752-4412-8fe3-3c3c511333db"/>
+				<textFieldExpression><![CDATA[$P{annee_Fin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="182" width="60" height="20" uuid="54870232-67ab-47ad-ace8-bd36688abe39"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{annee_Debut}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="409" y="182" width="16" height="20" uuid="1d90950a-b1ef-4453-beff-8f82872bc5dc"/>
+				<text><![CDATA[A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="182" width="114" height="20" uuid="2ed8489e-dd1a-49d9-a907-91474151f5bc"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[PERIODE  DE]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

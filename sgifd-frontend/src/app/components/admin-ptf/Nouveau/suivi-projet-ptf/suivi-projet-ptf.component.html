@@ -1,0 +1,363 @@
+<div class="row">
+    <div class="col-md-1 col-sm-12">
+    </div>
+    <div class="col-md-10 col-sm-12">
+
+        <div class="material-card card">
+            <div class="card-body">
+                <h4 class="card-title">Suivi des ressources extérieures des projets (Etape 2/2)</h4>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <nz-card style="width:100%;" nzTitle="SELECTION DU PROJET A SUIVRE">
+
+                                    <!-- <div class="row">
+                        <div class="col-md-9 col-sm-12">
+                          <nz-form-item>
+                            <h5> Numéro d'enregistrement du projet </h5>
+                            <nz-form-control>
+                              <input nz-input placeholder="Entrer le numéro enregistrement du projet"
+                                     [(ngModel)]="numEnregProjet"/>
+                            </nz-form-control>
+                          </nz-form-item>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                          <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                                  (click)="getRessourceInterieureByProjet()"><i class="ti-search"></i></button>
+                        </div>
+                      </div> -->
+
+                                    <div class="row" *ngIf="projetSuivi != null">
+                                        <hr>
+                                        <div class="col-md-4 col-sm-12">
+                                            N° :
+                                            <strong>{{ projetSuivi.id }}</strong>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            Année de collecte :
+                                            <strong>{{ (projetSuivi.annee != null) ? projetSuivi.annee.libelle: '#N/A' }}</strong>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            Intitulé :
+                                            <strong>{{ (projetSuivi.libelle != null) ? projetSuivi.libelle : '#N/A' }}</strong>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row" *ngIf="projetSuivi != null">
+                                        <div class="col-md-4 col-sm-12">
+                                            Date démarrage :
+                                            <strong>{{ projetSuivi.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            Date clôture prévue :
+                                            <strong>{{ projetSuivi.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            Secteur :
+                                            <!-- <strong>{{ projetSuivi.secteur.libelle }}</strong> -->
+                                            <strong>{{ (projetSuivi.secteur != null) ? projetSuivi.secteur.libelle : '#N/A' }}</strong>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row" *ngIf="projetSuivi != null">
+                                        <div class="col-md-4 col-sm-12">
+                                            Objectif général :
+                                            <strong>{{ projetSuivi.objectifgeneral }}</strong>
+                                        </div>
+
+                                        <!-- <div class="col-md-4 col-sm-12">
+                          Coût global (francs CFA) : <strong>{{ projetSuivi.coutGlobalProjet }}</strong>
+                        </div> -->
+
+                                        <div class="col-md-4 col-sm-12">
+                                            <span> Types de coopération :
+                                                <strong>
+                                                    {{ (projetSuivi.typeCooperations != null && projetSuivi.typeCooperations.length > 0)? '('+projetSuivi.typeCooperations.length+')'
+                                                    : '0' }} </strong>
+                                            </span>
+                                            <ul *ngIf="projetSuivi.typeCooperations != null && projetSuivi.typeCooperations.length > 0">
+                                                <li style="font-weight: bold;" *ngFor="let typeCooperation of  projetSuivi.typeCooperations"> {{ typeCooperation.libelle }}
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-12 col-sm-12" *ngIf="projetSuivi != null">  <!-- *ngIf="ressourceExterieure != null" -->
+                                        <hr>
+                                        <h5> Financement du projet </h5>
+                                        <hr>
+
+                                        <!-- <div class="row" *ngIf="ressourceExterieure != null">
+                                                <div class="col-md-3 col-sm-12">
+                                                    Nature financement :
+                                                    <strong>{{ ressourceExterieure.natureFinancement.libelle }}</strong>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    Montant programmé (francs cfa) :
+                                                    <strong>{{ ressourceExterieure.montantRessourceProgrammer }}</strong>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    Montant Approuvé(francs CFA) :
+                                                    <strong>{{ formatNumber(cumulTotal.engager )}}</strong>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    Montant Décaissé(francs CFA) :
+                                                    <strong>{{ formatNumber(cumulTotal.ordonnancer )}}</strong>
+                                                </div>
+                                        </div> -->
+
+                                        <table class="table table-striped border" style="width: 100%!important;">
+                                                <thead>
+                                                <tr>
+                                                  <th> N°</th>
+                                                  <th> Nature financement</th>
+                                                  <th> Montant sollicité <!-- (devise) --></th>
+                                                  <th> Montant Approuvé <!-- (devise) --></th>
+                                                  <th> Montant Décaissé <!-- (devise) --></th>
+                                                  <th>Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr *ngIf="projetSuivi.ressourceExterieures.length == 0">
+                                                  <td colspan="6" class="text-center">Aucune ressource n'est afficher.</td>
+                                                </tr>
+                                                <tr *ngFor="let ressource of projetSuivi.ressourceExterieures | filter:filter let i=index">
+                                                  <td> {{ i+1 }}</td>
+                                                  <td> {{ ressource.natureFinancement.libelle }}</td>
+                                                  <td> {{ ressource.montantRessourceDevise }}</td>
+                                                  <td> {{  getTotalEngagerByOneRessource(ressource.ressourceExterieureAnnuelles) }}</td>
+                                                  <td> {{  getTotalDecaisserByOneRessource(ressource.ressourceExterieureAnnuelles) }}</td>
+                                                  <td style="text-align: center;">
+                                                    <button type="button" class="btn btn-info btn-circle  btn-sm"
+                                                            (click)="choiceRessourceExterieure(ressource)"><i class="ti-info"></i></button>
+                                                  </td>
+                                                </tr>
+
+                                                </tbody>
+
+                                              </table>
+
+                                    </div>
+
+
+                                    <br>
+
+                    </nz-card>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <br>
+
+                    <div class="col-md-12 col-sm-12" *ngIf="ressourceExterieure != null && ressourceExterieure.isStatusClose==true">
+                        <nz-card style="width:100%;" nzTitle="FORMULAIRE DU SUIVI FINANCIER">
+                            <form class="mt-4" nz-form [formGroup]="validateFormRessource">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <nz-form-item>
+                                            <h5> Année </h5>
+                                            <nz-form-control>
+                                                <nz-select formControlName="annee">
+                                                    <nz-option *ngFor="let e of exerciceConcernesList" [nzValue]="e.id" [nzLabel]="e.libelle"></nz-option>
+                                                </nz-select>
+                                                <nz-form-explain *ngIf="validateFormRessource.get('annee')?.dirty && validateFormRessource.get('annee')?.errors">
+                                                    Ce champs est obligatoire !
+                                                </nz-form-explain>
+                                            </nz-form-control>
+
+                                        </nz-form-item>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <nz-form-item>
+                                            <h5> Montant programmer (devise)<!-- (f cfa) --></h5>
+                                            <nz-form-control>
+                                                <input nz-input type="number" formControlName="montantRessourceProgrammer" oninput="this.value = this.value.toUpperCase()">
+                                            </nz-form-control>
+                                            <nz-form-explain *ngIf="validateFormRessource.get('montantRessourceProgrammer')?.dirty && validateFormRessource.get('montantRessourceProgrammer')?.errors">
+                                                Ce champs est obligatoire !
+                                            </nz-form-explain>
+                                        </nz-form-item>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                            <nz-form-item>
+                                                <h5> Montant approuvé (devise)<!-- (f cfa) --></h5>
+                                                <nz-form-control>
+                                                    <input nz-input type="number" formControlName="montantRessourceApprouver" oninput="this.value = this.value.toUpperCase()">
+                                                </nz-form-control>
+                                                <nz-form-explain *ngIf="validateFormRessource.get('montantRessourceApprouver')?.dirty && validateFormRessource.get('montantRessourceApprouver')?.errors">
+                                                    Ce champs est obligatoire !
+                                                </nz-form-explain>
+                                            </nz-form-item>
+                                        </div>
+                                </div>
+                                <div class="row">
+
+
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <nz-form-item>
+                                            <h5> Montant décaissé (devise)<!-- (f cfa) --></h5>
+                                            <nz-form-control>
+                                                <input nz-input type="number" formControlName="montantRessourceDecaisser" oninput="this.value = this.value.toUpperCase()">
+                                            </nz-form-control>
+                                            <nz-form-explain *ngIf="validateFormRessource.get('montantRessourceDecaisser')?.dirty && validateFormRessource.get('montantRessourceDecaisser')?.errors">
+                                                Ce champs est obligatoire !
+                                            </nz-form-explain>
+                                        </nz-form-item>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <h5> Montant décaissé (f cfa)</h5>
+                                                <nz-form-control>
+                                                    <input nz-input type="number" formControlName="montantRessourceDecaisserFcfa" oninput="this.value = this.value.toUpperCase()">
+                                                </nz-form-control>
+                                                <nz-form-explain *ngIf="validateFormRessource.get('montantRessourceDecaisserFcfa')?.dirty && validateFormRessource.get('montantRessourceDecaisserFcfa')?.errors">
+                                                    Ce champs est obligatoire !
+                                                </nz-form-explain>
+                                            </nz-form-item>
+                                        </div>
+
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-6 col-sm-12">
+                                        <button nz-button nzType="primary" style="margin-right: 8px;" [disabled]="validateFormRessource.invalid" (click)="enregistrerRessource()">
+                                            Enregistrer
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <hr>
+
+                            <div class="row" *ngIf="ressourceExterieure != null">
+                                    <div class="col-md-4 col-sm-12">
+                                      Nature financement : <strong>{{ ressourceExterieure.natureFinancement.libelle }}</strong>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                      Montant sollicité ({{ressourceExterieure.deviseMonnaie.libelle}}) : <strong>{{ ressourceExterieure.montantRessourceDevise }}</strong>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                      Devise : <strong>{{ ressourceExterieure.deviseMonnaie.libelle }}</strong>
+                                    </div>
+                            </div>
+                            <br><br>
+                            <div class="row" *ngIf="ressourceExterieure != null">
+                                    <div class="col-md-4 col-sm-12">
+                                      Montant sollicité (francs cfa) : <strong>{{ ressourceExterieure.montantRessourceProgrammer }}</strong>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                      Montant financé ({{ressourceExterieure.deviseMonnaie.libelle}}) : <strong>{{ formatNumber(cumulTotal.ordonnancer) }}</strong>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                      Montant restant ({{ressourceExterieure.deviseMonnaie.libelle}}) : <strong>{{ ressourceExterieure.montantRessourceDevise - cumulTotal.ordonnancer }}</strong>
+                                    </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="table-responsive" *ngIf="ressourceExterieure != null">
+
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-info" type="button">
+                                                    <i class="ti-pencil"></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter" placeholder="Rechercher" aria-label=""
+                                                aria-describedby="basic-addon1">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-success" type="button">
+                                                    <i class="ti-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <table class="table table-striped border" style="width: 100%!important;" [svData]="ressourceExterieureAnnuelleList" #sv="svDataTable"
+                                            [svRowsOnPage]="5">
+                                            <thead>
+                                                <tr>
+                                                        <th> N°</th>
+                                                        <th> Année</th>
+                                                        <th> Montant programmé ({{ressourceExterieure.deviseMonnaie.libelle}})<!-- (f cfa)   +{{ (devLib != null)?  devLib : '#N/A' }}+--></th>
+                                                        <!-- <th> Devise </th> -->
+                                                        <th> Montant approuvé ({{ressourceExterieure.deviseMonnaie.libelle}})<!-- (f cfa) --></th>
+                                                        <!-- <th> Devise </th> -->
+                                                        <th> Montant décaissé ({{ressourceExterieure.deviseMonnaie.libelle}})<!-- (f cfa) --></th>
+                                                        <!-- <th> Devise </th> -->
+                                                        <th> Montant décaissé (f cfa)</th>
+                                                        <th *ngIf="ressourceExterieure != null && ressourceExterieure.isStatusClose==true">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngIf="ressourceExterieureAnnuelleList.length == 0">
+                                                    <td colspan="8" class="text-center">Aucune ressource n'est afficher.</td>
+                                                </tr>
+                                                <tr *ngFor="let ressource of sv.data | filter:filter let i=index">
+                                                        <td> {{ i+1 }}</td>
+                                                        <td> {{ ressource.annee.libelle }}</td>
+                                                        <td> {{ ressource.montantRessourceProgrammer }}</td>      <!-- <td> {{ (ressource.deviseMonnaie != null)?  ressource.deviseMonnaie.libelle : '#N/A' }}</td> -->
+                                                        <td> {{ ressource.montantRessourceApprouver }}</td>
+                                                        <td> {{ ressource.montantRessourceDecaisser }}</td>
+                                                        <td> {{ ressource.montantRessourceDecaisserFcfa }}</td>
+                                                    <td style="text-align: center;" *ngIf="ressourceExterieure != null && ressourceExterieure.isStatusClose==true">
+                                                        <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="deleteRessource(ressource)">
+                                                            <i class="ti-close"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="modifierAction(ressource)">
+                                                            <i class="ti-pencil"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="font-weight: bold;" colspan="2"> TOTAL</td>
+                                                    <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.programmer) }}</td>
+                                                    <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.engager) }}</td>
+                                                    <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.ordonnancer) }}</td>
+                                                    <td style="font-weight: bold;" colspan="1"> </td>
+                                                    <td></td>
+                                                </tr>
+
+                                            </tbody>
+
+                                            <tfoot>
+
+                                                <tr>
+                                                    <td colspan="8">
+                                                        <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                        </nz-card>
+                    </div>
+
+                    <!-- <a class="btn btn-inverse btn-sm" [routerLink]="['../nouveau-projet-ptf']" style="margin-right: 10px;">
+                            <i class="ti-check"> </i> Terminer
+                          </a> -->
+
+                </div>
+
+                <a class="btn btn-success btn-sm" [routerLink]="['../../nouveau-projet-ptf']" style="margin-right: 10px;">
+                    <i class="ti-check"> </i> Terminer
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+
+
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <div class="col-md-12 col-sm-12">
+
+      <div class="material-card card">
+        <div class="card-body">
+          <h4 class="card-title">Liste des requêtes de financement cloturées</h4>
+          <h6 class="card-subtitle">
+            Liste des requêtes de financement <br>
+            <hr>
+          </h6>
+
+          <div class="table-responsive">
+
+            <p-table #dt [paginator]="true" [rowsPerPageOptions]="[10,25,50]" [rows]="10"
+                     [showCurrentPageReport]="true" [value]="requeteList"
+                     currentPageReportTemplate="Affichage de {first} à {last} dans {totalRecords} éléments">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="dateCloture">Date clôture
+                    <p-sortIcon field="dateCloture"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="natureFinancement.libelle">Nature Financement
+                    <p-sortIcon field="natureFinancement.libelle"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="montantRessourceDevise">Montant adressé
+                    <p-sortIcon field="montantRessourceDevise"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="deviseMonnaie.libelle">Devise
+                    <p-sortIcon field="deviseMonnaie.libelle"></p-sortIcon>
+                  </th>
+                  <th>Nombre de relances
+                  </th>
+                  <th>Nombre de réponses
+                  </th>
+                  <th class="text-center">Action</th>
+                </tr>
+                <tr class="title-filter-table">
+                  <th>
+                    <nz-input-group [nzSuffix]="suffixIconSearch">
+                      <input (input)="dt.filter($event.target.value, 'dateCloture', 'equal')" nz-input placeholder="Rechercher"
+                             type="date" />
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                      <i nz-icon nzType="search"></i>
+                    </ng-template>
+                  </th>
+                  <th>
+                    <nz-input-group [nzSuffix]="suffixIconSearch">
+                      <input (input)="dt.filter($event.target.value, 'natureFinancement.libelle', 'contains')" nz-input placeholder="Rechercher"
+                             type="text"/>
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                      <i nz-icon nzType="search"></i>
+                    </ng-template>
+                  </th>
+                  <th>
+                    <nz-input-group [nzSuffix]="suffixIconSearch">
+                      <input (input)="dt.filter($event.target.value, 'montantRessourceDevise', 'equal')" nz-input placeholder="Rechercher"
+                             type="text"/>
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                      <i nz-icon nzType="search"></i>
+                    </ng-template>
+                  </th>
+                  <th>
+                    <nz-input-group [nzSuffix]="suffixIconSearch">
+                      <input (input)="dt.filter($event.target.value, 'deviseMonnaie.libelle', 'contains')" nz-input placeholder="Rechercher"
+                             type="text"/>
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                      <i nz-icon nzType="search"></i>
+                    </ng-template>
+                  </th>
+                  <th class="text-center">
+                    #
+                  </th>
+                  <th class="text-center">
+                    #
+                  </th>
+                  <th class="text-center">#</th>
+                </tr>
+              </ng-template>
+              <ng-template let-requete pTemplate="body">
+                <tr>
+                  <td> {{ requete.createdAt | date: 'dd-MM-yyyy' }}</td>
+                  <td> {{ requete.natureFinancement.libelle }}</td>
+                  <td class="text-align-right"> {{ formatNumber(requete.montantRessourceDevise) }}</td>
+                  <td> {{ requete.deviseMonnaie.libelle }}</td>
+                  <td> {{ requete.relanceRequeteFinancements.length }}</td>
+                  <td> {{ requete.reponseRequeteFinancements.length }}</td>
+                  <td class="text-center">
+                    <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                            (click)="ouvrirDetail(requete.id)">
+                      <i class="ti-info"></i></button>
+                  </td>
+                </tr>
+
+              </ng-template>
+            </p-table>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+
+
+
+
+

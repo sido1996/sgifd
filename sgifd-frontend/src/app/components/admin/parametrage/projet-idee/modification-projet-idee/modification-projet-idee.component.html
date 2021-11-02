@@ -1,0 +1,765 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <div class="col-md-12 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Formulaire d'enregistrement</h4>
+                <h6 class="card-subtitle">Enregistrement des informations sur un projet.</h6>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Informations </h4>
+                                <h6 class="card-subtitle">Information sur les projets.</h6>
+                                <hr>
+                                <form class="mt-4" [formGroup]="validateFormProjetIdee">
+
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Catégorie <span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="categorieProjet">
+                                                        <nz-option *ngFor="let categorieProjet of categorieprojetList" [nzLabel]="categorieProjet.libelle" [nzValue]="categorieProjet"></nz-option>
+                                                    </nz-select>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Année de collecte<span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="annee">
+                                                        <nz-option *ngFor="let annee of exerciceList" [nzLabel]="annee.libelle" [nzValue]="annee"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('annee')?.dirty && validateFormProjetIdee.get('annee')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Intitulé <span class="text-danger">*</span></h5>
+                                                    <input nz-input formControlName="libelle" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('libelle')?.dirty && validateFormProjetIdee.get('libelle')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Envergure<span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="envergure">
+                                                        <nz-option *ngFor="let envergure of envergureList" [nzLabel]="envergure.libelle" [nzValue]="envergure"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('envergure')?.dirty && validateFormProjetIdee.get('envergure')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Référence<span class="text-danger">*</span></h5>
+                                                    <input nz-input formControlName="reference" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Objectif général<span class="text-danger">*</span></h5>
+                                                    <input nz-input formControlName="objectifgeneral" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Date de démarrage<span class="text-danger">*</span></h5>
+                                                    <nz-date-picker formControlName="dateDemarrage" (ngModelChange)="makeDateCloturePrevue()"></nz-date-picker>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('dateDemarrage')?.dirty && validateFormProjetIdee.get('dateDemarrage')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Durée du projet (nbre de mois) <span class="text-danger">*</span></h5>
+                                                    <input nz-input type="number" formControlName="dureeProjet" class="form-control" oninput="this.value = this.value.toUpperCase()" (keyup)="validateFormProjetIdee.get('dateDemarrage').value != null ? makeDateCloturePrevue() : makeDateDemmaragePrevue()"
+                                                        (keydown)="validateFormProjetIdee.get('dateDemarrage').value != null ? makeDateCloturePrevue() : makeDateDemmaragePrevue()">
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('dureeProjet')?.dirty && validateFormProjetIdee.get('dureeProjet')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Date de clôture prévue<span class="text-danger">*</span></h5>
+                                                    <nz-date-picker formControlName="dateAchevementPrevue" (ngModelChange)="makeDateDemmaragePrevue()" nzDisabled></nz-date-picker>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('dateAchevementPrevue')?.dirty && validateFormProjetIdee.get('dateAchevementPrevue')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Les années concernées <span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear nzMode="multiple" formControlName="dureeAnnees">
+                                                        <nz-option *ngFor="let annee of exerciceList" [nzLabel]="annee.libelle" [nzValue]="annee"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('dureeAnnees')?.dirty && validateFormProjetIdee.get('dureeAnnees')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <h5> Grand secteur <span class="text-danger">*</span></h5>
+                                                <nz-form-control>
+                                                    <nz-select formControlName="grandSecteur" (ngModelChange)="grandSecteurChange(validateFormProjetIdee.value.grandSecteur)">
+                                                        <nz-option *ngFor="let p of grandsecteurList" [nzValue]="p" [nzLabel]="p.libelle"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('grandSecteur')?.dirty && validateFormProjetIdee.get('grandSecteur')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <h5> Secteur <span class="text-danger">*</span></h5>
+                                                <nz-form-control>
+                                                    <nz-select formControlName="secteur" (ngModelChange)="secteurChange(validateFormProjetIdee.value.secteur)">
+                                                        <nz-option *ngFor="let p of secteurList" [nzValue]="p" [nzLabel]="p.libelle"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('secteur')?.dirty && validateFormProjetIdee.get('secteur')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <h5> Sous Secteur <span class="text-danger">*</span></h5>
+                                                <nz-form-control>
+                                                    <nz-select formControlName="sousSecteur">
+                                                        <nz-option *ngFor="let p of soussecteurList" [nzValue]="p" [nzLabel]="p.libelle"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('sousSecteur')?.dirty && validateFormProjetIdee.get('sousSecteur')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Niveau de maturité</h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="niveaumaturite">
+                                                        <nz-option *ngFor="let niveaumaturite of niveaumaturiteList" [nzLabel]="niveaumaturite.libelle" [nzValue]="niveaumaturite"></nz-option>
+                                                    </nz-select>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Coût global du projet<span class="text-danger">*</span></h5>
+                                                    <input nz-input type="number" formControlName="coutGlobalProjet" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('coutGlobalProjet')?.dirty && validateFormProjetIdee.get('coutGlobalProjet')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Type de ressource intérieure<span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear nzMode="multiple" formControlName="typeRessourceInterieure">
+                                                        <nz-option *ngFor="let typeRessourceInterieure of typeressourceinterieureList" [nzLabel]="typeRessourceInterieure.libelle" [nzValue]="typeRessourceInterieure"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('typeRessourceInterieure')?.dirty && validateFormProjetIdee.get('typeRessourceInterieure')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Contrepartie nationale</h5>
+                                                    <input nz-input type="number" formControlName="contrePartieNationale" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Type de coopération</h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="typeCooperation" nzMode="multiple">
+                                                        <nz-option *ngFor="let typeCooperation of typecooperationList" [nzLabel]="typeCooperation.libelle" [nzValue]="typeCooperation"></nz-option>
+                                                    </nz-select>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Coût total des ressources extérieures des P.T.F</h5>
+                                                    <input nz-input type="number" formControlName="coutTotalRessourcesExterieures" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Structure sous tutelle<span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="structureSousTutelle">
+                                                        <nz-option *ngFor="let structureSousTutelle of structureList" [nzLabel]="structureSousTutelle.denominationStructure" [nzValue]="structureSousTutelle"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('structureSousTutelle')?.dirty && validateFormProjetIdee.get('structureSousTutelle')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Structure ou Agence d'exécution<span class="text-danger">*</span></h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="structureAgenceExecution">
+                                                        <nz-option *ngFor="let structureAgenceExecution of structureList" [nzLabel]="structureAgenceExecution.denominationStructure" [nzValue]="structureAgenceExecution"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormProjetIdee.get('structureAgenceExecution')?.dirty && validateFormProjetIdee.get('structureAgenceExecution')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Cibles ODD</h5>
+                                                    <nz-select nzShowSearch nzAllowClear nzMode="multiple" formControlName="cibles">
+                                                        <nz-option *ngFor="let cible of cibleList" [nzLabel]="cible.odd.code+' '+cible.code" [nzValue]="cible"></nz-option>
+                                                    </nz-select>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Axes prioritaires PAG</h5>
+                                                    <nz-select nzShowSearch nzAllowClear nzMode="multiple" formControlName="axePrioritaires">
+                                                        <nz-option *ngFor="let axeprioritaire of axeprioritaireList" [nzLabel]="axeprioritaire.pilierPAG.code+' '+axeprioritaire.code" [nzValue]="axeprioritaire"></nz-option>
+                                                    </nz-select>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Objectifs spécifiques</h5>
+                                                    <textarea rows="3" nz-input formControlName="objectifs" oninput="this.value = this.value.toUpperCase()"></textarea>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Difficultés</h5>
+                                                    <textarea rows="3" nz-input formControlName="difficultes" oninput="this.value = this.value.toUpperCase()"></textarea>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
+                                <div class="row">
+
+                                    <div class="col-md-12 col-sm-12">
+
+                                        <h5> Les Ressources Exterieures </h5>
+                                        <hr>
+
+                                        <form class="mt-4" [formGroup]="validateFormRessourceExterieure">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Partenaire Technique Financier (P.T.F) <span class="text-danger">*</span></h5>
+                                                        <nz-form-control>
+                                                            <nz-select nzShowSearch nzAllowClear formControlName="ptfBailleurFrs">
+                                                                <nz-option *ngFor="let ptf of ptfList" [nzLabel]="ptf.denominationptf" [nzValue]="ptf"></nz-option>
+                                                            </nz-select>
+                                                            <nz-form-explain *ngIf="validateFormRessourceExterieure.get('ptfBailleurFrs')?.dirty && validateFormRessourceExterieure.get('ptfBailleurFrs')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Nature assistance </h5>
+                                                        <nz-form-control>
+                                                            <nz-select nzShowSearch nzAllowClear formControlName="natureAssistance">
+                                                                <nz-option *ngFor="let nature of natureassistanceList" [nzLabel]="nature.libelle" [nzValue]="nature"></nz-option>
+                                                            </nz-select>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Nature financement <span class="text-danger">*</span></h5>
+                                                        <nz-form-control>
+                                                            <nz-select nzShowSearch nzAllowClear formControlName="natureFinancement">
+                                                                <nz-option *ngFor="let nature of naturefinancementList" [nzLabel]="nature.libelle" [nzValue]="nature"></nz-option>
+                                                            </nz-select>
+                                                            <nz-form-explain *ngIf="validateFormRessourceExterieure.get('natureFinancement')?.dirty && validateFormRessourceExterieure.get('natureFinancement')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Montant de la devise <span class="text-danger">*</span></h5>
+                                                        <nz-form-control>
+                                                            <input nz-input type="number" formControlName="montantRessourceDevise" class="form-control">
+
+                                                            <nz-form-explain *ngIf="validateFormRessourceExterieure.get('montantRessourceDevise')?.dirty && validateFormRessourceExterieure.get('montantRessourceDevise')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Devise <span class="text-danger">*</span></h5>
+                                                        <nz-form-control>
+                                                            <nz-select nzShowSearch nzAllowClear formControlName="deviseMonnaie">
+                                                                <nz-option *ngFor="let devise of devisemonaieList" [nzLabel]="devise.libelle" [nzValue]="devise"></nz-option>
+                                                            </nz-select>
+                                                            <nz-form-explain *ngIf="validateFormRessourceExterieure.get('deviseMonnaie')?.dirty && validateFormRessourceExterieure.get('deviseMonnaie')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Montant programmer (francs CFA) <span class="text-danger">*</span></h5>
+                                                        <nz-form-control>
+                                                            <input nz-input type="number" formControlName="montantRessourceProgrammer" class="form-control">
+
+                                                            <nz-form-explain *ngIf="validateFormRessourceExterieure.get('montantRessourceProgrammer')?.dirty && validateFormRessourceExterieure.get('montantRessourceProgrammer')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+
+                                                <div class="col-md-3 col-sm-12">
+                                                    <button nz-button nzType="primary" (click)="enregistrerRessourceExterieure()" [disabled]="validateFormRessourceExterieure.invalid">
+                            <i class="anticon anticon-plus"> </i> Ajouter
+                          </button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                        <br>
+
+                                        <div class="table-responsive">
+                                            <!-- Alert with rounded corner -->
+
+                                            <table class="table table-striped border" style="width: 100%!important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        <th>P.T.F</th>
+                                                        <th>Montant (francs CFA)</th>
+                                                        <th>Nature financement</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let ressource of ressourcesExterieureList let i=index">
+                                                        <td> {{ i+1 }}</td>
+                                                        <td> {{ ressource.ptfBailleurFrs.denominationptf }}</td>
+                                                        <td> {{ ressource.montantRessourceProgrammer }}</td>
+                                                        <td> {{ ressource.natureFinancement.libelle }}</td>
+                                                        <td>
+                                                            <ng-container>
+                                                                <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer ?'" (nzOnConfirm)="supprimerRessource(i, ressource)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+                                                                    <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                  <i class="ti-close"></i>
+                                </button>
+                                                                </nz-popconfirm>
+                                                            </ng-container>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot *ngIf="ressourcesExterieureList.length > 0">
+                                                    <tr>
+                                                        <td colspan="2"> TOTAL</td>
+                                                        <td colspan="1"> {{ getTotalMontantRessourceExterieure() }}</td>
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <br><br>
+                                <div class="row">
+
+                                    <div class="col-md-12 col-sm-12">
+
+                                        <h5> Les conditions suspensives du financement </h5>
+                                        <hr>
+
+                                        <form class="mt-4" [formGroup]="validateFormConditionSuspensive">
+
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12">
+                                                    <nz-form-item>
+                                                        <nz-form-control>
+                                                            <h5> Condition <span class="text-danger">*</span></h5>
+                                                            <textarea rows="2" nz-input formControlName="libelle" oninput="this.value = this.value.toUpperCase()"></textarea>
+
+                                                            <nz-form-explain *ngIf="validateFormConditionSuspensive.get('libelle')?.dirty && validateFormConditionSuspensive.get('libelle')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+
+                                                    <button nz-button nzType="primary" (click)="enregistrerConditionSuspensive()" [disabled]="validateFormConditionSuspensive.invalid">
+                            <i class="anticon anticon-plus"> </i> Ajouter
+                          </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br>
+                                        <div class="table-responsive">
+                                            <!-- Alert with rounded corner -->
+
+                                            <table class="table table-striped border" style="width: 100%!important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        <th>Conditions suspensives du projet</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let conditionSus of conditionsuspensiveList let i=index">
+                                                        <td>{{ i+1 }}</td>
+                                                        <td> {{ conditionSus.libelle }}</td>
+                                                        <td>
+                                                            <ng-container>
+                                                                <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer ?'" (nzOnConfirm)="supprimerCondition(i, conditionSus)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+                                                                    <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                  <i class="ti-close"></i>
+                                </button>
+                                                                </nz-popconfirm>
+                                                            </ng-container>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <br><br>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12">
+
+                                        <h4 class="card-title">Conditions suspensives du premier décaissement </h4>
+                                        <hr>
+                                        <form class="mt-4" nz-form [formGroup]="validateFormConditionSuspensiveDecaissement">
+
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <nz-form-item>
+                                                        <nz-form-control>
+                                                            <h5> Condition <span class="text-danger">*</span></h5>
+                                                            <textarea rows="2" nz-input formControlName="libelle" oninput="this.value = this.value.toUpperCase()"></textarea>
+                                                            <nz-form-explain *ngIf="validateFormConditionSuspensiveDecaissement.get('libelle')?.dirty && validateFormConditionSuspensiveDecaissement.get('libelle')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <nz-form-control>
+                                                            <h5> Etat <span class="text-danger">*</span></h5>
+                                                            <nz-select nzShowSearch nzAllowClear formControlName="etat">
+                                                                <nz-option nzLabel="REMPLIE" nzValue="REMPLIE"></nz-option>
+                                                                <nz-option nzLabel="NON REMPLIE" nzValue="NON REMPLIE"></nz-option>
+                                                                <nz-option nzLabel="EN COURS" nzValue="EN COURS"></nz-option>
+                                                                <nz-option nzLabel="PARTIELLEMENT REMPLIE" nzValue="PAARTIELLEMENT REMPLIE"></nz-option>
+                                                            </nz-select>
+                                                            <nz-form-explain *ngIf="validateFormConditionSuspensiveDecaissement.get('etat')?.dirty && validateFormConditionSuspensiveDecaissement.get('etat')?.errors">
+                                                                Ce champs est obligatoire !
+                                                            </nz-form-explain>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+
+                                                <div class="col-md-3 col-sm-12">
+
+                                                    <button type="button" class="btn btn-primary btn-sm" [disabled]="validateFormConditionSuspensiveDecaissement.invalid" (click)="enregistrerConditionSuspensiveDecaissement()"><i class="ti-plus"></i> Ajouter
+                          </button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+                                        <div class="table-responsive">
+                                            <!-- Alert with rounded corner -->
+                                            <table class="table table-striped border" style="width: 100%!important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>N°</th>
+                                                        <th>Conditions suspensives du premier décaissement</th>
+                                                        <th>Etat</th>
+                                                        <th>#</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let condition of conditionSuspensiveDecaissementsList let i=index">
+                                                        <td> {{ i + 1 }}</td>
+                                                        <td> {{ condition.libelle }}</td>
+                                                        <td> {{ condition.etat }}</td>
+                                                        <td style="text-align: center;">
+                                                            <ng-container>
+                                                                <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer ?'" (nzOnConfirm)="supprimerConditionSuspensiveDecaissement(condition)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+                                                                    <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                  <i class="ti-close"></i>
+                                </button>
+                                                                </nz-popconfirm>
+                                                            </ng-container>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br><br>
+                                <div class="row">
+
+                                    <div class="col-md-12 col-sm-12">
+
+                                        <h5> Localisation </h5>
+                                        <hr>
+
+                                        <form class="mt-4" nz-form [formGroup]="validateFormLocalisation">
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Département </h5>
+                                                        <nz-form-control>
+                                                            <nz-select id="departement" formControlName="departement" (ngModelChange)="departementChange(validateFormLocalisation.value.departement)">
+                                                                <nz-option *ngFor="let p of departementList" [nzValue]="p" [nzLabel]="p.libelle"></nz-option>
+                                                            </nz-select>
+
+                                                        </nz-form-control>
+
+                                                    </nz-form-item>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Commune </h5>
+                                                        <nz-form-control>
+                                                            <nz-select id="commune" formControlName="commune" (ngModelChange)="communeChange(validateFormLocalisation.value.commune)">
+                                                                <nz-option *ngFor="let c of communeList" [nzValue]="c" [nzLabel]="c.libelle"></nz-option>
+                                                            </nz-select>
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Arrondissement </h5>
+                                                        <nz-form-control>
+                                                            <nz-select id="arrondissement" formControlName="arrondissement">
+                                                                <nz-option *ngFor="let a of arrondissementList" [nzValue]="a" [nzLabel]="a.libelle">
+                                                                </nz-option>
+                                                            </nz-select>
+
+                                                        </nz-form-control>
+
+                                                    </nz-form-item>
+                                                </div>
+                                                <div class="col-md-3 col-sm-12">
+                                                    <nz-form-item>
+                                                        <h5> Localités</h5>
+                                                        <nz-form-control>
+                                                            <input nz-input id="localite" formControlName="libelle" oninput="this.value = this.value.toUpperCase()">
+                                                        </nz-form-control>
+                                                    </nz-form-item>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div>
+                                                    <button nz-button nzType="primary" style="margin-right: 8px;" [disabled]="validateFormLocalisation.invalid" (click)="enregistrerLocalisation()">
+                            <i class="anticon anticon-plus"> </i> Ajouter
+                          </button>
+
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </form>
+
+                                        <table class="table table-striped border" style="width: 100%!important;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Département</th>
+                                                    <th>Commune</th>
+                                                    <th>Arrondissement</th>
+                                                    <th>Zonne ou localité</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let data of localisationList let i=index">
+                                                    <td> {{data.arrondissement.commune.departement.libelle}}</td>
+                                                    <td> {{data.arrondissement.commune.libelle}}</td>
+                                                    <td> {{data.arrondissement.libelle}}</td>
+                                                    <td> {{data.libelle}}</td>
+                                                    <td>
+                                                        <div class="editable-row-operations">
+
+                                                            <ng-container>
+                                                                <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer?'" (nzOnConfirm)="supprimerLocalisation(i, data)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+
+                                                                    <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                  <i class="ti-close"></i>
+                                </button>
+
+                                                                </nz-popconfirm>
+                                                            </ng-container>
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                                <br><br>
+
+                                <a nz-button nzType="default" [routerLink]="['../list-projet-en-cours']" style="margin-right: 10px;">
+                                    <i nz-icon type="left"> </i>Liste des Projets
+                                </a>
+
+                                <button type="button" class="btn btn-primary btn-sm" (click)="modificationProjet()" [disabled]="validateFormProjetIdee.invalid">
+                                    <i class="ti-check"></i> Enregistrer
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

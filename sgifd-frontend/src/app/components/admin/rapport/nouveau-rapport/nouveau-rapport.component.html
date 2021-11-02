@@ -1,0 +1,226 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire</h4>
+        <h6 class="card-subtitle">Enregistrement des rapports.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <nz-form-item>
+                  <h5> Nom du fichier du rapport <span class="text-danger">*</span></h5>
+                  <nz-form-control nzErrorTip="Ce champs est obligatoire !">
+                    <input nz-input formControlName="nom" id="nom" class="form-control"
+                           oninput="this.value = this.value.toUpperCase()">
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <nz-form-item>
+                  <h5> Libellé <span class="text-danger">*</span></h5>
+                  <nz-form-control>
+                    <input nz-input formControlName="libelle" id="libelle" class="form-control"
+                           oninput="this.value = this.value.toUpperCase()">
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label nz-checkbox formControlName="estAccessibleAvecRole">
+                Concerne des groupes d'utilisateurs ?
+              </label>
+            </div>
+            <div class="col-md-6">
+              <label nz-checkbox formControlName="estAccessibleAvecUser">
+                Concerne certains utilisateurs ?
+              </label>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <nz-form-item>
+                  <h5> Groupe d'utilisateurs <span class="text-danger">*</span></h5>
+                  <nz-form-control>
+                    <nz-select nzMode="multiple" formControlName="roles" nzShowSearch nzAllowClear
+                               [compareWith]="compareFn" [nzDisabled]="!validateForm.get('estAccessibleAvecRole').value">
+                      <nz-option *ngFor="let option of roleList" [nzLabel]="option.libelle"
+                                 [nzValue]="option">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+
+                </nz-form-item>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <nz-form-item>
+                  <h5> Utilisateurs <span class="text-danger">*</span></h5>
+                  <nz-form-control>
+                    <nz-select nzMode="multiple" formControlName="users" nzShowSearch nzAllowClear
+                               [compareWith]="compareFn"  [nzDisabled]="!validateForm.get('estAccessibleAvecUser').value">
+                      <nz-option *ngFor="let option of userList" [nzLabel]="option.firstName+' '+option.lastName"
+                                 [nzValue]="option">
+                      </nz-option>
+                    </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <h6 class="card-subtitle">Spécification des paramètres du rapport.</h6>
+          <form class="mt-4" [formGroup]="validateFormParam">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <nz-form-item>
+                    <h5> Clé <span class="text-danger">*</span></h5>
+                    <nz-form-control nzErrorTip="Ce champs est obligatoire !">
+                      <input nz-input formControlName="cle"  class="form-control">
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <nz-form-item>
+                    <h5> Libellé <span class="text-danger">*</span></h5>
+                    <nz-form-control nzErrorTip="Ce champs est obligatoire !">
+                      <input nz-input formControlName="libelle"  class="form-control">
+                    </nz-form-control>
+                  </nz-form-item>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h5>  <span class="text-danger"></span></h5>
+                <label nz-checkbox formControlName="estChampsDeSaisie"
+                style="margin-top: 20px;">
+                  Est champs de sélection ?
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <nz-form-item>
+                    <h5> Provenance de la valeur de sélection <span class="text-danger">*</span></h5>
+                    <nz-form-control>
+                      <nz-select formControlName="fonctionnaliteName" nzShowSearch nzAllowClear
+                                 [compareWith]="compareFn">
+                        <nz-option *ngFor="let option of fonctionaliteList" [nzLabel]="option.name"
+                                   [nzValue]="option.name">
+                        </nz-option>
+                      </nz-select>
+                    </nz-form-control>
+
+                  </nz-form-item>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h5>  <span class="text-danger"></span></h5>
+                <label nz-checkbox formControlName="selectionRetourneId"
+                       style="margin-top: 20px;">
+                  Renvoie l'Id de la source ?
+                </label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <h5>  <span class="text-danger"></span></h5>
+                <label nz-checkbox formControlName="selectionRetourneCode">
+                  Renvoie la valeur code de la source ?
+                </label>
+              </div>
+              <div class="col-md-6">
+                <h5>  <span class="text-danger"></span></h5>
+                <label nz-checkbox formControlName="selectionRetourneLibelle">
+                  Renvoie le libellé de la source ?
+                </label>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col-md-3">
+                <button nz-button nzType="primary"
+                        [disabled]="validateFormParam.invalid"
+                        (click)="resetParamForm()"><i nz-icon nzType="close"></i>
+                </button>
+                <button nz-button nzType="default" style="margin-left: 10px;"
+                        [disabled]="validateFormParam.invalid"
+                        (click)="ajouterParam()"><i nz-icon nzType="check"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <nz-table #editRowTable nzBordered [nzData]="rapportParams">
+                <thead>
+                <tr>
+                  <th>Clé</th>
+                  <th>libellé</th>
+                  <th>type</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let data of editRowTable.data | filter:filter; let i=index">
+                  <td>{{data.cle}}</td>
+                  <td>{{data.libelle}}</td>
+                  <td>{{data.estChampsDeSaisie ? 'à saisir': 'à sélectionner'}}</td>
+                  <td>
+                    <a nz-button nzType="primary" nzShape="round" (click)="makeFormParam(data)">
+                      <i nz-icon nzType="edit" style="color: white;"></i>
+                    </a>
+                    <button nz-button nzType="default" nzShape="round" class="margin-left-5-px"
+                            (click)="deleteRapportParams(data)"><i nz-icon nzType="delete"></i>
+                    </button>
+                  </td>
+                </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+                    style="margin-left: 10px;"><i class="ti-check"> </i> Enregistrer
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2 col-sm-12">
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

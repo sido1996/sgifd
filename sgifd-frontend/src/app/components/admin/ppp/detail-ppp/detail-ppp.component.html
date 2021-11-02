@@ -1,0 +1,434 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+  <div class="col-md-1 col-sm-12"> </div>
+  <div class="col-md-10 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Formulaire d'enregistrement</h4>
+          <h6 class="card-subtitle">Enregistrement des PPP.
+          <button type="button" (click)="gotoListPPP()" class="btn btn-inverse btn-sm" style="float: right;">
+            <i class="ti-menu"> </i>
+            Consulter la Liste des coopérations
+          </button>
+          </h6>
+          <hr>
+
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Données </h4>
+                  <h6 class="card-subtitle">Information sur les données du PPP.</h6>
+                  <hr>
+
+                    <div class="row">
+
+                      <div class="col-md-6 col-sm-12">
+
+                        Catégorie :  <strong style="margin-right: 20px;">
+                          {{ (pppSubmit != null)? pppSubmit.categorie: '#N/A' }}</strong>
+
+                      </div>
+
+                      <div class="col-md-6 col-sm-12">
+
+                        Année du Partenariat: <strong style="margin-right: 20px;">
+                          {{ (pppSubmit != null && pppSubmit.anneePartenariat)? pppSubmit.anneePartenariat.libelle: '#N/A' }}</strong>
+
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12">
+
+                        <nz-card style="width:100%;" nzTitle="SELECTION DU PROJET">
+
+                          <!-- <div class="row"> -->
+                          <h4 class="card-title">Projet</h4>
+                          <h6 class="card-subtitle">Informations sur le projet.
+                          </h6>
+                          <hr>
+                          <!-- </div> -->
+
+                          <div class="row" *ngIf="projetSubmit != null">
+                            <hr>
+                            <div class="col-md-4 col-sm-12">
+                              N° :
+                              <strong>{{ projetSubmit.id }}</strong>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                              Année de collecte :
+                              <strong>{{ projetSubmit.annee.libelle }}</strong>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                              Intitulé :
+                              <strong>{{ projetSubmit.libelle }}</strong>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row" *ngIf="projetSubmit != null">
+                            <div class="col-md-4 col-sm-12">
+                              Date démarrage :
+                              <strong>{{ projetSubmit.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                              Date clôture prévue :
+                              <strong>{{ projetSubmit.dateDemarrage |date:'dd-MMM-yyyy' }}</strong>
+                            </div>
+                            <!-- <div class="col-md-4 col-sm-12">
+                              Secteur :
+                              <strong>{{ projetSubmit.secteur.libelle }}</strong>
+                            </div> -->
+                          </div>
+                          <br>
+                          <div class="row" *ngIf="projetSubmit != null">
+                            <div class="col-md-4 col-sm-12">
+                              Objectif général :
+                              <strong>{{ projetSubmit.objectifgeneral }}</strong>
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                              Coût global (francs CFA) :
+                              <strong>{{ projetSubmit.coutGlobalProjet }}</strong>
+                            </div>
+
+                            <div class="col-md-4 col-sm-12">
+                              <span> Types de coopération :
+                                <strong>
+                                  {{ (projetSubmit.typeCooperations != null && projetSubmit.typeCooperations.length > 0)? '('+projetSubmit.typeCooperations.length+')'
+                                  : '0' }} </strong>
+                              </span>
+                              <ul *ngIf="projetSubmit.typeCooperations != null && projetSubmit.typeCooperations.length > 0">
+                                <li style="font-weight: bold;" *ngFor="let typeCooperation of  projetSubmit.typeCooperations"> {{ typeCooperation.libelle }}
+                                </li>
+                              </ul>
+                            </div>
+
+                          </div>
+                          <br>
+                          <div class="row" *ngIf="projetSubmit != null">
+                            <div class="col-md-4 col-sm-12">
+                              Coût total des ressources extérieures prévu (francs CFA) :
+                              <strong>{{ projetSubmit.coutTotalRessourcesExterieures}}
+                              </strong>
+                            </div>
+                          </div>
+
+                          <br>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                              <div class="table-responsive" *ngIf="projetSubmit != null">
+
+                                <h5>Liste des ressources extérieures du projet</h5>
+
+                                <table class="table table-striped border" style="width: 100%!important;">
+                                  <thead>
+                                    <tr>
+                                      <th> N°</th>
+                                      <th> P.T.F</th>
+                                      <th> Nature financement</th>
+                                      <th> Montant prévu (F CFA)</th>
+                                      <!-- <th> Montant engager (F CFA)</th> -->
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngIf="projetSubmit.ressourceExterieures.length == 0">
+                                      <td colspan="6" class="text-center">Aucune ressource n'est afficher.</td>
+                                    </tr>
+                                    <tr *ngFor="let ressource of projetSubmit.ressourceExterieures | filter:filter let i=index">
+                                      <td> {{ i+1 }}</td>
+                                      <td> {{ ressource.ptfBailleurFrs.denominationptf }}</td>
+                                      <td> {{ ressource.natureFinancement.libelle }}</td>
+                                      <td> {{ ressource.montantRessourceProgrammer }}</td>
+                                      <!-- <td> {{ getTotalEngagerByOneRessource(ressource.ressourceExterieureAnnuelles) }}</td>  -->
+                                    </tr>
+
+                                  </tbody>
+
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </nz-card>
+
+                      </div>
+                    </div>
+
+                    <br>
+                    <br>
+
+
+                    <div class="row">
+
+                      <div class="col-md-6 col-sm-12">
+
+                        Référence(s) :  <strong style="margin-right: 20px;">
+                            {{ (pppSubmit != null)? pppSubmit.libelle: '#N/A' }}</strong>
+
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+
+                        Observations :  <strong style="margin-right: 20px;">
+                            {{ (pppSubmit != null)? pppSubmit.observations: '#N/A' }}</strong>
+
+                      </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row">
+
+                      <div class="col-md-6 col-sm-12">
+
+                        Type de Coopération: <strong style="margin-right: 20px;">
+                            {{ (pppSubmit != null && pppSubmit.typeCooperation)? pppSubmit.typeCooperation.libelle: '#N/A' }}</strong>
+
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+
+                        Montant en Devise:  <strong style="margin-right: 20px;">
+                            {{ (pppSubmit != null)? formatNumber(pppSubmit.montantDevise ): '#N/A' }}</strong>
+
+                      </div>
+                    </div>
+                    <br><br>
+                  <div class="row">
+
+                      <div class="col-md-6 col-sm-12">
+
+                        Devise: <strong style="margin-right: 20px;">
+                            {{ (pppSubmit != null && pppSubmit.deviseMonnaie)? pppSubmit.deviseMonnaie.libelle: '#N/A' }}</strong>
+
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+
+                        Montant théorique :  <strong style="margin-right: 20px;">
+                            {{ (pppSubmit != null)? formatNumber(pppSubmit.montantTheorique): '#N/A' }}</strong>
+
+                      </div>
+                    </div>
+                    <br><br>
+
+                    <h4 class="card-title">Promoteurs</h4>
+                    <h6 class="card-subtitle">Liste des promoteurs du partenariat.
+                    </h6>
+                    <hr>
+
+                    <div class="table-responsive">
+                      <!-- Alert with rounded corner -->
+
+                      <table class="table table-striped border" style="width: 100%!important;">
+                        <thead>
+                          <tr>
+                            <th>Nom</th>
+                            <th>Téléphone</th>
+                            <th>Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let promoteur of promoteursSubmit">
+                            <td> {{ promoteur.nomcomplet }}</td>
+                            <td> {{ promoteur.tel }}</td>
+                            <td> {{ promoteur.email }}</td>
+                          </tr>
+                        </tbody>
+
+                      </table>
+                    </div>
+
+
+                    <br>
+                    <br>
+
+
+                    <h4 class="card-title">Prévisions et réalisations</h4>
+                    <h6 class="card-subtitle">Liste des Prévisions et réalisations.</h6>
+                    <hr>
+                    <div class="table-responsive">
+                      <!-- Alert with rounded corner -->
+
+                      <table class="table table-striped border" style="width: 100%!important;">
+                        <thead>
+                          <tr>
+                            <th>Annee</th>
+                            <th>Montant théorique</th>
+                            <th>Montant réalisation</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let previvion of previvionRealisationSubmit">
+                            <td> {{ previvion.annee.libelle }}</td>
+                            <td> {{formatNumber( previvion.montantTheorique ) }}</td>
+                            <td> {{ formatNumber(previvion.montantRealisation )}}</td>
+                          </tr>
+                        </tbody>
+
+                      </table>
+                    </div>
+
+
+                </div>
+              </div>
+            </div>
+
+              <div class="col-md-12 col-sm-12">
+
+                <h4 class="card-title">Pièces jointes</h4>
+                <h6 class="card-subtitle">Liste des Pièces jointes.</h6>
+                <hr>
+                <div class="table-responsive">
+
+                  <table class="table table-striped border">
+                    <thead>
+                    <tr>
+                      <th> Date archivage</th>
+                      <th> Nom de la pièce</th>
+                      <th> Réf. Pièce</th>
+                      <th>
+                        <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                                style="float: right;" (click)="showModalPiece()"><i class="ti-plus"> </i></button>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngIf="filesPPP.length == 0">
+                      <td style="text-align: center;" colspan="4"> Aucune pièce</td>
+                    </tr>
+                    <tr *ngFor="let file of filesPPP let i=index">
+                      <td>
+                        {{ file.createdAt | date:'dd-MM-yyyy' }}
+                      </td>
+                      <td>
+                        {{ file.namePiece }}
+                      </td>
+                      <td>
+                        {{ file.refPiece }}
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-circle  btn-sm" style="float: right;"
+                                (click)="showModalPieceInfo(file)"><i class="ti-info"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                                (click)="showMessageClosePiece(i, file)"><i class="ti-close"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- End PAge Content -->
+  <!-- ============================================================== -->
+
+  <!--gestion de gestion des pièces jointes-->
+  <nz-modal [(nzVisible)]="isVisibleFile" nzTitle="Formulaire d'ajoute de pièce " [(nzCancelText)]="btnFermerText"
+            (nzOnCancel)="handleCancelReponse()" [nzClosable]="false"
+            (nzOnOk)="submitFormFile()" [nzOkText]="'Enregistrer'">
+
+    <form class="mt-4" [formGroup]="validateFormFile">
+      <!-- Alert with rounded corner -->
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Nom de la pièce<span class="text-danger">*</span></h5>
+          <input nz-input formControlName="namePiece" id="namePiece" class="form-control"
+                 oninput="this.value = this.value.toUpperCase()">
+          <nz-form-explain
+            *ngIf="validateFormFile.get('namePiece')?.dirty && validateFormFile.get('namePiece')?.errors">
+            Ce champs est obligatoire !
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Réf. Pièce<span class="text-danger">*</span></h5>
+          <input nz-input formControlName="refPiece" id="refPiece" class="form-control"
+                 oninput="this.value = this.value.toUpperCase()">
+          <nz-form-explain
+            *ngIf="validateFormFile.get('refPiece')?.dirty && validateFormFile.get('refPiece')?.errors">
+            Ce champs est obligatoire !
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Réf. Emplacement physique</h5>
+          <textarea rows="3" nz-input formControlName="refEmplacement"
+                    oninput="this.value = this.value.toUpperCase()"></textarea>
+
+        </nz-form-control>
+      </nz-form-item>
+
+      <div class="form-group">
+        <nz-form-item>
+          <h5> Résumé du contenu </h5>
+          <nz-form-control>
+            <textarea rows="3" nz-input formControlName="resumePiece"></textarea>
+
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div class="form-group">
+
+        <input type="file"
+               id="file" #fileInput
+               (change)="handleFileInput($event)">
+      </div>
+
+    </form>
+
+  </nz-modal>
+
+<!--information sur une pièce -->
+<nz-modal [(nzVisible)]="isVisiblePieceInfo" nzTitle="Informations sur la pièce"
+          [nzClosable]="false" (nzOnOk)="handleCancelPieceInfo()"
+          [nzCancelText] = "null"  [nzOkText]="'OK'">
+
+  <div *ngIf="pieceInfo != null">
+    <p>
+      <span> Nom de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.fileName : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.refPiece : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de l'emplacement physique : </span> <strong> {{ pieceInfo.resumePiece != null ?
+      pieceInfo.refEmplacement : '#N/A' }} </strong>
+    </p>
+    <p>
+      <span> Résumé du contenu : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.resumePiece :
+      '#N/A'}} </strong>
+    </p>
+    <p>
+      <span> Date de sauvegarde de la pièce : </span> <strong> {{ pieceInfo.createdAt != null ? (pieceInfo.createdAt |
+      date:'dd MM yyyy') : '#N/A'}} </strong>
+    </p>
+    <p>
+      <button type="button" class="btn btn-primary btn-sm"
+              (click)="downloadFile(pieceInfo.fullFileName)"><i class="ti-download"></i> cliquer ici pour télécharger la pièce
+      </button>
+    </p>
+    <br>
+  </div>
+
+</nz-modal>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl"><name>data_sgifd</name><driver>org.postgresql.Driver</driver><username>dgfd_user</username><password>@U&5!3*R$</password><savePassword>true</savePassword><url>jdbc:postgresql://localhost:5432/db_sgifd</url><database></database><serverAddress></serverAddress></jdbcDataAdapter>

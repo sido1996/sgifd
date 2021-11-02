@@ -1,0 +1,182 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire</h4>
+        <h6 class="card-subtitle">Enregistrement et modification des promoteurs.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Type <span class="text-danger">*</span></h5>
+                <nz-select nzShowSearch nzAllowClear
+                           id="type" formControlName="type" (ngModelChange)="changePersonnality()">
+                  <nz-option  [nzLabel]="'PERSONNE_MORALE'" [nzValue]="'PERSONNE_MORALE'"></nz-option>
+                  <nz-option  [nzLabel]="'PERSONNE_PHYSIQUE'" [nzValue]="'PERSONNE_PHYSIQUE'"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateForm.get('type')?.dirty && validateForm.get('type')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5 *ngIf="!isPersonneMorale"> Nom complet <span class="text-danger">*</span> </h5>
+              <h5 *ngIf="isPersonneMorale">
+                Raison sociale <span class="text-danger">*</span> </h5>
+              <nz-form-control>
+                <input nz-input formControlName="nomcomplet" id="libelle" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('nomcomplet')?.dirty && validateForm.get('nomcomplet')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Email <span class="text-danger">*</span>  </h5>
+              <nz-form-control>
+                <input nz-input formControlName="email" id="email" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Contact(s) <span class="text-danger">*</span>  </h5>
+              <nz-form-control>
+                <input nz-input formControlName="tel" id="tel" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('tel')?.dirty && validateForm.get('tel')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group" *ngIf="isPersonneMorale">
+            <nz-form-item>
+              <h5> Année de création   </h5>
+              <nz-form-control>
+                <input nz-input formControlName="anneeCreation" id="anneeCreation" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Adresse  </h5>
+              <nz-form-control>
+                <textarea rows="3" nz-input formControlName="adresse"
+                          oninput="this.value = this.value.toUpperCase()"></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+                    style="margin-left: 10px;"><i class="ti-check"> </i> {{ btnTitle }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Promoteurs</h4>
+        <h6 class="card-subtitle">
+          Liste des promoteurs <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+            <i class="ti-info-alt"></i> {{messageNotificationTable}}
+            <button type="button" class="close" (click)="closeNotificationTable()">
+              <span>×</span></button>
+          </div>
+          <table class="table table-striped border" style="width: 100%!important;" [svData]="promoteurList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th>  <sv-default-sorter by="nomcomplet"> Nom complet | Raison sociale </sv-default-sorter> </th>
+              <th>  <sv-default-sorter by="tel"> Contact(s) </sv-default-sorter> </th>
+              <th>  <sv-default-sorter by="email"> Email </sv-default-sorter> </th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let promoteur of sv.data | filter:filter">
+              <td> {{ promoteur.nomcomplet }}</td>
+              <td> {{ promoteur.tel }}</td>
+              <td> {{ promoteur.email }}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(promoteur)"
+                >
+                  <i class="ti-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(promoteur)">
+                  <i class="ti-close"></i>
+                </button>
+              </td>
+            </tr>
+
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="4">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

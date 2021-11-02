@@ -1,0 +1,322 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+
+<div class="row">
+
+  <div class="col-md-1 col-sm-12"></div>
+  <div class="col-md-10 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+
+        <h4 class="card-title">Détails d'un aide capital</h4>
+        <h6 class="card-subtitle">Affichage du détail des informations concernant un aide en capital.
+          <button type="button" (click)="gotoListAide()" class="btn btn-inverse btn-sm" style="float: right;">
+            <i class="ti-menu"> </i>
+            Consulter la Liste des Aides Bourses
+          </button>
+        </h6>
+        <hr>
+
+        <div class="row" *ngIf="aideCapitale !=null">
+          <div class="col-md-6 col-sm-12">
+
+            <span> Exercice </span> :
+            <strong> {{ aideCapitale.exercice.libelle }} </strong>
+
+          </div>
+          <br>
+          <div class="col-md-6 col-sm-12">
+
+            <span> PTF </span> :
+            <strong> {{ aideCapitale.ptfBailleurFrs.denominationptf }} </strong>
+
+          </div>
+        </div>
+
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <span> Montant en Devise</span> : <strong style="margin-right: 20px;">
+              {{ (aideCapitale!=null)? (formatNumber(aideCapitale.montantDevise ))  : '#N/A' }} </strong>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <span> Devise </span> :<strong style="margin-right: 20px;">
+              {{ (aideCapitale!=null)? aideCapitale.deviseMonnaie.libelle  : '#N/A' }} </strong>
+          </div>
+
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <span> Montant (F CFA) </span> :<strong style="margin-right: 20px;">
+              {{ (aideCapitale!=null)?(formatNumber(aideCapitale.montant ))  : '#N/A' }} </strong>
+          </div>
+        </div>
+
+        <br>
+        <hr>
+
+        <h4 class="card-title">Informateur</h4>
+        <h6 class="card-subtitle">Informations sur l'informateur.</h6>
+        <hr>
+
+        <div class="row" *ngIf="aideCapitale!=null && aideCapitale.informateur!=null">
+          <div class="col-md-6 col-sm-12">
+            <div>
+              <span> Nom </span> :
+              <strong> {{ aideCapitale.informateur.prenom  }} </strong>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div>
+              <span> Prénom </span> :
+              <strong> {{ aideCapitale.informateur.nom }} </strong>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row" *ngIf="aideCapitale!=null && aideCapitale.informateur!=null">
+          <div class="col-md-6 col-sm-12">
+            <div>
+              <span> Téléphone </span> :
+              <strong> {{ aideCapitale.informateur.tel }} </strong>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <div>
+              <span> Email </span> :
+              <strong> {{ aideCapitale.informateur.email }} </strong>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row" *ngIf="aideCapitale!=null && aideCapitale.informateur!=null">
+          <div class="col-md-6 col-sm-12">
+            <div>
+              <span> Titre ou Fonction</span> :
+              <strong> {{ aideCapitale.informateur.profession }} </strong>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <div>
+              <span> Source de l'information </span> :
+              <p><strong> {{ aideCapitale.informateur.sourceInformation.denominationStructure }} </strong></p>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <h4 class="card-title">Bourses</h4>
+        <h6 class="card-subtitle">Informations sur les bourses octroyées.</h6>
+        <hr>
+
+        <nz-table #editRowTable nzBordered [nzPageSize]=4 [nzShowPagination]=true [nzData]="bourseList"
+          *ngIf="bourseList!=null">
+          <thead>
+            <tr>
+
+              <th nzWidth="20%">Filiere</th>
+              <th nzWidth="20%">Cycle</th>
+              <th nzWidth="20%">Sexe</th>
+              <th nzWidth="20%">Departement</th>
+              <th nzWidth="20%">Commune</th>
+              <th nzWidth="20%">nombre</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of editRowTable.data">
+              <td>
+                <ng-container>
+                  {{data.filiereBourseEtude.libelle}}
+                </ng-container>
+              </td>
+              <td>
+                <ng-container>
+                  {{data.cycleBourseEtude.libelle}}
+                </ng-container>
+              </td>
+              <td>
+                <ng-container>
+                  {{(data.sexe!=null)?data.sexe.libelle:'#N/A'}}
+                </ng-container>
+              </td>
+              <td>
+                <ng-container>
+                  {{ (data.commune!=null)?data.commune.departement.libelle:'#N/A' }}
+                </ng-container>
+              </td>
+              <td>
+                <ng-container>
+                  {{(data.commune!=null)?data.commune.libelle:'#N/A'}}
+                </ng-container>
+              </td>
+              <td>
+                <ng-container>
+                  {{data.nombre}}
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+
+            <h4 class="card-title">Pièces jointes</h4>
+            <h6 class="card-subtitle">Liste des Pièces jointes.</h6>
+            <hr>
+            <div class="table-responsive">
+
+              <table class="table table-striped border">
+                <thead>
+                  <tr>
+                    <th> Date archivage</th>
+                    <th> Nom de la pièce</th>
+                    <th> Réf. Pièce</th>
+                    <th>
+                      <button type="button" class="btn btn-primary btn-circle  btn-sm" style="float: right;"
+                        (click)="showModalPiece()"><i class="ti-plus"> </i></button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="filesAideCapitale.length == 0">
+                    <td style="text-align: center;" colspan="4"> Aucune pièce</td>
+                  </tr>
+                  <tr *ngFor="let file of filesAideCapitale let i=index">
+                    <td>
+                      {{ file.createdAt | date:'dd-MM-yyyy' }}
+                    </td>
+                    <td>
+                      {{ file.namePiece }}
+                    </td>
+                    <td>
+                      {{ file.refPiece }}
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-info btn-circle  btn-sm" style="float: right;"
+                        (click)="showModalPieceInfo(file)"><i class="ti-info"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                        (click)="showMessageClosePiece(i, file)"><i class="ti-close"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+<!--gestion de gestion des pièces jointes-->
+<nz-modal [(nzVisible)]="isVisibleFile" nzTitle="Formulaire d'ajoute de pièce " [(nzCancelText)]="btnFermerText"
+  (nzOnCancel)="handleCancelReponse()" [nzClosable]="false" (nzOnOk)="submitFormFile()" [nzOkText]="'Enregistrer'">
+
+  <form class="mt-4" [formGroup]="validateFormFile">
+    <!-- Alert with rounded corner -->
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Nom de la pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="namePiece" id="namePiece" class="form-control"
+          oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain *ngIf="validateFormFile.get('namePiece')?.dirty && validateFormFile.get('namePiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="refPiece" id="refPiece" class="form-control"
+          oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain *ngIf="validateFormFile.get('refPiece')?.dirty && validateFormFile.get('refPiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Emplacement physique</h5>
+        <textarea rows="3" nz-input formControlName="refEmplacement"
+          oninput="this.value = this.value.toUpperCase()"></textarea>
+
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Résumé du contenu </h5>
+        <nz-form-control>
+          <textarea rows="3" nz-input formControlName="resumePiece"></textarea>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <input type="file" id="file" #fileInput (change)="handleFileInput($event)">
+    </div>
+
+  </form>
+
+</nz-modal>
+
+
+<!--information sur une pièce -->
+<nz-modal [(nzVisible)]="isVisiblePieceInfo" nzTitle="Informations sur la pièce" [nzClosable]="false"
+  (nzOnOk)="handleCancelPieceInfo()" [nzCancelText]="null" [nzOkText]="'OK'">
+
+  <div *ngIf="pieceInfo != null">
+    <p>
+      <span> Nom de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.fileName : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.refPiece : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de l'emplacement physique : </span> <strong> {{ pieceInfo.resumePiece != null ?
+      pieceInfo.refEmplacement : '#N/A' }} </strong>
+    </p>
+    <p>
+      <span> Résumé du contenu : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.resumePiece :
+      '#N/A'}} </strong>
+    </p>
+    <p>
+      <span> Date de sauvegarde de la pièce : </span> <strong> {{ pieceInfo.createdAt != null ? (pieceInfo.createdAt |
+      date:'dd MM yyyy') : '#N/A'}} </strong>
+    </p>
+    <p>
+      <button type="button" class="btn btn-primary btn-sm" (click)="downloadFile(pieceInfo.fullFileName)"><i
+          class="ti-download"></i> cliquer ici pour télécharger la pièce
+      </button>
+    </p>
+    <br>
+  </div>
+
+</nz-modal>
+
+
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="1_ii_RCD" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d43c45bb-3c76-4fa5-b8a2-758648274e5d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#5F9EA0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFFDFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#5F9EA0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFFDFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="30c3e710-7f76-4c8e-8d3b-c145a4d04bbb"/>
+	<subDataset name="TABLE_DATA_SET" uuid="5c4b8235-3d50-4ea0-a259-45e55a864117">
+		<queryString language="SQL">
+			<![CDATA[SELECT a.libelle AS ANNEE, SUM(t.montant_ressource_decaisser_fcfa) AS montant
+FROM t_annee a, t_ressource_exterieure_annuelle t
+WHERE t.annee_id = a.id
+GROUP BY a.libelle
+ORDER BY a.libelle ASC]]>
+		</queryString>
+		<field name="annee" class="java.lang.String"/>
+		<field name="montant" class="java.lang.Double"/>
+	</subDataset>
+	<parameter name="annee_Debut" class="java.lang.String"/>
+	<parameter name="annee_Fin" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT a.libelle AS ANNEE, SUM(t.montant_ressource_decaisser_fcfa) AS montant
+FROM t_annee a, t_ressource_exterieure_annuelle t
+WHERE t.annee_id = a.id
+
+ AND a.libelle BETWEEN $P{annee_Debut} AND  $P{annee_Fin}
+
+GROUP BY a.libelle
+ORDER BY a.libelle ASC]]>
+	</queryString>
+	<field name="annee" class="java.lang.String"/>
+	<field name="montant" class="java.lang.Double"/>
+	<title>
+		<band height="76">
+			<image>
+				<reportElement x="7" y="2" width="248" height="66" uuid="8dfad1f5-8df6-4ff6-8d56-1de948181f2b"/>
+				<imageExpression><![CDATA["D:\\PROJETs\\Spring-boot\\mpd\\src\\main\\resources\\rapports\\logo\\logo-mpd.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="268" y="5" width="287" height="45" uuid="cb0f610e-20d1-4385-b319-0ccd48e2ff74"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTION GENERALE DU FINANCEMENT DU DEVELOPPEMENT]]></text>
+			</staticText>
+			<line>
+				<reportElement x="365" y="49" width="106" height="1" forecolor="#009999" uuid="a842b8fa-f79d-4514-ad26-0675f35d3e3b"/>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="123">
+			<staticText>
+				<reportElement x="20" y="7" width="486" height="23" uuid="1b4bc6f2-1b88-4c6d-a3f3-e39d40886e13"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVOLUTION DU FINANCEMENT EXTERIEUR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="221" y="30" width="92" height="1" forecolor="#009999" uuid="ba46b241-9560-4b2d-87f9-c19e7d597241"/>
+			</line>
+			<staticText>
+				<reportElement x="99" y="92" width="169" height="31" backcolor="#0DA394" uuid="b5e824c8-fa15-4416-a57f-40868eb3180e"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.0" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.0" lineColor="#0DA394"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANNEE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="268" y="92" width="181" height="31" backcolor="#0DA394" uuid="39f33c24-a6c8-4225-805d-31b1dccc4f5e"/>
+				<box>
+					<topPen lineWidth="1.0" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.0" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.0" lineColor="#0DA394"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[MONTANT]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32">
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="99" y="0" width="169" height="32" backcolor="#0DA394" uuid="c0761f84-4ad0-4612-9dcc-6df7805a236e"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineColor="#0DA394"/>
+					<topPen lineWidth="1.25" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.25" lineColor="#0DA394"/>
+					<bottomPen lineWidth="1.25" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.25" lineColor="#0DA394"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{annee}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="268" y="0" width="181" height="32" backcolor="#0DA394" uuid="4088bb73-fca6-44ab-95ad-16f9cb42682a"/>
+				<box leftPadding="0">
+					<topPen lineWidth="1.25" lineStyle="Solid" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.5" lineColor="#0DA394"/>
+					<bottomPen lineWidth="1.5" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.5" lineColor="#0DA394"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14" isUnderline="false"/>
+					<paragraph rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montant}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="1_i_RCD" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="86760907-4ddf-4f0a-a7d5-fcefee014ff6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="annee_Debut" class="java.lang.String">
+		<defaultValueExpression><![CDATA[2011]]></defaultValueExpression>
+	</parameter>
+	<parameter name="annee_Fin" class="java.lang.String">
+		<defaultValueExpression><![CDATA[2020]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT a.libelle,
+	SUM( t.montant_ressource_engager)
+FROM t_ressource_interieure_annuelle t,
+	t_annee a
+WHERE
+	 t.annee_id = a.id
+
+	 AND a.libelle BETWEEN $P{annee_Debut} AND  $P{annee_Fin}
+GROUP BY a.libelle
+ORDER BY a.libelle ASC]]>
+	</queryString>
+	<field name="libelle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="libelle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_annee"/>
+	</field>
+	<field name="sum" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="sum"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="10" width="270" height="74" uuid="3ea91375-57b2-44fb-bf46-319c9604628a"/>
+				<imageExpression><![CDATA["/logo/logo-mpd.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="270" y="28" width="300" height="38" uuid="63f1daa6-6e45-4f8f-9a84-f2f49c16d4f1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Lucida Console" size="17"/>
+				</textElement>
+				<text><![CDATA[DIRECTION GENERALE DU FINANCEMENT DU DEVELOPPEMENT]]></text>
+			</staticText>
+			<line>
+				<reportElement x="367" y="65" width="100" height="1" forecolor="#0DA394" uuid="e78ca11c-fc41-48d1-a596-d3cc51decf82"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="122" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="12" width="531" height="25" uuid="faf44da8-ffeb-4585-b4c3-f548329d9a32"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVOLUTION PLURIANNUELLE DU FINANCEMENT INTERIEUR]]></text>
+			</staticText>
+			<line>
+				<reportElement x="222" y="48" width="100" height="1" forecolor="#0DA394" uuid="c1f1c327-1668-4765-aa5d-7bb9ac0ad6ba"/>
+			</line>
+			<staticText>
+				<reportElement x="80" y="92" width="219" height="30" forecolor="#0A0202" backcolor="#0DA394" uuid="3413a7e3-5db3-4283-b580-89606031f87f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d8099e14-44ac-4b40-8165-6e9221353eff"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#0DA394"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANNEE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="92" width="181" height="30" forecolor="#0F0303" backcolor="#0DA394" uuid="eef3f197-5051-4a9c-84ce-23916dc16f15">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c216f2ce-4260-46a0-9f1d-c8812a6c2971"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#0DA394"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTANT (F CFA)]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="219" height="30" uuid="a8709499-b53f-4161-918f-e1665b31592c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d8099e14-44ac-4b40-8165-6e9221353eff"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#0DA394"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+					<paragraph leftIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{libelle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="299" y="0" width="181" height="30" uuid="e0cf02cf-e2d5-4d49-a4ce-aa290f0ce052">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c216f2ce-4260-46a0-9f1d-c8812a6c2971"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#0DA394"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#0DA394"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14"/>
+					<paragraph leftIndent="0" rightIndent="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum}.longValue()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="78" splitType="Stretch">
+			<image>
+				<reportElement x="130" y="40" width="310" height="22" uuid="9256195a-6369-43c4-89c2-14fa607f4743"/>
+				<imageExpression><![CDATA["/logo/footer_img.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="4" y="50" width="106" height="28" uuid="510403b9-319a-4a31-ab66-1759883b328c"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

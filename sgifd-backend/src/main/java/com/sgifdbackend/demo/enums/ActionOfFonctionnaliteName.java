@@ -1,0 +1,14 @@
+package com.sgifdbackend.demo.enums;
+
+public enum ActionOfFonctionnaliteName {
+    ENREGISTRER_DONNEE,
+    MODIFIER_DONNEE,
+    SUPPRIMER_DONNEE,
+    CONSULTER_LISTE,
+    CONSULTER_DETAIL,
+    JOINDRE_PIECE,
+    CONSULTER_PIECE,
+    SUPPRIMER_PIECE,
+    CLOTURER_DONNEE,
+    ARCHIVER_DONNEE
+}

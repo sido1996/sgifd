@@ -1,0 +1,160 @@
+
+
+
+
+
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Financement annuel des projets </h4>
+        <h6 class="card-subtitle">
+          Financement annuel <br>
+          <hr>
+        </h6>
+
+        <div class="row">
+          <div class="col-md-3 col-sm-12">
+              <nz-form-item>
+                  <h5> Année de collecte </h5>
+                  <nz-form-control>
+                      <nz-select [(ngModel)]="exercice" (ngModelChange)="makeListeProjet()" style="width: 100%;">
+                          <nz-option *ngFor="let exercice of exerciceList" [nzValue]="exercice" [nzLabel]="exercice.libelle"></nz-option>
+                      </nz-select>
+                  </nz-form-control>
+              </nz-form-item>
+          </div>
+      </div>
+
+        <div *ngIf="isChargment == true" class="row">
+          <div class="col-md-12">
+            <br>
+            <div class="alert alert-info alert-rounded">
+              <i class="ti-info-alt"></i> Recherche en cours ...
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive" *ngIf="isChargment == false">
+
+          <p-table #dt [paginator]="true" [rowsPerPageOptions]="[10,25,50]" [rows]="10"
+                   [showCurrentPageReport]="true" [value]="requeteList"
+                   currentPageReportTemplate="Affichage de {first} à {last} dans {totalRecords} éléments">
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="reference">Référence
+                  <p-sortIcon field="reference"></p-sortIcon>
+                </th>
+                <th pSortableColumn="libelle">Libellé
+                  <p-sortIcon field="libelle"></p-sortIcon>
+                </th>
+                <th pSortableColumn="natureFinancement.libelle">Nature Financement
+                  <p-sortIcon field="natureFinancement.libelle"></p-sortIcon>
+                </th>
+                <th pSortableColumn="montantRessourceProgrammer">Montant programmé
+                  <p-sortIcon field="montantRessourceProgrammer"></p-sortIcon>
+                </th>
+                <th pSortableColumn="montantRessourceDecaisser">Montant financé
+                  <p-sortIcon field="montantRessourceDecaisser"></p-sortIcon>
+                </th>
+                <th pSortableColumn="deviseMonnaie.libelle">Devise
+                  <p-sortIcon field="deviseMonnaie.libelle"></p-sortIcon>
+                </th>
+                <th class="text-center">Action</th>
+              </tr>
+              <tr class="title-filter-table">
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'reference', 'contains')" nz-input placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'libelle', 'contains')" nz-input placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'natureFinancement.libelle', 'contains')" nz-input placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'montantRessourceProgrammer', 'equal')" nz-input placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'montantRessourceDecaisser', 'equal')" nz-input placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'deviseMonnaie.libelle', 'contains')" nz-input placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th class="text-center">#</th>
+              </tr>
+            </ng-template>
+            <ng-template let-requete pTemplate="body">
+              <tr>
+                <td> {{ requete.reference }}</td>
+                <td> {{ requete.libelle }}</td>
+                <td> {{ requete.natureFinancement.libelle }}</td>
+                <td class="text-align-right"> {{ formatNumber(requete.montantRessourceProgrammer) }}</td>
+                <td class="text-align-right"> {{ formatNumber(requete.montantRessourceDecaisser) }}</td>
+                <td> {{ requete.deviseMonnaie.libelle }}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                          (click)="ouvrirDetail(requete.id)">
+                    <i class="ti-info"></i></button>
+                </td>
+              </tr>
+
+            </ng-template>
+          </p-table>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+
+
+
+

@@ -1,0 +1,185 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire</h4>
+        <h6 class="card-subtitle">Enregistrement et modification des informateurs.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Source d'information <span class="text-danger">*</span></h5>
+                <nz-select nzShowSearch nzAllowClear
+                           id="sourceInformation" formControlName="sourceInformation">
+                  <nz-option *ngFor="let structure of structureList"
+                             [nzLabel]="structure.denominationStructure" [nzValue]="structure.id"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateForm.get('sourceInformation')?.dirty && validateForm.get('sourceInformation')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Nom  <span class="text-danger">*</span> </h5>
+              <nz-form-control>
+                <input nz-input formControlName="nom" id="nom" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('nom')?.dirty && validateForm.get('nom')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Prénom(s)  <span class="text-danger">*</span> </h5>
+              <nz-form-control>
+                <input nz-input formControlName="prenom" id="prenom" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('prenom')?.dirty && validateForm.get('prenom')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Email <span class="text-danger">*</span>  </h5>
+              <nz-form-control>
+                <input nz-input formControlName="email" id="email" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Contact(s) <span class="text-danger">*</span>  </h5>
+              <nz-form-control>
+                <input nz-input formControlName="tel" id="tel" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('tel')?.dirty && validateForm.get('tel')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="form-group" *ngIf="isPersonneMorale">
+            <nz-form-item>
+              <h5> Profession   </h5>
+              <nz-form-control>
+                <input nz-input formControlName="profession" id="profession" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+                    style="margin-left: 10px;"><i class="ti-check"> </i> {{ btnTitle }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Informateurs</h4>
+        <h6 class="card-subtitle">
+          Liste des informateurs <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+            <i class="ti-info-alt"></i> {{messageNotificationTable}}
+            <button type="button" class="close" (click)="closeNotificationTable()">
+              <span>×</span></button>
+          </div>
+          <table class="table table-striped border" style="width: 100%!important;" [svData]="informateurList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th>  <sv-default-sorter by="nom"> Nom  </sv-default-sorter> </th>
+              <th>  <sv-default-sorter by="prenom"> Prénom(s)  </sv-default-sorter> </th>
+              <th>  <sv-default-sorter by="tel"> Contact(s) </sv-default-sorter> </th>
+              <th>  <sv-default-sorter by="email"> Source </sv-default-sorter> </th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let informateur of sv.data | filter:filter">
+              <td> {{ informateur.nom }}</td>
+              <td> {{ informateur.prenom }}</td>
+              <td> {{ informateur.tel }}</td>
+              <td> {{ informateur.sourceInformation!=null ? informateur.sourceInformation.sigleStructure : '#N/A' }}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(informateur)"
+                >
+                  <i class="ti-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(informateur)">
+                  <i class="ti-close"></i>
+                </button>
+              </td>
+            </tr>
+
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="5">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

@@ -1,0 +1,110 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Liste des projets idées</h4>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-3 col-sm-12">
+            <nz-form-item>
+              <h5> Année de collecte </h5>
+              <nz-form-control>
+                <nz-select [(ngModel)]="exerciceModel"
+                           (ngModelChange)="getList()" style="width: 100%;">
+                  <nz-option *ngFor="let exercice of exerciceList" [nzValue]="exercice"
+                             [nzLabel]="exercice.libelle"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <h5> Structure ou Agence d'exécution </h5>
+              <nz-form-control>
+                <nz-select [(ngModel)]="structureModel"
+                           (ngModelChange)="getList()" style="width: 100%;">
+                  <nz-option *ngFor="let strutcure of structureList" [nzValue]="strutcure"
+                             [nzLabel]="strutcure.denominationStructure"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+
+        <div class="table-responsive">
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <table class="table table-striped border" style="width: 100%!important;" [svData]="projetIdeeList"
+                 #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th> N°Enreg</th>
+              <th> Référence(s)</th>
+              <th> Intitulé</th>
+              <th> Cout global (F CFA)</th>
+              <th> Secteur</th>
+              <th> Envergure</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngIf="projetIdeeList.length == 0">
+              <td colspan="7" class="text-center">Aucun projet n'est afficher.</td>
+            </tr>
+            <tr *ngFor="let projet of sv.data | filter:filter">
+              <td> {{ projet.id }}</td>
+              <td> {{ projet.reference }}</td>
+              <td> {{ projet.libelle }}</td>
+              <td> {{ projet.coutGlobalProjet }}</td>
+              <td> {{ projet.secteur.libelle }}</td>
+              <td> {{ projet.envergure != null ? projet.envergure.libelle : '#N/A' }}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm"
+                        (click)="ouvrirModifier(projet.id)"><i class="ti-pencil"></i></button>
+                <button type="button" class="btn btn-danger btn-circle  btn-sm"
+                        (click)="deleteProjet(projet)"><i class="ti-close"></i></button>
+                <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                        (click)="ouvrirDetail(projet.id)"><i class="ti-info"></i></button>
+              </td>
+            </tr>
+
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="7">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

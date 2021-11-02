@@ -1,0 +1,135 @@
+<h2 class="font-medium text-uppercase mb-0 text-center">
+  Tableau de bord
+</h2>
+
+<br>
+<br>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card min-height-menu">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+            <a [routerLink]="['list-projets-finances']" class="lien-admin">
+              <!-- <span class="icon-size-admin"> <i class="ti-settings mr-1 ml-1" style="font-size: 50px;"></i></span> -->
+              <span class="icon-size-admin">
+                <h2>{{projetFinances.length}}</h2>
+              </span>
+              <br>
+              <span class="text-admin-module"> PROJETS FINANCÉS </span>
+            </a>
+          </div>
+          <div class="col-md-4">
+            <i nz-icon nzType="audit" nzTheme="outline" class="icon-dash-ptf"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card min-height-menu">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+        <a [routerLink]="['list-encours']" class="lien-admin">
+          <!-- <span class="icon-size-admin"> <i class="ti-control-shuffle mr-1 ml-1" style="font-size: 50px;"></i></span> -->
+          <span class="icon-size-admin">
+            <h2>{{requeteEncours.length}}</h2>
+          </span>
+          <br>
+          <span class="text-admin-module"> REQUETES EN COURS </span>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <i nz-icon nzType="redo" nzTheme="outline" class="icon-dash-ptf"></i>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="col-md-6">
+    <div class="card min-height-menu">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+        <a [routerLink]="['list-clotures']" class="lien-admin">
+          <!-- <span class="icon-size-admin"> <i class="ti-receipt mr-1 ml-1" style="font-size: 50px;"></i></span> -->
+          <span class="icon-size-admin">
+            <h2>{{requeteClotures.length}}</h2>
+          </span>
+          <br>
+          <span class="text-admin-module"> REQUETES CLOTURÉES </span>
+        </a>
+      </div>
+
+    <div class="col-md-4">
+      <i nz-icon nzType="schedule" nzTheme="outline" class="icon-dash-ptf"></i>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="col-md-6">
+    <div class="card min-height-menu">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+        <a [routerLink]="['list-appuis-budgetaire']" class="lien-admin">
+          <!-- <span class="icon-size-admin"> <i class="ti-bookmark-alt mr-1 ml-1" style="font-size: 50px;"></i></span> -->
+          <span class="icon-size-admin">
+            <h2>{{appuibudgetaireList.length}}</h2>
+          </span>
+          <br>
+          <span class="text-admin-module"> APPUIS BUDGETAIRES </span>
+        </a>
+      </div>
+    <div class="col-md-4">
+      <i nz-icon nzType="shake" nzTheme="outline" class="icon-dash-ptf"></i>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+<!--   <div class="col-md-6">
+    <div class="card min-height-menu">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+        <a class="lien-admin">
+          <span class="icon-size-admin">
+            <h2>{{ formatNumber(getTotalFinancementProjet()) }} F CFA</h2>
+          </span>
+          <br>
+          <span class="text-admin-module"> FINANCEMENTS PROJETS </span>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <i nz-icon nzType="file-protect" nzTheme="outline" class="icon-dash-ptf"></i>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="col-md-6">
+    <div class="card min-height-menu">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-8">
+        <a class="lien-admin">
+
+          <span class="icon-size-admin">
+            <h2>{{ formatNumber(getTotalMontantAppuiBudgetaire()) }} F CFA</h2>
+          </span>
+          <br>
+          <span class="text-admin-module"> FINANCEMENTS APPUIS BUDGETAIRES </span>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <i nz-icon nzType="snippets" nzTheme="outline" class="icon-dash-ptf"></i>
+      </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+</div>

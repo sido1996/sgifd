@@ -1,0 +1,123 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+
+      <div class="card-body">
+
+        <h4 class="card-title">Aides en capital (Bourses de formation)</h4>
+
+        <h6 class="card-subtitle">
+          Liste des Bourses de formation <br>
+          <hr>
+        </h6>
+
+        <div *ngIf="isChargment == true" class="row">
+          <div class="col-md-12">
+            <br>
+            <div class="alert alert-info alert-rounded">
+              <i class="ti-info-alt"></i> Recherche en cours ...
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="isChargment == false" class="table-responsive">
+
+          <p-table #dt [paginator]="true" [rowsPerPageOptions]="[10,25,50]" [rows]="10"
+                   [showCurrentPageReport]="true" [value]="aideCapitaleList"
+                   currentPageReportTemplate="Affichage de {first} à {last} dans {totalRecords} éléments">
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="id">N°Enreg
+                  <p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="exercice.id">Exercice
+                  <p-sortIcon field="exercice.id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="ptfBailleurFrs.denominationptf">PTF
+                  <p-sortIcon field="ptfBailleurFrs.denominationptf"></p-sortIcon>
+                </th>
+                <th pSortableColumn="montant">Montant (F CFA)
+                  <p-sortIcon field="montant"></p-sortIcon>
+                </th>
+                <th class="text-center">Action</th>
+              </tr>
+              <tr class="title-filter-table">
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'id', 'equal')" nz-input placeholder="Rechercher"
+                           type="number"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'exercice.libelle', 'contains')" nz-input
+                           placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'ptfBailleurFrs.denominationptf', 'contains')"
+                           nz-input
+                           placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'montant', 'equal')" nz-input
+                           placeholder="Rechercher"
+                           type="number"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th class="text-center">#</th>
+              </tr>
+            </ng-template>
+            <ng-template let-aideCapitale pTemplate="body">
+              <tr>
+                <td> {{ aideCapitale.id }}</td>
+                <td> {{ (aideCapitale.exercice != null) ? aideCapitale.exercice.libelle : '#N/A'}}</td>
+                <td> {{ (aideCapitale.ptfBailleurFrs != null) ? aideCapitale.ptfBailleurFrs.denominationptf : '#N/A' }}</td>
+                <td class="text-right"> {{ formatNumber(aideCapitale.montant) }}</td>
+
+                <td class="text-center">
+                  <button (click)="ouvrirModifier(aideCapitale.id)" class="btn btn-info btn-circle  btn-sm"
+                          type="button"><i class="ti-pencil"></i></button>
+                  <button (click)="deleteIde(aideCapitale)" class="btn btn-danger btn-circle  btn-sm" type="button"><i
+                    class="ti-close"></i></button>
+                  <button (click)="ouvrirDetail(aideCapitale.id)" class="btn btn-primary btn-circle  btn-sm"
+                          type="button">
+                    <i class="ti-info"></i></button>
+                </td>
+              </tr>
+
+            </ng-template>
+          </p-table>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

@@ -1,0 +1,311 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-1 col-sm-12">
+  </div>
+  <div class="col-md-10 col-sm-12">
+    <nz-card nzTitle="Formulaire de gestion des utilisateurs">
+
+      <!--  <h6 class="card-subtitle">Enregistrement des Bourses de Formation.</h6> -->
+      <form class="mt-4" [formGroup]="validateFormUser">
+        <!-- Alert with rounded corner -->
+        <!-- <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+          <i class="ti-info-alt"></i> {{messageNotificationForm}}
+          <button type="button" class="close" (click)="closeNotificationForm()">
+            <span>×</span>
+          </button>
+        </div> -->
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Nom
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="text" nz-input formControlName="firstName" class="form-control"
+                  oninput="this.value = this.value.toUpperCase()">
+                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                <nz-form-explain
+                  *ngIf="validateFormUser.get('firstName')?.dirty && validateFormUser.get('firstName')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-6">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Prénom(s)
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="text" nz-input formControlName="lastName" class="form-control"
+                  oninput="this.value = this.value.toUpperCase()">
+                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                <nz-form-explain
+                  *ngIf="validateFormUser.get('lastName')?.dirty && validateFormUser.get('lastName')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Tél
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="text" nz-input formControlName="tel" class="form-control">
+                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                <nz-form-explain *ngIf="validateFormUser.get('tel')?.dirty && validateFormUser.get('tel')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-6">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Email
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="email" nz-input formControlName="email" class="form-control"
+                  oninput="this.value = this.value.toUpperCase()">
+                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                <nz-form-explain *ngIf="validateFormUser.get('email')?.dirty && validateFormUser.get('email')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-12">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Profession
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="email" nz-input formControlName="profession" class="form-control"
+                  oninput="this.value = this.value.toUpperCase()">
+                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                <nz-form-explain
+                  *ngIf="validateFormUser.get('profession')?.dirty && validateFormUser.get('profession')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Login
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="text" nz-input formControlName="username" class="form-control">
+                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                <nz-form-explain
+                  *ngIf="validateFormUser.get('username')?.dirty && validateFormUser.get('username')?.errors">
+                  Le login doit comporter au moin cinq (05) caractères !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-md-3">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Rôle
+                  <span class="text-danger">*</span>
+                </h5>
+                <nz-select nzShowSearch nzAllowClear formControlName="roles">
+                  <nz-option *ngFor="let roleUser of roleList" [nzLabel]="roleUser.name" [nzValue]="roleUser">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateFormUser.get('roles')?.dirty && validateFormUser.get('roles')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-3">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Mot de passe
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="password" nz-input formControlName="password" class="form-control" minlength="6"
+                  maxlength="20">
+                <nz-form-explain
+                  *ngIf="validateFormUser.get('password')?.dirty && validateFormUser.get('password')?.errors">
+                  Le mot de passe doit contenir huit (08) caractères au minimum, au moin une lettre majuscule, au moin
+                  une lettre minuscule, au moin un (01) chiffre et un des caractères spéciaaux $ @ % * + - _ !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-3">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Confirmation
+                  <span class="text-danger">*</span>
+                </h5>
+                <input type="password" nz-input formControlName="confirmationpwd" class="form-control" minlength="6"
+                  maxlength="20">
+                <nz-form-explain
+                  *ngIf="validateFormUser.get('confirmationpwd')?.dirty && validateFormUser.get('confirmationpwd')?.errors">
+                  Le mot de passe doit contenir huit (08) caractères au minimum, au moin une lettre majuscule, au moin
+                  une lettre minuscule, au moin un (01) chiffre et un des caractères spéciaaux $ @ % * + - _ !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6 col-sm-12" *ngIf="validateFormUser.get('roles').value != null && validateFormUser.get('roles').value.id == 4">
+            <nz-form-item>
+              <nz-form-control>
+                <h5>Structure d'appartenance</h5>
+                <nz-select nzShowSearch nzAllowClear formControlName="structureBeneficiaire"
+                  (ngModelChange)="structureAppartenanceChange(validateFormUser.value.structureBeneficiaire)">
+                  <nz-option *ngFor="let structure of structureList" [nzLabel]="structure.denominationStructure"
+                    [nzValue]="structure"></nz-option>
+                </nz-select>
+                <nz-form-explain
+                  *ngIf="validateFormUser.get('structureBeneficiaire')?.dirty && validateFormUser.get('structureBeneficiaire')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+          </div>
+
+          <div class="col-md-6" *ngIf="validateFormUser.get('roles').value != null &&  validateFormUser.get('roles').value.id == 5">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> PTF </h5>
+                <nz-select nzShowSearch nzAllowClear formControlName="ptf"
+                  (ngModelChange)="ptfChange(validateFormUser.value.ptf)">
+                  <nz-option *ngFor="let ptf of ptfList" [nzLabel]="ptf.denominationptf" [nzValue]="ptf"></nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateFormUser.get('ptf')?.dirty && validateFormUser.get('ptf')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+
+      </form>
+
+      <div class="row" *ngIf="validateFormUser.get('roles').value != null && validateFormUser.get('roles').value.id != 4 && validateFormUser.get('roles').value.id != 5">
+        <div class="col-md-12 col-sm-12">
+
+          <br>
+          <h5 class="card-title">Spécification des accès aux modules</h5>
+          <span>Précision des modules d'accès par l'utilisateur</span>
+          <hr>
+
+          <div class="row">
+
+            <div class="col-md-6 col-sm-12">
+              <nz-form-item>
+                <h5> Module <span class="text-danger">*</span></h5>
+                <nz-form-control>
+                  <nz-select nzShowSearch nzAllowClear [(ngModel)]="moduleUserSelected" style="width: 100%;">
+                    <nz-option *ngFor="let moduleUser of moduleUserList" [nzLabel]="moduleUser.name"
+                      [nzValue]="moduleUser"></nz-option>
+                  </nz-select>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div class="col-md-3 col-sm-12" style="margin-top: 25px;">
+              <button nz-button nzType="primary" (click)="enregistrerModule()" [disabled]="moduleUserSelected==null">
+                <i class="anticon anticon-plus"> </i> Ajouter
+              </button>
+            </div>
+
+            <div class="col-md-3 col-sm-12" style="margin-top: 25px;">
+              <button nz-button nzType="default" (click)="annulerSelection()">
+                Annuler
+              </button>
+            </div>
+
+          </div>
+
+          <br>
+
+          <div class="table-responsive">
+            <!-- Alert with rounded corner -->
+
+            <table class="table table-striped border" style="width: 100%!important;">
+              <thead>
+                <tr>
+                  <th>N°</th>
+                  <th>Modules</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let moduleUser of moduleUserListSelected let i=index">
+                  <td> {{ i+1 }}</td>
+                  <td> {{ moduleUser.name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-circle  btn-sm"
+                      (click)="selectionnerModule(moduleUser)">
+                      <i class="ti-info"></i>
+                    </button>
+                    <ng-container>
+                      <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer ?'"
+                        (nzOnConfirm)="supprimerModule(i, moduleUser)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+                        <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                          <i class="ti-close"></i>
+                        </button>
+                      </nz-popconfirm>
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="float: right;margin-top: 15px;padding: 5px;">
+        <button type="button" (click)="gotoListUtilisateurs()" class="btn btn-inverse btn-sm">
+          <i class="ti-menu"> </i>
+          Consulter la Liste des utilisateurs
+        </button>
+        <button type="submit" class="btn btn-primary btn-sm" style="margin-left: 10px;" (click)="submitForm()"
+          [disabled]="validateFormUser.invalid">
+          <i class="ti-check"> </i> Enrégistrer
+        </button>
+      </div>
+
+
+    </nz-card>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

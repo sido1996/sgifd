@@ -1,0 +1,92 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-1 col-sm-12"></div>
+  <div class="col-md-10 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h5 class="card-title text-uppercase">édition du point des ODD</h5>
+        <hr>
+
+          <br>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+
+                <h5> Spécifier la période. </h5> <br>
+                <div>
+                  <div>
+                    <table style="width: 100%;">
+
+                      <tbody>
+                      <tr  style="border: 1px solid #4c5667;">
+                        <td>
+                          <span style="margin-left: 15px;">
+                            Année début
+                          </span>
+                        </td>
+                        <td>
+
+                          <div  style="margin-top: 20px;margin-right: 15px;">
+
+                              <nz-select  [(ngModel)]="anneeDebut" nzShowSearch nzAllowClear
+                                          style="width: 100%;">
+                                <nz-option *ngFor="let option of exerciceList" [nzLabel]="option.libelle"
+                                           [nzValue]="option">
+                                </nz-option>
+                              </nz-select>
+
+                          </div>
+                          <br>
+                        </td>
+                      </tr>
+                      <tr  style="border: 1px solid #4c5667;">
+                        <td>
+                          <span style="margin-left: 15px;">
+                            Année fin
+                          </span>
+                        </td>
+                        <td>
+
+                          <div  style="margin-top: 20px;margin-right: 15px;">
+
+                              <nz-select [(ngModel)]="anneeFin" nzShowSearch nzAllowClear
+                                         style="width: 100%;">
+                                <nz-option *ngFor="let option of exerciceList" [nzLabel]="option.libelle"
+                                           [nzValue]="option">
+                                </nz-option>
+                              </nz-select>
+                          </div>
+                          <br>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+              <button type="button" (click)="editerRapport()" class="btn btn-inverse btn-sm">
+                <i class="ti-printer"> </i>
+                ÉDITER LE RAPPORT
+              </button>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

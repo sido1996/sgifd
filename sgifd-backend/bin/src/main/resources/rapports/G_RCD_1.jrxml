@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="G_RCD_1" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c0c1f728-f32b-431d-9f9a-b2f76d0b10dd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT sRequete1.ANNEE, sRequete1.SECTEUR, sRequete2.MONTANT
+FROM
+(SELECT ta.libelle AS ANNEE, s.libelle AS SECTEUR
+FROM t_secteur s, t_annee ta
+WHERE ta.status = false
+AND ta.status = false
+AND ta.libelle BETWEEN '2011' AND  '2018') sRequete1 LEFT JOIN
+
+(SELECT  a.libelle AS ANNEE, s.libelle AS SECTEUR, SUM(t.montant_ressource_decaisser_fcfa) AS MONTANT
+FROM t_secteur_impacte si, t_secteur s, t_annee a, t_ressource_exterieure_annuelle t, t_ressource_exterieure tr
+WHERE tr.projet_programme_idee_id = si.projet_programme_idee_id
+AND t.ressource_exterieure_id = tr.id
+AND si.secteur_id = s.id
+AND t.annee_id = a.id
+GROUP BY a.libelle, s.libelle
+ORDER BY a.libelle, s.libelle ASC) sRequete2 ON sRequete1.SECTEUR = sRequete2.SECTEUR AND sRequete1.ANNEE = sRequete2.ANNEE
+
+ORDER BY ANNEE]]>
+	</queryString>
+	<field name="annee" class="java.lang.String"/>
+	<field name="secteur" class="java.lang.String"/>
+	<field name="montant" class="java.lang.Double"/>
+	<summary>
+		<band height="555" splitType="Stretch"/>
+	</summary>
+</jasperReport>

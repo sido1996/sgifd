@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4aba3d1e-9f88-4451-b7b1-967f9b68b771">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#006400">
+		<box>
+			<pen lineWidth="0.5" lineColor="#125E2D"/>
+			<topPen lineWidth="0.5" lineColor="#125E2D"/>
+			<leftPen lineWidth="0.5" lineColor="#125E2D"/>
+			<bottomPen lineWidth="0.5" lineColor="#125E2D"/>
+			<rightPen lineWidth="0.5" lineColor="#125E2D"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#125E2D"/>
+			<topPen lineWidth="0.5" lineColor="#125E2D"/>
+			<leftPen lineWidth="0.5" lineColor="#125E2D"/>
+			<bottomPen lineWidth="0.5" lineColor="#125E2D"/>
+			<rightPen lineWidth="0.5" lineColor="#125E2D"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFFFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#125E2D"/>
+			<topPen lineWidth="0.5" lineColor="#125E2D"/>
+			<leftPen lineWidth="0.5" lineColor="#125E2D"/>
+			<bottomPen lineWidth="0.5" lineColor="#125E2D"/>
+			<rightPen lineWidth="0.5" lineColor="#125E2D"/>
+		</box>
+	</style>
+	<subDataset name="R_PTF_LISTE" uuid="46bffe5d-ab90-488b-91a9-1dbd8ce2aaf7">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
+		<queryString language="SQL">
+			<![CDATA[SELECT p.sigleptf, p.denominationptf, p.telptf, 
+p.emailptf, p.adresseptf, p.adresseptf_etrangere,
+c.libelle AS categorie
+FROM public.t_ptfbailleur_frs p, public.t_categorieptf c
+WHERE p.categorieptf_id = c.id
+ORDER BY c.libelle, p.sigleptf ASC]]>
+		</queryString>
+		<field name="sigleptf" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="sigleptf"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+		</field>
+		<field name="denominationptf" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="denominationptf"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+		</field>
+		<field name="telptf" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="telptf"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+		</field>
+		<field name="emailptf" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="emailptf"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+		</field>
+		<field name="adresseptf" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="adresseptf"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+		</field>
+		<field name="adresseptf_etrangere" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="adresseptf_etrangere"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+		</field>
+		<field name="categorie" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="categorie"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="t_categorieptf"/>
+		</field>
+		<group name="categorie">
+			<groupExpression><![CDATA[$F{categorie}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT DISTINCT p.sigleptf, p.denominationptf, p.telptf, 
+p.emailptf, p.adresseptf, p.adresseptf_etrangere,
+c.libelle AS categorie
+FROM public.t_ptfbailleur_frs p, public.t_categorieptf c
+WHERE p.categorieptf_id = c.id
+ORDER BY c.libelle, p.sigleptf ASC]]>
+	</queryString>
+	<field name="sigleptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="sigleptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="denominationptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="denominationptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="telptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="emailptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="emailptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="adresseptf" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="adresseptf"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="adresseptf_etrangere" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="adresseptf_etrangere"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_ptfbailleur_frs"/>
+	</field>
+	<field name="categorie" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="categorie"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="t_categorieptf"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="35" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="158" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="178" splitType="Stretch">
+			<componentElement>
+				<reportElement style="Table_CH" x="0" y="0" width="776" height="130" backcolor="#BFFFBF" uuid="b47cce23-fc53-4df9-8de9-c949fa4fb56a">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="Blank">
+					<datasetRun subDataset="R_PTF_LISTE" uuid="94d37b16-b5d5-4ed2-b27d-3383423655bd"/>
+					<jr:column width="80" uuid="18928488-5de7-46b8-ac78-c5178a642cf0">
+						<jr:tableHeader height="11"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="80" height="30" uuid="6e994a8e-cb70-46bf-a043-dd143364ef48"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[SIGLE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="671dda6b-7639-4d18-82b0-d336b31707a1"/>
+								<textFieldExpression><![CDATA[$F{sigleptf}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="199" uuid="8d7298cb-03f5-4750-a768-691c8392952a">
+						<jr:tableHeader height="11"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="199" height="30" uuid="b095f1af-f0ac-41f2-9ccd-b3e39f18c1e9"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[DENOMINATION]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="199" height="30" uuid="c4bd91cd-aaf8-47d0-920e-e75c62dcdc9f"/>
+								<textFieldExpression><![CDATA[$F{denominationptf}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="58dfcbe5-ed2e-4460-b019-07edafd4dbbb">
+						<jr:tableHeader height="11"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="110" height="30" uuid="9e5aa5dc-04a0-4da9-b17d-f8182d6765cb"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[TEL]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="110" height="30" uuid="65b785d2-2655-487f-b717-f79e96df265b"/>
+								<textFieldExpression><![CDATA[$F{telptf}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="bde41a9e-95ac-436a-89a7-8f9e6c5cfe09">
+						<jr:tableHeader height="11"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="4543bbc9-54f1-4433-80d8-3d821653256d"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[EMAIL]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="30" uuid="11fd2794-c032-4d79-a29b-8c5d8c257029"/>
+								<textFieldExpression><![CDATA[$F{emailptf}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="99" uuid="6dc89ecf-5949-4a28-bfae-1b6b2219d581">
+						<jr:tableHeader height="11"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="99" height="30" uuid="777650c2-c0e5-41db-a1d9-4bd1028aa3f0"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[ADRESSE LOCALE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="99" height="30" uuid="fc951c95-9fe6-432b-942f-7321b44cb523"/>
+								<textFieldExpression><![CDATA[$F{adresseptf}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="e7fae227-d409-478f-9b15-09457be67c59">
+						<jr:tableHeader height="11"/>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="93" height="30" uuid="72ed9778-48cf-461c-bfe0-eddd207c9d7a"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[ADRESSE A L'ETRANGER]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="93" height="30" uuid="5fb27099-46da-493f-be9d-ab36b020544b"/>
+								<textFieldExpression><![CDATA[$F{adresseptf_etrangere}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="95" uuid="8c50849f-3d72-4e0a-9b84-896340cafd91">
+						<jr:tableHeader height="11">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+						</jr:tableHeader>
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="95" height="30" uuid="737dcc7c-b016-404e-8b07-573db96955ba"/>
+								<textElement verticalAlignment="Middle"/>
+								<text><![CDATA[CATEGORIE]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="95" height="30" uuid="518c55dc-0728-4574-a23d-42e9ed866bdc"/>
+								<textFieldExpression><![CDATA[$F{categorie}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="33" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="14" splitType="Stretch"/>
+	</summary>
+</jasperReport>

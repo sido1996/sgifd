@@ -1,0 +1,13 @@
+.lien-admin:hover {
+  color:  #2CA07A;
+}
+.lien-admin {
+  color: black;
+}
+.icon-size-admin {
+  width: 30%;
+}
+.text-admin-module {
+  width: 70%;font-size: 15px;
+}
+

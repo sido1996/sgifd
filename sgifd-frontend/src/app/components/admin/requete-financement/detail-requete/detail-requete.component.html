@@ -1,0 +1,736 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+  <div class="col-md-1 col-sm-12"></div>
+  <div class="col-md-10 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Détails d'une requêtes de financement</h4>
+        <h6 class="card-subtitle">Affichage du détail des informations concernant une requête de financement.
+          <button type="button" (click)="gotoListRequete()" class="btn btn-inverse btn-sm" *ngIf="isPTF == false">
+            <i class="ti-menu"> </i>
+            Liste des requêtes en cours
+          </button>
+          <button type="button" (click)="showModalProjet()" class="btn btn-primary btn-sm"
+                  style="float: right;" *ngIf="requetefinancement != null && requetefinancement != undefined && requetefinancement.projetProgrammeIdee != null">
+            <i class="ti-info"> </i>
+            Plus de détails sur le projet
+          </button>
+        </h6>
+        <hr>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12" *ngIf="requetefinancement != null">
+
+          <!--   <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <span> Montant global sollicité (fcfa) : </span>
+                <strong> {{ requetefinancement.projetProgrammeIdee.coutTotalRessourcesExterieures }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <span> Montant mobilisé (fcfa) des suites des réponses des P.T.F. : </span>
+                <strong> {{ getMontantTotalAccorde() }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <span> Montant restante (fcfa) sans suite favorable des P.T.F. : </span>
+                <strong> {{ requetefinancement.projetProgrammeIdee.coutTotalRessourcesExterieures -
+                      getMontantTotalAccorde() }}</strong>
+              </div>
+            </div>
+            <br><br> -->
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <span> Date d'initiation de la requête : </span>
+                <strong> {{ requetefinancement.dateEnvoiRequete | date: 'dd-MM-yyyy HH:mm' }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <span> Date de la mission de préparation : </span>
+                <strong> {{ requetefinancement.dateMissionPreparation != null ?
+                  (requetefinancement.dateMissionPreparation | date: 'dd-MM-yyyy') : '#N/A' }}</strong>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <span> Observations : </span>
+                <strong> {{ requetefinancement.aideMemoireMission != null ? requetefinancement.aideMemoireMission :
+                  '#N/A'}}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+
+            <br>
+            <h4 class="card-title">Destinataires (P.T.F.)</h4>
+            <h6 class="card-subtitle">Informations sur la situation des dinataires P.T.F.</h6>
+            <hr>
+
+            <div class="table-responsive">
+              <!-- Alert with rounded corner -->
+
+              <table class="table table-striped border" style="width: 100%!important;">
+                <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>P.T.F</th>
+                    <th>Mt sollicité</th>
+                    <th>Mt accordé</th>
+                    <th>Devise</th>
+                    <th>Nature financement</th>
+                    <th> Etat </th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+               <!-- <ng-template *ngFor="let ressource of ressourcesExterieureList let i=index">-->
+                  <tr *ngFor="let ressource of ressourcesExterieureList let i=index">
+                  <td> {{ i+1 }}</td>
+                    <td> {{ ressource.ptfBailleurFrs?.sigleptf }}</td>
+                    <td> {{ formatNumber(ressource.montantRessourceDevise) }}</td>
+                    <td> {{ formatNumber(getTotalMontantRponseInit(ressource)) }}</td>
+                    <td> {{ ressource.deviseMonnaie.libelle }}</td>
+                    <td> {{ ressource.natureFinancement.libelle }}</td>
+                    <td class="center text-center">
+                      <span class="badge badge-success badge-pill" *ngIf="ressource.isStatusClose==false"
+                        style="font-size: 12px;font-weight: bold;"> encours</span>
+                      <span class="badge badge-info badge-pill" *ngIf="ressource.isStatusClose==true"
+                        style="font-size: 12px;font-weight: bold;"> cloturé</span>
+
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-info btn-circle  btn-sm"
+                        (click)="selectOneRessourceRequete(ressource)">
+                        <i class="ti-info"></i>
+                      </button>
+                      <div class="btn-group"*ngIf="isPTF == false && requetefinancement != null && requetefinancement != undefined && requetefinancement.isStatusClose == false">
+                        <button type="button" class="btn btn-secondary btn-rounded dropdown-toggle"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Etat
+                        </button>
+                        <div class="dropdown-menu">
+                        <!--   <a class="dropdown-item" href="javascript:void(0)"
+                            (click)="cloturerDialogue(ressource)">Accord final</a> -->
+                          <a class="dropdown-item" href="javascript:void(0)"
+                            (click)="cloturerDialogue(ressource, 'ABOUTIE')">Requête aboutie ?</a>
+                          <a class="dropdown-item" href="javascript:void(0)"
+                            (click)="cloturerDialogue(ressource, 'NON ABOUTIE')">Requête non aboutie ?</a>
+                          <a class="dropdown-item" href="javascript:void(0)"
+                            (click)="reouvrirDialogue(ressource)">Réouvrir</a>
+                            <a class="dropdown-item" href="javascript:void(0)"
+                            (click)="abandonnerPTF(i, ressource)">Abandonner ce PTF</a>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+         <!--       </ng-template>-->
+                </tbody>
+                <tfoot *ngIf="ressourcesExterieureList.length > 0">
+                  <tr>
+                    <td colspan="2"> TOTAL</td>
+                    <td colspan="1"> {{ formatNumber(getTotalMontantRessourceExterieure()) }}</td>
+                    <td colspan="5"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+          </div>
+        </div>
+        <br>
+        <div *ngIf="ressourceExterieure != null">
+          <div class="row">
+            <div class="col-md-6">
+              <p>
+                <span> P.T.F : </span> <strong> {{ ressourceExterieure.ptfBailleurFrs?.denominationptf }}</strong>
+              </p>
+            </div>
+            <div class="col-md-6">
+              <span> Nature de financement : </span> {{ ressourceExterieure.natureFinancement.libelle }}
+              <!-- <ul *ngFor="let nature of ressourceExterieure.natureFinancement">
+                <li> {{ nature.libelle }}</li>
+              </ul> -->
+            </div>
+          </div>
+          <div class="row" *ngIf="ressourceExterieure != null">
+            <div class="col-md-3">
+              <p>
+                <span> Nbre de réponse : </span> <strong>
+                  {{ reponses.length }}</strong>
+              </p>
+            </div>
+            <div class="col-md-3">
+              <p>
+                <span> Nbre de relance : </span> <strong>
+                  {{ relances.length }}</strong>
+              </p>
+            </div>
+            <div class="col-md-3">
+              <p>
+                <span> Montant sollicité : </span> <strong> {{
+                ressourceExterieure.montantRessourceProgrammer }}</strong>
+              </p>
+            </div>
+            <div class="col-md-3">
+              <p>
+                <span> Montant accordé : </span> <strong> {{ getTotalMontantRponse(ressourceExterieure) }}</strong>
+              </p>
+            </div>
+          </div>
+          <hr>
+        </div>
+
+        <div class="row" *ngIf="ressourceExterieure != null">
+          <div class="col-md-12">
+
+            <div class="table-responsive">
+
+              <table class="table table-striped border">
+                <thead>
+                  <tr>
+                    <th colspan="2">
+                      <i class="ti-comments"> </i> Liste des relances
+                    </th>
+                    <th *ngIf="isPTF == false && ressourceExterieure.isStatusClose==false">
+                      <button type="button" class="btn btn-primary btn-circle  btn-sm" style="float: right;"
+                        (click)="showModalRelance()"><i class="ti-plus"> </i></button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="relances.length == 0">
+                    <td style="text-align: center;" colspan="3"> Aucune relance</td>
+                  </tr>
+                  <tr *ngFor="let relance of relances">
+                    <td>
+                      {{ relance.dateRelance | date:'dd-MM-yyyy' }}
+                    </td>
+                    <td style="width: 80%;">
+                      {{ relance.libelle }}
+                    </td>
+                    <td *ngIf="ressourceExterieure.isStatusClose==false">
+                      <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                        (click)="showMessageRelanceDelete(relance)"><i class="ti-close"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row" *ngIf="ressourceExterieure != null">
+          <div class="col-md-12 col-sm-12">
+
+            <div class="table-responsive">
+
+              <table class="table table-striped border">
+                <thead>
+                  <tr>
+                    <th colspan="3">
+                      <i class="ti-comments"> </i> Liste des réponses
+                    </th>
+                    <th *ngIf="ressourceExterieure.isStatusClose==false">
+                      <button type="button" class="btn btn-primary btn-circle  btn-sm" style="float: right;"
+                        (click)="showModalReponse()"><i class="ti-plus"> </i></button>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th colspan="1">
+                      Date réponse
+                    </th>
+                    <th colspan="1">
+                      Nature financement
+                    </th>
+                    <th colspan="1">
+                      Montant accordé (francs cfa)
+                    </th>
+                    <th *ngIf="ressourceExterieure.isStatusClose==false">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="reponses.length == 0">
+                    <td style="text-align: center;" colspan="4"> Aucune réponse</td>
+                  </tr>
+                  <tr *ngFor="let reponse of reponses">
+                    <td>
+                      {{ reponse.dateReponse | date:'dd-MM-yyyy' }}
+                    </td>
+                    <td>
+                      {{ reponse.natureFinancement.libelle }}
+                    </td>
+                    <td>
+                      {{ reponse.montantRessourceProgrammer }}
+                    </td>
+                    <td *ngIf="ressourceExterieure.isStatusClose==false">
+                      <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                        (click)="showMessageReponseDelete(reponse)"><i class="ti-close"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row" *ngIf="isPTF == false">
+          <div class="col-md-12 col-sm-12">
+
+            <h4 class="card-title">Liste des instructions</h4>
+            <h6 class="card-subtitle">Liste des instructions de la requête.</h6>
+            <hr>
+            <div class="table-responsive">
+
+              <table class="table table-striped border">
+                <thead>
+                  <tr>
+                    <th> Libellé ou référence(s)</th>
+                    <th> Dates de l'instruction</th>
+                    <th>
+                      <button type="button" class="btn btn-primary btn-circle  btn-sm" style="float: right;"
+                        (click)="showModalInstruction()"  *ngIf="requetefinancement != null && requetefinancement != undefined && requetefinancement.isStatusClose == false">
+                        <i class="ti-plus"> </i></button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="instructionRequetes.length == 0">
+                    <td style="text-align: center;" colspan="3"> Aucune instruction</td>
+                  </tr>
+                  <tr *ngFor="let instruction of instructionRequetes let i=index">
+                    <td>
+                      {{ instruction.libelle != null ? instruction.libelle : '#N/A' }}
+                    </td>
+                    <td>
+                      <span> Date identification : {{ instruction.dateIdentification | date: 'dd-MM-yyyy' }} </span>
+                      <br>
+                      <span> Date préparation : {{ instruction.datePreparation | date: 'dd-MM-yyyy' }} </span>
+                      <br>
+                      <span> Date évaluation : {{ instruction.dateEvaluation | date: 'dd-MM-yyyy' }} </span>
+                      <br>
+                      <span> Date négociation : {{ instruction.dateNegociation | date: 'dd-MM-yyyy' }} </span>
+                      <br>
+                      <span> Date approbation : {{ instruction.dateApprobation | date: 'dd-MM-yyyy' }} </span>
+                      <br>
+                      <span> Date signature : {{ instruction.dateSignature | date: 'dd-MM-yyyy' }} </span>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                        (click)="showMessageInstructionDelete(instruction)" *ngIf="requetefinancement != null && requetefinancement != undefined && requetefinancement.isStatusClose == false">
+                        <i class="ti-close"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <br><br>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+
+            <h4 class="card-title">Pièces jointes</h4>
+            <h6 class="card-subtitle">Liste des Pièces jointes.</h6>
+            <hr>
+            <div class="table-responsive">
+
+              <table class="table table-striped border">
+                <thead>
+                  <tr>
+                    <th> Date archivage</th>
+                    <th> Nom de la pièce</th>
+                    <th> Réf. Pièce</th>
+                    <th>
+                      <button type="button" class="btn btn-primary btn-circle  btn-sm" style="float: right;"
+                        (click)="showModalPiece()"  *ngIf="requetefinancement != null && requetefinancement != undefined && requetefinancement.isStatusClose == false">
+                        <i class="ti-plus"> </i></button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="filesRequete.length == 0">
+                    <td style="text-align: center;" colspan="4"> Aucune pièce</td>
+                  </tr>
+                  <tr *ngFor="let file of filesRequete let i=index">
+                    <td>
+                      {{ file.createdAt | date:'dd-MM-yyyy' }}
+                    </td>
+                    <td>
+                      {{ file.namePiece }}
+                    </td>
+                    <td>
+                      {{ file.refPiece }}
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-info btn-circle  btn-sm" style="float: right;"
+                        (click)="showModalPieceInfo(file)"><i class="ti-info"></i>
+                      </button>
+                      <button type="button" class="btn btn-danger btn-circle  btn-sm" style="float: right;"
+                        (click)="showMessageClosePiece(i, file)" *ngIf="requetefinancement != null && requetefinancement != undefined && requetefinancement.isStatusClose == false">
+                        <i class="ti-close"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row"
+             *ngIf="isPTF == false && requetefinancement != null && requetefinancement != undefined && requetefinancement.isStatusClose == false">
+          <div class="col-md-12 col-sm-12">
+            <h4 class="card-title">Appréciation global de la requête</h4>
+            <h6 class="card-subtitle">Formulaire d'appréciation globale de la requête.</h6>
+            <hr>
+            <form class="mt-4" [formGroup]="validateFormCloseRequete">
+
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Type Appréciation <span class="text-danger">*</span></h5>
+                  <nz-select style="width: 100%;" nzShowSearch nzAllowClear formControlName="typeappreciation">
+                    <nz-option *ngFor="let appreciation of typeappreciationList" [nzLabel]="appreciation.libelle"
+                      [nzValue]="appreciation"></nz-option>
+                  </nz-select>
+                  <nz-form-explain
+                    *ngIf="validateFormCloseRequete.get('typeappreciation')?.dirty && validateFormCloseRequete.get('typeappreciation')?.errors">
+                    Ce champs est obligatoire !
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Observation(s) sur l'appréciation<span class="text-danger">*</span></h5>
+                  <textarea rows="3" nz-input formControlName="closeReason"></textarea>
+                  <nz-form-explain
+                    *ngIf="validateFormCloseRequete.get('closeReason')?.dirty && validateFormCloseRequete.get('closeReason')?.errors">
+                    Ce champs est obligatoire !
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+
+              <button type="button" class="btn btn-primary  btn-sm" style="float: right;"
+                [disabled]="validateFormCloseRequete.invalid" (click)="showMessageCloseRequete(requetefinancement)">
+                <i class="ti-check"></i> Archiver
+              </button>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+<!--gestion des relances de requête de financement-->
+<nz-modal [(nzVisible)]="isVisibleRelance" nzTitle="Formulaire de relance" [(nzCancelText)]="btnFermerText"
+  (nzOnCancel)="handleCancelRelance()" [nzClosable]="false" (nzOnOk)="submitFormRelance()" [nzOkText]="'Enregistrer'">
+
+  <form class="mt-4" [formGroup]="validateFormAjouterRelance" (ngSubmit)="submitFormRelance()">
+    <!-- Alert with rounded corner -->
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Message de relance de la requête <span class="text-danger">*</span></h5>
+        <nz-form-control>
+          <textarea rows="3" nz-input formControlName="libelle"></textarea>
+
+          <nz-form-explain
+            *ngIf="validateFormAjouterRelance.get('libelle')?.dirty && validateFormAjouterRelance.get('libelle')?.errors">
+            Ce champs est obligatoire !
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </form>
+
+</nz-modal>
+
+<!--gestion des réponses de requête de financement-->
+<nz-modal [(nzVisible)]="isVisibleReponse" nzTitle="Formulaire de réponse " [(nzCancelText)]="btnFermerText"
+  (nzOnCancel)="handleCancelReponse()" [nzClosable]="false" (nzOnOk)="submitFormReponse()" [nzOkText]="'Enregistrer'">
+
+  <form class="mt-4" [formGroup]="validateFormAjouterReponse" *ngIf="ressourceExterieure != null">
+    <!-- Alert with rounded corner -->
+    <p>
+      <span> P.T.F</span> : <strong> {{ ressourceExterieure.ptfBailleurFrs?.denominationptf }}</strong>
+    </p>
+    <p>
+      <span>Montant sollicité (fcfa): </span> <strong> {{ ressourceExterieure.montantRessourceProgrammer }} </strong>
+    </p>
+
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <nz-form-item>
+          <h5> Nature financement <span class="text-danger">*</span></h5>
+          <nz-form-control>
+            <nz-select nzShowSearch nzAllowClear formControlName="natureFinancement">
+              <nz-option *ngFor="let nature of naturefinancementList" [nzLabel]="nature.libelle" [nzValue]="nature">
+              </nz-option>
+            </nz-select>
+            <nz-form-explain
+              *ngIf="validateFormAjouterReponse.get('natureFinancement')?.dirty && validateFormAjouterReponse.get('natureFinancement')?.errors">
+              Ce champs est obligatoire !
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <nz-form-item>
+          <h5> Montant accordé (fcfa) <span class="text-danger">*</span></h5>
+          <nz-form-control>
+            <input nz-input type="number" formControlName="montantRessourceProgrammer" class="form-control">
+
+            <nz-form-explain
+              *ngIf="validateFormAjouterReponse.get('montantRessourceProgrammer')?.dirty && validateFormAjouterReponse.get('montantRessourceProgrammer')?.errors">
+              Ce champs est obligatoire !
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Observations <span class="text-danger">*</span></h5>
+        <nz-form-control>
+          <textarea rows="3" nz-input formControlName="libelle"></textarea>
+
+          <nz-form-explain
+            *ngIf="validateFormAjouterReponse.get('libelle')?.dirty && validateFormAjouterReponse.get('libelle')?.errors">
+            Ce champs est obligatoire !
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <!--
+        <div style="float: right;margin-bottom: -15px;">
+          <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateFormAjouterReponse.invalid"
+                  style="margin-left: 10px;"><i class="ti-check"> </i> Enregistrer
+          </button>
+        </div>-->
+
+  </form>
+
+</nz-modal>
+
+<!--gestion de gestion des pièces jointes-->
+<nz-modal [(nzVisible)]="isVisibleFile" nzTitle="Formulaire d'ajoute de pièce " [(nzCancelText)]="btnFermerText"
+  (nzOnCancel)="handleCancelReponse()" [nzClosable]="false" (nzOnOk)="submitFormFile()" [nzOkText]="'Enregistrer'">
+
+  <form class="mt-4" [formGroup]="validateFormFile">
+    <!-- Alert with rounded corner -->
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Nom de la pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="namePiece" id="namePiece" class="form-control"
+          oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain *ngIf="validateFormFile.get('namePiece')?.dirty && validateFormFile.get('namePiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Pièce<span class="text-danger">*</span></h5>
+        <input nz-input formControlName="refPiece" id="refPiece" class="form-control"
+          oninput="this.value = this.value.toUpperCase()">
+        <nz-form-explain *ngIf="validateFormFile.get('refPiece')?.dirty && validateFormFile.get('refPiece')?.errors">
+          Ce champs est obligatoire !
+        </nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-control>
+        <h5> Réf. Emplacement physique</h5>
+        <textarea rows="3" nz-input formControlName="refEmplacement"
+          oninput="this.value = this.value.toUpperCase()"></textarea>
+
+      </nz-form-control>
+    </nz-form-item>
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Résumé du contenu </h5>
+        <nz-form-control>
+          <textarea rows="3" nz-input formControlName="resumePiece"></textarea>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <input type="file" id="file" #fileInput (change)="handleFileInput($event)">
+    </div>
+
+    <!-- <div style="float: right;margin-bottom: -15px;">
+       <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateFormFile.invalid"
+               style="margin-left: 10px;"><i class="ti-check"> </i> Enregistrer
+       </button>
+     </div>-->
+
+  </form>
+
+</nz-modal>
+
+
+<!--gestion des relances de requête de financement-->
+<nz-modal [(nzVisible)]="isVisibleInstruction" nzTitle="Formulaire d'enregistrement des instructions"
+  [(nzCancelText)]="btnFermerText" (nzOnCancel)="handleCancelInstruction()" [nzClosable]="false"
+  (nzOnOk)="submitFormInstruction()" [nzOkText]="'Enregistrer'">
+
+  <form class="mt-4" [formGroup]="validateFormAjouterInstruction" (ngSubmit)="submitFormInstruction()">
+    <!-- Alert with rounded corner -->
+
+    <div class="form-group">
+      <nz-form-item>
+        <h5> Libellé ou référence(s) <span class="text-danger">*</span></h5>
+        <nz-form-control>
+          <textarea rows="3" nz-input formControlName="libelle"></textarea>
+
+          <nz-form-explain
+            *ngIf="validateFormAjouterInstruction.get('libelle')?.dirty && validateFormAjouterInstruction.get('libelle')?.errors">
+            Ce champs est obligatoire !
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Date identification</h5>
+          <nz-date-picker formControlName="dateIdentification"></nz-date-picker>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Date préparation</h5>
+          <nz-date-picker formControlName="datePreparation"></nz-date-picker>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Date évaluation</h5>
+          <nz-date-picker formControlName="dateEvaluation"></nz-date-picker>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Date négociation</h5>
+          <nz-date-picker formControlName="dateNegociation"></nz-date-picker>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Date approbation</h5>
+          <nz-date-picker formControlName="dateApprobation"></nz-date-picker>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div class="form-group">
+
+      <nz-form-item>
+        <nz-form-control>
+          <h5> Date signature</h5>
+          <nz-date-picker formControlName="dateSignature"></nz-date-picker>
+
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+  </form>
+
+</nz-modal>
+
+
+<!--information sur une pièce -->
+<nz-modal [(nzVisible)]="isVisiblePieceInfo" nzTitle="Informations sur la pièce" [nzClosable]="false"
+  (nzOnOk)="handleCancelPieceInfo()" [nzCancelText]="null" [nzOkText]="'OK'">
+
+  <div *ngIf="pieceInfo != null">
+    <p>
+      <span> Nom de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.fileName : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de la pièce : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.refPiece : '#N/A'
+      }} </strong>
+    </p>
+    <p>
+      <span> Réf de l'emplacement physique : </span> <strong> {{ pieceInfo.resumePiece != null ?
+      pieceInfo.refEmplacement : '#N/A' }} </strong>
+    </p>
+    <p>
+      <span> Résumé du contenu : </span> <strong> {{ pieceInfo.resumePiece != null ? pieceInfo.resumePiece :
+      '#N/A'}} </strong>
+    </p>
+    <p>
+      <span> Date de sauvegarde de la pièce : </span> <strong> {{ pieceInfo.createdAt != null ? (pieceInfo.createdAt |
+      date:'dd MM yyyy') : '#N/A'}} </strong>
+    </p>
+    <p>
+      <button type="button" class="btn btn-primary btn-sm" (click)="downloadFile(pieceInfo.fullFileName)"><i
+          class="ti-download"></i> cliquer ici pour télécharger la pièce
+      </button>
+    </p>
+  </div>
+
+</nz-modal>
+
+<!--Informations sur le projet-->
+<!--<nz-modal [(nzVisible)]="isVisibleProjet" nzTitle="Informations sur la requête de financement" [(nzCancelText)]="btnFermerText"
+  (nzOnCancel)="handleCancelReponse()" [nzClosable]="false" [nzOkText]="null" [nzWidth]="1020">
+
+  <div style="padding: 5px;" *ngIf="projetProgrammeIdee != null">
+    <app-detail-sommaire-projet [projet]="projetProgrammeIdee"></app-detail-sommaire-projet>
+  </div>
+
+</nz-modal>-->

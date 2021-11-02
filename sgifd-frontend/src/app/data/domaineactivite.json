@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "libelle": "AGRICOLE"
+  },
+  {
+    "id": 2,
+    "libelle": "TOURISME"
+  },
+  {
+    "id": 3,
+    "libelle": "MINERAIRE"
+  }
+]

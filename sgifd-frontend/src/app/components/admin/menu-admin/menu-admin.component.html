@@ -1,0 +1,345 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+
+      <img src="assets/images/logo-rb.png" style="width: 200px;height: 120px;margin-top: 25%;padding-left: 15%;" alt="">
+      <h5 style="color: white;text-transform: uppercase;text-align: center;">
+        Ministère de l'Économie et des Finances
+      </h5>
+      <h1 style="color: white;font-weight: bold;margin-top: 10%;text-align: center;">DGFD</h1>
+      <h5 style="color: white;text-transform: uppercase;text-align: center;">
+        Direction générale du financement du développement
+      </h5>
+
+      <img src="assets/images/logos/logo-sgifd.PNG" class="rounded-circle"
+           style="height: 110px;margin-left: 20%;margin-top: 5%;" alt="homepage"/>
+
+      <br>
+      <br>
+      <a [routerLink]="['']" style="margin-left: 32%;" class="btn btn-sm btn-success text-white btn-rounded center">
+        <i class="ti ti-home"></i>
+        Accueil
+      </a>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+
+
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb border-bottom">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+        <h5 class="font-medium text-uppercase mb-0">Administration</h5>
+      </div>
+      <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+        <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+          <ol class="breadcrumb mb-0 justify-content-end p-0">
+            <li class="breadcrumb-item">
+              <a href="index.html">SGIFD</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Administration</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="page-content container-fluid" style="margin-bottom: -25px;">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+      <div class="col-md-4" *ngIf="getIsModuleForUser('PARAMETRAGE')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-primary btn-circle btn-xl  heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon10.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">PARAMETRAGE DES MODULES DU SYSTEME</h5>
+            <a class="btn btn-primary btn-rounded waves-effect waves-light mt-3"
+            [routerLink]="['parametrage']">Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="getIsModuleForUser('ACCORD_COOPERATION')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-secondary btn-circle btn-xl  heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon12.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION DES ACCORDS DE COOPERATION</h5>
+            <!-- <a class="btn btn-secondary btn-rounded waves-effect waves-light mt-3" [routerLink]="['accords']">Accéder au
+              module
+            </a> -->
+            <a class="btn btn-secondary btn-rounded waves-effect waves-light mt-3"
+            href ="/admin/accords">Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="getIsModuleForUser('REQUETE_FINANCEMENT')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-success btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon1.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">
+              GESTION ET SUIVI DES REQUÊTES DE FINANCEMENT</h5>
+            <!--<a class="btn btn-success btn-rounded waves-effect waves-light mt-3"
+            [routerLink]="['requete-financement']">
+              Accéder au module
+            </a>-->
+            <a class="btn btn-success btn-rounded waves-effect waves-light mt-3"
+            href ="/admin/requete-financement">Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4" *ngIf="getIsModuleForUser('SUIVI_PROJET')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-info btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon13.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">
+              GESTION ET SUIVI FINANCIER DES PROJETS</h5>
+            <!--<a class="btn btn-info btn-rounded waves-effect waves-light mt-3"
+            [routerLink]="['projet']">Accéder au
+              module
+            </a> -->
+            <a class="btn btn-info btn-rounded waves-effect waves-light mt-3"
+            href ="/admin/projet">Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="getIsModuleForUser('COOPERATION_DECENTRALISEE')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-warning btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon11.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">
+              GESTION DE LA COOPERATION DECENTRALISEE</h5>
+            <!--<a class="btn btn-warning btn-rounded waves-effect waves-light mt-3" style="color: white;"
+               [routerLink]="['cooperation-decentralisee']">Accéder au module
+            </a>-->
+            <a class="btn btn-warning btn-rounded waves-effect waves-light mt-3"
+            href ="/admin/cooperation-decentralisee">Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="getIsModuleForUser('AIDE_ALIMENTAIRE_BOURSE_ET_SECOURS')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-primary btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon6.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">
+              GESTION AIDES ALIMENTAIRES ET LES BOURSES DE FORMATION</h5>
+            <!--<a class="btn btn-primary btn-rounded waves-effect waves-light mt-3"
+              [routerLink]="['aides-secours']">
+              Accéder au module
+            </a>-->
+            <a class="btn btn-primary btn-rounded waves-effect waves-light mt-3"
+            href ="/admin/aides-secours">Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4" *ngIf="getIsModuleForUser('INVESTISSEMENT_DIRECT_ETRANGER')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-success btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon2.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">
+              GESTION DES INVESTISSEMENTS DIRECTS ETRANGERS</h5>
+            <a class="btn btn-success btn-rounded waves-effect waves-light mt-3" [routerLink]="['ide']">Accéder au
+              module
+            </a>
+          </div>
+        </div>
+     </div>
+      <div class="col-md-4" *ngIf="getIsModuleForUser('PARTENARIAT_PUBLIC_PRIVE')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-secondary btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon8.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">
+              GESTION ET SUIVI DU PARTENARIAT PUBLIC-PRIVE</h5>
+            <a class="btn btn-secondary btn-rounded waves-effect waves-light mt-3" [routerLink]="['ppp']">Accéder au
+              module
+            </a>
+          </div>
+        </div>
+       </div>
+      <div class="col-md-4" *ngIf="getIsModuleForUser('FOND_SPECIFIQUE')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-info btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/004-coins.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION DES FONDS SPECIFIQUES</h5>
+            <a class="btn btn-info btn-rounded waves-effect waves-light mt-3" [routerLink]="['fonds-specifiques']">
+              Accéder au module
+            </a>
+          </div>
+        </div>
+        <!--   <div class="card min-height-menu">
+     <div class="card-body text-center">
+       <div class="row">
+         <div class="col-md-4">
+           <img src="assets/images/icons/icon4.png"
+                class="rounded-circle btn-secondary img-margin-top img-menu-icon-size"
+                alt="">
+         </div>
+         <div class="col-md-8">
+           <a [routerLink]="['fonds-specifiques']" class="lien-admin">
+             <br>
+             <br>
+             <span class="text-admin-module">GESTION DES FONDS SPECIFIQUES</span>
+           </a>
+         </div>
+       </div>
+     </div>
+   </div>-->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4" *ngIf="getIsModuleForUser('COMMISSION_MIXTE_DOCUMENT_STRAGTEGIE_PAYS')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-primary btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/005-united.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">
+              GESTION DES COMMISSIONS MIXTES ET DOCUMENTS DE STRATEGIE PAYS
+            </h5>
+            <a class="btn btn-primary btn-rounded waves-effect waves-light mt-3" [routerLink]="['commision-dsp']">
+              Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" *ngIf="getIsModuleForUser('UTILISATEUR_SYSTEME')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-warning btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/icon9.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION DES UTILISATEURS DU SYSTEME</h5>
+            <a class="btn btn-warning btn-rounded waves-effect waves-light mt-3" style="color: white;"
+               [routerLink]="['utilisateurs']">Accéder au module
+            </a>
+          </div>
+        </div>
+     </div>
+      <div class="col-md-4" *ngIf="getIsModuleForUser('OUTPUT_RAPPORT')">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-secondary btn-circle btn-xl heigth-width-180 margin-left-25
+                                margin-top-1">
+            <img src="assets/images/icons/006-printer.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GERATION DES RAPPORTS</h5>
+            <a class="btn btn-secondary btn-rounded waves-effect waves-light mt-3"
+               [routerLink]="['rapport']">Accéder au module
+            </a>
+          </div>
+        </div>
+     </div>
+
+      <!--<div class="col-md-4">
+        <div class="card min-height-356-px">
+          <button type="button" class="btn btn-info btn-circle btn-xl heigth-width-180 margin-left-25 margin-top-1">
+            <img src="assets/images/icons/icon13.png" alt="">
+          </button>
+          <div class="card-body text-center">
+
+            <h5 class="font-normal" style="color: black;">GESTION DES APPUIS BUDGETAIRES</h5>
+            <a class="btn btn-info btn-rounded waves-effect waves-light mt-3" [routerLink]="['appui-budgetaire']">
+              Accéder au module
+            </a>
+          </div>
+        </div>
+      </div>
+-->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">
+    © 2019 SGIFD. Designed and Developed by<a href="https://wrappixel.com/">FAVIEM</a>.
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+
+  <img src="../../assets/images/footer_img.png" alt="" style="margin-top: -2%;">
+
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->

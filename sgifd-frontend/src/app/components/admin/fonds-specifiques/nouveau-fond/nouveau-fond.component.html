@@ -1,0 +1,509 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <div class="col-md-1 col-sm-12"></div>
+    <div class="col-md-10 col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Formulaire d'enregistrement</h4>
+                <h6 class="card-subtitle">Enregistrement des fonds specifiques.</h6>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Données </h4>
+                                <h6 class="card-subtitle">Information sur les données du fond spécifique.</h6>
+                                <hr>
+                                <form class="mt-4" [formGroup]="validateFormFondSpecifique">
+
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5>Année
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <nz-select nzShowSearch nzAllowClear id="exercice" formControlName="exercice">
+                                                        <nz-option *ngFor="let exercice of exerciceList" [nzLabel]="exercice.libelle" [nzValue]="exercice"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('exercice')?.dirty && validateFormFondSpecifique.get('exercice')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Référence
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <input nz-input formControlName="reference" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('reference')?.dirty && validateFormFondSpecifique.get('reference')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5>Type
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <nz-select nzShowSearch nzAllowClear id="typeFondSpecifique" formControlName="typeFondSpecifique">
+                                                        <nz-option *ngFor="let type of typefondspecifiqueList" [nzLabel]="type.libelle" [nzValue]="type"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('typeFondSpecifique')?.dirty && validateFormFondSpecifique.get('typeFondSpecifique')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Montant du fonds en devise
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <input nz-input formControlName="montantDevise" class="form-control" oninput="this.value = this.value.toUpperCase()" type="number">
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('montantDevise')?.dirty && validateFormFondSpecifique.get('montantDevise')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5>Devise
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <nz-select nzShowSearch nzAllowClear formControlName="deviseMonnaie">
+                                                        <nz-option *ngFor="let deviseMonnaie of deviseMonnaieList" [nzLabel]="deviseMonnaie.libelle" [nzValue]="deviseMonnaie"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('deviseMonnaie')?.dirty && validateFormFondSpecifique.get('deviseMonnaie')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Montant francs CFA
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <input nz-input formControlName="montantFcfa" class="form-control" oninput="this.value = this.value.toUpperCase()" type="number">
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('montantFcfa')?.dirty && validateFormFondSpecifique.get('montantFcfa')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Libellé ou désignation
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <input nz-input formControlName="libelle" class="form-control" oninput="this.value = this.value.toUpperCase()">
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('libelle')?.dirty && validateFormFondSpecifique.get('libelle')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5>Grand Secteur
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <nz-select nzShowSearch nzAllowClear id="grandSecteur" formControlName="grandSecteur" (ngModelChange)="grandSecteurChange($event)">
+                                                        <nz-option *ngFor="let grandSecteur of grandSecteurList" [nzLabel]="grandSecteur.libelle" [nzValue]="grandSecteur"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('grandSecteur')?.dirty && validateFormFondSpecifique.get('grandSecteur')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5>Secteur
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <nz-select nzShowSearch nzAllowClear id="secteur" formControlName="secteur" (ngModelChange)="secteurChange($event)">
+                                                        <nz-option *ngFor="let secteur of secteurList" [nzLabel]="secteur.libelle" [nzValue]="secteur"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('secteur')?.dirty && validateFormFondSpecifique.get('secteur')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5>Sous Secteurs
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <nz-select nzShowSearch nzAllowClear nzMode="multiple" id="sousSecteurs" formControlName="sousSecteurs">
+                                                        <nz-option *ngFor="let sousSecteur of sousSecteurList" [nzLabel]="sousSecteur.libelle" [nzValue]="sousSecteur"></nz-option>
+                                                    </nz-select>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('sousSecteurs')?.dirty && validateFormFondSpecifique.get('sousSecteurs')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Objectifs
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <textarea rows="3" nz-input formControlName="objectifs"></textarea>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('objectifs')?.dirty && validateFormFondSpecifique.get('objectifs')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Observations
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <textarea rows="3" nz-input formControlName="observations"></textarea>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('observations')?.dirty && validateFormFondSpecifique.get('observations')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Difficultés
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <textarea rows="3" nz-input formControlName="difficultes"></textarea>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('difficultes')?.dirty && validateFormFondSpecifique.get('difficultes')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12">
+                                            <nz-form-item>
+                                                <nz-form-control>
+                                                    <h5> Solutions Envisagées
+                                                        <span class="text-danger">*</span>
+                                                    </h5>
+                                                    <textarea rows="3" nz-input formControlName="solutionsEnvisagees"></textarea>
+                                                    <nz-form-explain *ngIf="validateFormFondSpecifique.get('solutionsEnvisagees')?.dirty && validateFormFondSpecifique.get('solutionsEnvisagees')?.errors">
+                                                        Ce champs est obligatoire !
+                                                    </nz-form-explain>
+                                                </nz-form-control>
+                                            </nz-form-item>
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+
+                                    <div class="row">
+
+                                        <div class="col-md-12 col-sm-12">
+
+                                            <h5> Liste des projets impactés </h5>
+                                            <hr>
+
+                                            <form class="mt-4" nz-form [formGroup]="validateFormDetailFondSpecifique" *ngIf="validateFormFondSpecifique.value.montantFcfa != null">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <nz-form-item>
+                                                            <nz-form-control>
+                                                                <h5>Projet
+                                                                    <span class="text-danger">*</span>
+                                                                </h5>
+                                                                <nz-select nzShowSearch nzAllowClear id="projetProgramme" formControlName="projetProgramme">
+                                                                    <nz-option *ngFor="let projet of projetList" [nzLabel]="projet.libelle" [nzValue]="projet.id"></nz-option>
+                                                                </nz-select>
+                                                                <nz-form-explain *ngIf="validateFormDetailFondSpecifique.get('projet')?.dirty && validateFormDetailFondSpecifique.get('projet')?.errors">
+                                                                    Ce champs est obligatoire !
+                                                                </nz-form-explain>
+                                                            </nz-form-control>
+                                                        </nz-form-item>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <nz-form-item>
+                                                            <nz-form-control>
+                                                                <h5> Montant devise
+                                                                    <span class="text-danger">*</span>
+                                                                </h5>
+                                                                <input nz-input formControlName="montantDevise" class="form-control" oninput="this.value = this.value.toUpperCase()" type="number">
+                                                                <nz-form-explain *ngIf="validateFormDetailFondSpecifique.get('montantDevise')?.dirty && validateFormDetailFondSpecifique.get('montantDevise')?.errors">
+                                                                    Ce champs est obligatoire !
+                                                                </nz-form-explain>
+                                                            </nz-form-control>
+                                                        </nz-form-item>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <nz-form-item>
+                                                            <nz-form-control>
+                                                                <h5>Devise monnaie
+                                                                    <span class="text-danger">*</span>
+                                                                </h5>
+                                                                <nz-select nzShowSearch nzAllowClear formControlName="deviseMonnaie">
+                                                                    <nz-option *ngFor="let deviseMonnaie of deviseMonnaieList" [nzLabel]="deviseMonnaie.libelle" [nzValue]="deviseMonnaie.id"></nz-option>
+                                                                </nz-select>
+                                                                <nz-form-explain *ngIf="validateFormDetailFondSpecifique.get('deviseMonnaie')?.dirty && validateFormDetailFondSpecifique.get('deviseMonnaie')?.errors">
+                                                                    Ce champs est obligatoire !
+                                                                </nz-form-explain>
+                                                            </nz-form-control>
+                                                        </nz-form-item>
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-12">
+                                                        <nz-form-item>
+                                                            <nz-form-control>
+                                                                <h5> Montant francs CFA
+                                                                    <span class="text-danger">*</span>
+                                                                </h5>
+                                                                <input nz-input formControlName="montantFcfa" class="form-control" oninput="this.value = this.value.toUpperCase()" type="number">
+                                                                <nz-form-explain *ngIf="validateFormDetailFondSpecifique.get('montantFcfa')?.dirty && validateFormDetailFondSpecifique.get('montantFcfa')?.errors">
+                                                                    Ce champs est obligatoire !
+                                                                </nz-form-explain>
+                                                            </nz-form-control>
+                                                        </nz-form-item>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div>
+                                                        <button nz-button nzType="danger" style="margin-right: 8px;" (click)="annulerDetailFondSpecifique()">
+                                  <i class="anticon anticon-close"> </i> Annuler
+                                </button>
+                                                        <button nz-button nzType="primary" style="margin-right: 8px;" [disabled]="validateFormDetailFondSpecifique.invalid" (click)="enregistrerDetailFondSpecifique()">
+                              <i class="anticon anticon-plus"> </i> {{ btnTitle }}
+                            </button>
+
+                                                    </div>
+                                                    <br>
+                                                </div>
+                                            </form>
+
+                                            <table class="table table-striped border" style="width: 100%!important;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Réf</th>
+                                                        <th>Intitulé</th>
+                                                        <th>Niveau maturité</th>
+                                                        <th>Montant devise</th>
+                                                        <th>Devise</th>
+                                                        <th>Montant en francs CFA</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let detailFondS of detailFondSpecifiqueSubmit">
+                                                        <td> {{detailFondS.projetProgramme.reference}}</td>
+                                                        <td> {{detailFondS.projetProgramme.libelle}}</td>
+                                                        <td> {{detailFondS.projetProgramme.niveaumaturite.libelle}}</td>
+                                                        <td> {{ formatNumber(detailFondS.montantDevise) }}</td>
+                                                        <td> {{detailFondS.deviseMonnaie.libelle}}</td>
+                                                        <td> {{ formatNumber(detailFondS.montantFcfa) }}</td>
+                                                        <td>
+                                                            <div class="editable-row-operations">
+                                                                <ng-container>
+                                                                    <button type="button" class="btn btn-success btn-circle  btn-sm" (click)="modifierDetailFondSpecifique(detailFondS)">
+                                    <i class="ti-pencil"></i>
+                                  </button>
+                                                                    <nz-popconfirm [nzTitle]="'Êtes-vous sûr de l\'enlever?'" (nzOnConfirm)="enleverDetailFondSpecifique(detailFondS)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+
+                                                                        <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                      <i class="ti-close"></i>
+                                    </button>
+
+                                                                    </nz-popconfirm>
+                                                                </ng-container>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot *ngIf="detailFondSpecifiqueSubmit.length > 0">
+                                                    <tr>
+                                                        <td colspan="5"> TOTAL ALLOUE</td>
+                                                        <td colspan="2"> <strong>{{ formatNumber(getTotalMontantDetailFondSpecifique()) }}</strong></td>
+                                                        <!-- <td colspan="3"></td> -->
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5"> NON ALLOUE</td>
+                                                        <td colspan="2"> <strong>{{ formatNumber(validateFormFondSpecifique.value.montantFcfa - getTotalMontantDetailFondSpecifique()) }}</strong></td>
+                                                        <!-- <td colspan="3"></td> -->
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+
+                                    <h4 class="card-title"> Fournisseurs de coopération</h4>
+                                    <h6 class="card-subtitle">Liste des Fournisseurs de coopération.
+                                        <button type="button" class="btn btn-success btn-circle  btn-sm" style="float: right;" (click)="showModalPtf()">
+                            <i class="ti-plus"></i>
+                          </button>
+                                    </h6>
+                                    <hr>
+                                    <div class="table-responsive">
+                                        <!-- Alert with rounded corner -->
+
+                                        <table class="table table-striped border" style="width: 100%!important;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dénomination</th>
+                                                    <th>Sigle</th>
+                                                    <th>Catégorie</th>
+                                                    <th>Pays</th>
+                                                    <th>Contact(s)</th>
+                                                    <th>#</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let ptf of ptfsSubmit">
+                                                    <td> {{ ptf.denominationptf }}</td>
+                                                    <td> {{ ptf.sigleptf }}</td>
+                                                    <td> {{ ptf.categorieptf.libelle }}</td>
+                                                    <td> {{ ptf.pays.libelle }}</td>
+                                                    <td> {{ ptf.telptf }}</td>
+                                                    <td style="text-align: center;">
+
+                                                        <ng-container>
+                                                            <nz-popconfirm [nzTitle]="'Êtes vous sûr de supprimer ?'" (nzOnConfirm)="enleverPtf(ptf)" [nzOkText]="'Oui'" [nzCancelText]="'Non'">
+
+                                                                <button type="button" nz-popconfirm class="btn btn-danger btn-circle  btn-sm">
+                                        <i class="ti-close"></i>
+                                      </button>
+
+                                                            </nz-popconfirm>
+                                                        </ng-container>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+
+
+
+
+
+
+                                </form>
+
+                                <div class="col-md-12 col-sm-12">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <a nz-button nzType="default" [routerLink]="['../list-fond-specifique']">
+                                                <i nz-icon type="left"> </i> Liste des fonds spécifiques</a>
+
+                                            <button nz-button nzType="primary" style="margin-left: 10px;" (click)="enregistrerFondSpecifique()" [disabled]="validateFormFondSpecifique.invalid || ptfsSubmit.length ==0
+                        || detailFondSpecifiqueSubmit.length ==0">
+                        Enregistrer le fonds spécifique
+                      </button>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->
+
+<!--gestion des Ptfs-->
+<nz-modal [(nzVisible)]="isVisibleModalPtf" nzTitle="Répertoire des P.T.F" [(nzCancelText)]="btnFermerText" (nzOnCancel)="handleCancel()" [nzClosable]="false" [nzOkDisabled]="false" [nzOkText]="null" [nzWidth]="700">
+
+    <div class="table-responsive">
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-info" type="button">
+          <i class="ti-pencil"></i>
+        </button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter" placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="button">
+          <i class="ti-search"></i>
+        </button>
+            </div>
+        </div>
+
+        <table class="table table-striped border" style="width: 100%!important;">
+            <thead>
+                <tr>
+                    <th> Dénomination</th>
+                    <th> Catégorie</th>
+                    <th> Sigle</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ptf of ptfList | filter:filter">
+                    <td> {{ ptf.denominationptf }}</td>
+                    <td> {{ ptf.categorieptf.libelle }}</td>
+                    <td> {{ ptf.sigleptf }}</td>
+                    <td style="text-align: center;">
+                        <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="choisirUnPTF(ptf)">
+              <i class="ti-check"></i>
+            </button>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+</nz-modal>

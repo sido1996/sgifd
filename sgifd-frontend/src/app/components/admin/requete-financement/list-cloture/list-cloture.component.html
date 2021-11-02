@@ -1,0 +1,137 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title">Liste des requêtes de financement archivées </h4>
+        <h6 class="card-subtitle">
+          Liste des requêtes de financement <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+
+          <p-table #dt [paginator]="true" [rowsPerPageOptions]="[10,25,50]" [rows]="10"
+                   [showCurrentPageReport]="true" [value]="requeteList"
+                   currentPageReportTemplate="Affichage de {first} à {last} dans {totalRecords} éléments">
+            <ng-template pTemplate="header">
+              <tr>
+                <th pSortableColumn="id"> N° Enreg
+                  <p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th pSortableColumn="dateEnvoiRequete">Date envoie
+                  <p-sortIcon field="dateEnvoiRequete"></p-sortIcon>
+                </th>
+                <th pSortableColumn="projetProgrammeIdee.reference">Ref. projet
+                  <p-sortIcon field="projetProgrammeIdee.reference"></p-sortIcon>
+                </th>
+                <th pSortableColumn="projetProgrammeIdee.libelle ">Intitulé
+                  <p-sortIcon field="projetProgrammeIdee.libelle "></p-sortIcon>
+                </th>
+                <th pSortableColumn="projetProgrammeIdee.coutGlobalProjet">Cout global (F CFA)
+                  <p-sortIcon field="projetProgrammeIdee.coutGlobalProjet"></p-sortIcon>
+                </th>
+                <th pSortableColumn="projetProgrammeIdee.coutTotalRessourcesExterieures"> Montant des Res. Ext. attendu (fcfa)
+                  <p-sortIcon field="projetProgrammeIdee.coutTotalRessourcesExterieures"></p-sortIcon>
+                </th>
+                <th> Nbre de P.T.F Destinataires
+                </th>
+                <th class="text-center">Action</th>
+              </tr>
+              <tr class="title-filter-table">
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'id', 'equal')" nz-input placeholder="Rechercher"
+                           type="number"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'dateEnvoiRequete', 'equal')" nz-input placeholder="Rechercher"
+                           type="date"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'projetProgrammeIdee.reference', 'contains')" nz-input
+                           placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'projetProgrammeIdee.libelle', 'contains')" nz-input
+                           placeholder="Rechercher"
+                           type="text"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'projetProgrammeIdee.coutGlobalProjet', 'equal')" nz-input placeholder="Rechercher"
+                           type="number"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  <nz-input-group [nzSuffix]="suffixIconSearch">
+                    <input (input)="dt.filter($event.target.value, 'projetProgrammeIdee.coutTotalRessourcesExterieures', 'equal')" nz-input placeholder="Rechercher"
+                           type="number"/>
+                  </nz-input-group>
+                  <ng-template #suffixIconSearch>
+                    <i nz-icon nzType="search"></i>
+                  </ng-template>
+                </th>
+                <th>
+                  #
+                </th>
+                <th class="text-center">#</th>
+              </tr>
+            </ng-template>
+            <ng-template let-requete pTemplate="body">
+              <tr>
+                <td> {{ requete.id }}</td>
+                <td> {{ requete.dateEnvoiRequete|date:'dd-MMM-yyyy' }}</td>
+                <td> {{ requete.projetProgrammeIdee.reference }}</td>
+                <td> {{ requete.projetProgrammeIdee.libelle }}</td>
+                <td> {{ formatNumber(requete.projetProgrammeIdee.coutGlobalProjet) }}</td>
+                <td> {{ formatNumber(requete.projetProgrammeIdee.coutTotalRessourcesExterieures) }}</td>
+                <td> {{ requete.projetProgrammeIdee.ressourceExterieures.length }}</td>
+                <td style="text-align: center;">
+                  <button type="button" class="btn btn-primary btn-circle  btn-sm"
+                          (click)="ouvrirDetail(requete.id)">
+                    <i class="ti-info"></i></button>
+                </td>
+              </tr>
+
+            </ng-template>
+          </p-table>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

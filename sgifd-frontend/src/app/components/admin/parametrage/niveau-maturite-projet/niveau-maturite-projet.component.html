@@ -1,0 +1,142 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-4 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire</h4>
+        <h6 class="card-subtitle">Enregistrement et modification des niveaux de maturité de projet.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <div class="form-group">
+            <nz-form-item>
+              <h5> Niveau maturité <span class="text-danger">*</span> </h5>
+              <nz-form-control>
+                <input nz-input formControlName="libelle" id="libelle" class="form-control"
+                       oninput="this.value = this.value.toUpperCase()">
+                <nz-form-explain *ngIf="validateForm.get('libelle')?.dirty && validateForm.get('libelle')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+                    style="margin-left: 10px;"><i class="ti-check"> </i> {{ btnTitle }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title"> Niveaux de maturité de projet</h4>
+        <h6 class="card-subtitle">
+          Liste des niveaux de maturité de projet <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+          <!-- Alert with rounded corner -->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                   placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+            <i class="ti-info-alt"></i> {{messageNotificationTable}}
+            <button type="button" class="close" (click)="closeNotificationTable()">
+              <span>×</span></button>
+          </div>
+          <table class="table table-striped border" style="width: 100%!important;" [svData]="niveaumaturiteList" #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+            <tr>
+              <th>  <sv-default-sorter by="libelle"> Nom pays </sv-default-sorter> </th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let niveau of sv.data | filter:filter">
+              <td> {{ niveau.libelle }}</td>
+              <td style="text-align: center;">
+                <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(niveau)"
+                >
+                  <i class="ti-pencil"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(niveau)">
+                  <i class="ti-close"></i>
+                </button>
+              </td>
+            </tr>
+
+            </tbody>
+
+            <tfoot>
+
+            <tr>
+              <td colspan="2">
+                <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+              </td>
+            </tr>
+            </tfoot>
+
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de suppression -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-normal" id="exampleModalLabel">Suppression</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h6 class="text-danger">Confirmation de suppression...</h6>
+          <div class="p-t-25">
+            <p>Confirmez-vous la suppression de <strong>element</strong> ?</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+          <button type="button" class="btn btn-danger">Oui</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fin modal de suppression -->
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

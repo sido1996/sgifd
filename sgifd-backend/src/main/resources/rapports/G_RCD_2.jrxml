@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="G_RCD_2" language="java" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c760436b-8a5c-4446-9e4b-cbccab79b943">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT sRequete1.SECTEUR, SUM(sRequete2.MONTANT)
+FROM
+(SELECT s.libelle AS SECTEUR
+FROM t_secteur s
+WHERE s.status = false) sRequete1 LEFT JOIN
+
+(SELECT  s.libelle AS SECTEUR, SUM(t.montant_ressource_decaisser_fcfa) AS MONTANT
+FROM t_secteur_impacte si, t_secteur s, t_annee a, t_ressource_exterieure_annuelle t, t_ressource_exterieure tr
+WHERE tr.projet_programme_idee_id = si.projet_programme_idee_id
+AND t.ressource_exterieure_id = tr.id
+AND si.secteur_id = s.id
+AND t.annee_id = a.id
+ AND a.status = false
+ AND a.libelle BETWEEN '2011' AND '2018'
+GROUP BY a.libelle, s.libelle
+ORDER BY a.libelle, s.libelle ASC) sRequete2 ON sRequete1.SECTEUR = sRequete2.SECTEUR
+
+GROUP BY sRequete1.SECTEUR
+ORDER BY sRequete1.SECTEUR]]>
+	</queryString>
+	<field name="secteur" class="java.lang.String"/>
+	<field name="sum" class="java.lang.Double"/>
+	<detail>
+		<band height="340">
+			<pieChart>
+				<chart>
+					<reportElement x="96" y="157" width="200" height="100" uuid="d39c06b2-8f77-4750-b58e-990c135f91f2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{secteur}]]></keyExpression>
+					<valueExpression><![CDATA[$F{sum}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</detail>
+	<summary>
+		<band height="30" splitType="Stretch"/>
+	</summary>
+</jasperReport>

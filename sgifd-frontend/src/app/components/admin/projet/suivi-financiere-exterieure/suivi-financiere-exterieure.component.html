@@ -1,0 +1,332 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    Coût total des ressources extérieures prévu (francs CFA) :
+    <strong>{{ formatNumber(projetSuivi.coutTotalRessourcesExterieures) }}
+    </strong>
+  </div>
+  <div class="col-md-6 col-sm-12">
+    Coût total décaissé (francs CFA) :
+    <strong>{{ formatNumber(getTotalDecaisserFcfaForProjet()) }}</strong>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    Coût total restant (francs CFA) :
+    <strong>
+      {{ formatNumber(projetSuivi.coutTotalRessourcesExterieures - getTotalDecaisserFcfaForProjet()) }}</strong>
+  </div>
+</div>
+
+<br>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div *ngIf="projetSuivi != null" class="table-responsive">
+
+      <h5>Liste des ressources financières extérieures des PTF </h5>
+
+      <table class="table table-striped border" style="width: 100%!important;">
+        <thead>
+        <tr>
+          <th> N°</th>
+          <th> P.T.F</th>
+          <th> Nature financement</th>
+          <th> Montant sollicité</th>
+          <th> Montant Approuvé</th>
+          <th> Montant Décaissé</th>
+          <th> Devise</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="projetSuivi.ressourceExterieures.length == 0">
+          <td class="text-center" colspan="6">Aucune ressource n'est afficher.</td>
+        </tr>
+        <tr *ngFor="let ressource of projetSuivi.ressourceExterieures | filter:filter let i=index">
+          <td> {{ i + 1 }}</td>
+          <td> {{ ressource.ptfBailleurFrs.sigleptf }}</td>
+          <td> {{ ressource.natureFinancement.libelle }}</td>
+          <td> {{ formatNumber(ressource.montantRessourceDevise) }}</td>
+          <td> {{ formatNumber(getTotalEngagerByOneRessource(ressource.ressourceExterieureAnnuelles)) }}</td>
+          <td> {{ formatNumber(getTotalDecaisserByOneRessource(ressource.ressourceExterieureAnnuelles)) }}</td>
+          <td> {{ ressource.deviseMonnaie.libelle }}</td>
+          <td style="text-align: center;">
+            <button (click)="choiceRessourceExterieure(ressource)" class="btn btn-info btn-circle  btn-sm"
+                    type="button">
+              <i class="ti-info"></i>
+            </button>
+          </td>
+        </tr>
+
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+  <div *ngIf="ressourceExterieure != null"
+       class="col-md-12 col-sm-12">
+    <nz-card nzTitle="GESTION DU SUIVI FINANCIER" style="width:100%;">
+      <form [formGroup]="validateFormRessource" class="mt-4" nz-form *ngIf="projetSuivi != null && projetSuivi.close == false">
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <h5> Année </h5>
+              <nz-form-control>
+                <nz-select formControlName="annee">
+                  <nz-option *ngFor="let e of exerciceConcernesList" [nzLabel]="e.libelle"
+                             [nzValue]="e.id"></nz-option>
+                </nz-select>
+                <nz-form-explain
+                  *ngIf="validateFormRessource.get('annee')?.dirty && validateFormRessource.get('annee')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+
+            </nz-form-item>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <h5> Montant programmé ({{ ressourceExterieure.deviseMonnaie.libelle }})
+                <!-- (f cfa) -->
+              </h5>
+              <nz-form-control>
+                <input formControlName="montantRessourceProgrammer" min="0" nz-input
+                       oninput="this.value = this.value.toUpperCase()"
+                       type="number">
+              </nz-form-control>
+              <nz-form-explain
+                *ngIf="validateFormRessource.get('montantRessourceProgrammer')?.dirty && validateFormRessource.get('montantRessourceProgrammer')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-item>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <h5> Montant approuvé ({{ ressourceExterieure.deviseMonnaie.libelle }})
+                <!-- (f cfa) -->
+              </h5>
+              <nz-form-control>
+                <input formControlName="montantRessourceApprouver" min="0" nz-input
+                       oninput="this.value = this.value.toUpperCase()"
+                       type="number">
+              </nz-form-control>
+              <nz-form-explain
+                *ngIf="validateFormRessource.get('montantRessourceApprouver')?.dirty && validateFormRessource.get('montantRessourceApprouver')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-item>
+          </div>
+
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <h5> Montant décaissé ({{ ressourceExterieure.deviseMonnaie.libelle }})
+                <!-- (f cfa) -->
+              </h5>
+              <nz-form-control>
+                <input formControlName="montantRessourceDecaisser" min="0" nz-input
+                       oninput="this.value = this.value.toUpperCase()"
+                       type="number">
+              </nz-form-control>
+              <nz-form-explain
+                *ngIf="validateFormRessource.get('montantRessourceDecaisser')?.dirty && validateFormRessource.get('montantRessourceDecaisser')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-item>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <h5> Montant décaissé (f cfa)</h5>
+              <nz-form-control>
+                <input formControlName="montantRessourceDecaisserFcfa" min="0" nz-input type="number">
+              </nz-form-control>
+              <nz-form-explain
+                *ngIf="validateFormRessource.get('montantRessourceDecaisserFcfa')?.dirty && validateFormRessource.get('montantRessourceDecaisserFcfa')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-item>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <h5> Montant consommé (f cfa)</h5>
+              <nz-form-control>
+                <input formControlName="montantConsommeFcfa" min="0" nz-input
+                       oninput="this.value = this.value.toUpperCase()"
+                       type="number">
+              </nz-form-control>
+              <nz-form-explain
+                *ngIf="validateFormRessource.get('montantConsommeFcfa')?.dirty && validateFormRessource.get('montantConsommeFcfa')?.errors">
+                Ce champs est obligatoire !
+              </nz-form-explain>
+            </nz-form-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <button (click)="enregistrerRessource()" [disabled]="validateFormRessource.invalid" nz-button
+                    nzType="primary"
+                    style="margin-right: 8px;">
+              Enregistrer
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <hr>
+      <div *ngIf="ressourceExterieure != null" class="row">
+        <div class="col-md-3 col-sm-12">
+          P.T.F :
+          <strong>{{ ressourceExterieure.ptfBailleurFrs.denominationptf }}</strong>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          Nature financement :
+          <strong>{{ ressourceExterieure.natureFinancement.libelle }}</strong>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          Nature assistance :
+          <strong
+            *ngIf="ressourceExterieure.natureAssistance != null">{{ ressourceExterieure.natureAssistance.libelle }}</strong>
+        </div>
+        <!-- <div class="col-md-3 col-sm-12">
+  Montant programmé (francs cfa) : <strong>{{ ressourceExterieure.montantRessourceProgrammer }}</strong>
+  </div> -->
+        <div class="col-md-3 col-sm-12">
+          Montant sollicité ({{ressourceExterieure.deviseMonnaie.libelle}}) :
+          <strong>{{ ressourceExterieure.montantRessourceDevise }}</strong>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div *ngIf="ressourceExterieure != null" class="row">
+        <div class="col-md-3 col-sm-12">
+          Devise :
+          <strong>{{ ressourceExterieure.deviseMonnaie.libelle }}</strong>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          Montant sollicité (francs cfa) :
+          <strong>{{ formatNumber(ressourceExterieure.montantRessourceProgrammer) }}</strong>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          Montant financé ({{ressourceExterieure.deviseMonnaie.libelle}}) :
+          <strong>{{ formatNumber(cumulTotal.ordonnancer) }}</strong>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          Montant restant ({{ressourceExterieure.deviseMonnaie.libelle}}) :
+          <strong>{{ formatNumber(ressourceExterieure.montantRessourceDevise - cumulTotal.ordonnancer) }}</strong>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-12 col-sm-12">
+          <div *ngIf="ressourceExterieure != null" class="table-responsive">
+
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <button class="btn btn-info" type="button">
+                  <i class="ti-pencil"></i>
+                </button>
+              </div>
+              <input [(ngModel)]="filter" aria-describedby="basic-addon1" aria-label="" autocomplete="false"
+                     class="form-control" placeholder="Rechercher" type="text">
+              <div class="input-group-append">
+                <button class="btn btn-success" type="button">
+                  <i class="ti-search"></i>
+                </button>
+              </div>
+            </div>
+
+            <table #sv="svDataTable" [svData]="ressourceExterieureAnnuelleList"
+                   [svRowsOnPage]="5" class="table table-striped border" style="width: 100%!important;">
+              <thead>
+              <tr>
+                <th> N°</th>
+                <th> Année</th>
+                <th> Mont. programmé ({{ressourceExterieure.deviseMonnaie.libelle}})
+                  <!-- (f cfa) +{{ (ressource.deviseMonnaie != null)?  ressource.deviseMonnaie.libelle : '#N/A' }}+-->
+                </th>
+                <!-- <th> Devise </th> -->
+                <th> Mont. approuvé ({{ressourceExterieure.deviseMonnaie.libelle}})
+                  <!-- (f cfa) -->
+                </th>
+                <!-- <th> Devise </th> -->
+                <th> Mont. décaissé ({{ressourceExterieure.deviseMonnaie.libelle}})
+                  <!-- (f cfa) -->
+                </th>
+                <!-- <th> Devise </th> -->
+                <th> Mont. décaissé (f cfa)</th>
+                <th> Mont. consommé (f cfa)</th>
+                <th *ngIf="ressourceExterieure != null && ressourceExterieure.isStatusClose==true">Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngIf="ressourceExterieureAnnuelleList.length == 0">
+                <td class="text-center" colspan="10">Aucune ressource n'est afficher.</td>
+              </tr>
+              <tr *ngFor="let ressourceAnnuelle of sv.data | filter:filter let i=index">
+                <td> {{ i + 1 }}</td>
+                <td> {{ ressourceAnnuelle.annee.libelle }}</td>
+                <td> {{ formatNumber(ressourceAnnuelle.montantRessourceProgrammer) }}</td>
+                <td> {{ formatNumber(ressourceAnnuelle.montantRessourceApprouver) }}</td>
+                <td> {{ formatNumber(ressourceAnnuelle.montantRessourceDecaisser) }}</td>
+                <td> {{ formatNumber(ressourceAnnuelle.montantRessourceDecaisserFcfa) }} </td>
+                <td> {{ formatNumber(ressourceAnnuelle.montantConsommeFcfa) }} </td>
+                <td style="text-align: center;">
+                  <button (click)="deleteRessource(ressourceAnnuelle)" class="btn btn-danger btn-circle  btn-sm"
+                          type="button" *ngIf="projetSuivi != null && projetSuivi.close == false">
+                    <i class="ti-close"></i>
+                  </button>
+                  <button (click)="modifierAction(ressourceAnnuelle)" class="btn btn-info btn-circle  btn-sm"
+                          type="button" *ngIf="projetSuivi != null && projetSuivi.close == false">
+                    <i class="ti-pencil"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="font-weight: bold;"> TOTAL</td>
+                <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.programmer) }}</td>
+                <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.engager) }}</td>
+                <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.ordonnancer) }}</td>
+                <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.ordonnancerFcfa) }} </td>
+                <td style="font-weight: bold;"> {{ formatNumber(cumulTotal.consommeFcfa) }} </td>
+                <td></td>
+              </tr>
+
+              </tbody>
+
+              <tfoot>
+
+              <tr>
+                <td colspan="8">
+                  <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                </td>
+              </tr>
+              </tfoot>
+
+            </table>
+          </div>
+        </div>
+      </div>
+      <br>
+
+    </nz-card>
+  </div>
+</div>
+<br><br>
+
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

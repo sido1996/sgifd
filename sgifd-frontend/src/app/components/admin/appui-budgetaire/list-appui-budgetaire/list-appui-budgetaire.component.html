@@ -1,0 +1,87 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+    <div class="col-md-12 col-sm-12">
+
+        <div class="material-card card">
+            <div class="card-body">
+                <h4 class="card-title">Liste des appuis budgétaires</h4>
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-3 col-sm-12">
+                        <nz-form-item>
+                            <h5> Année </h5>
+                            <nz-form-control>
+                                <nz-select [(ngModel)]="exercice" (ngModelChange)="makeListeAppuiBudgetaire()" style="width: 100%;">
+                                    <nz-option *ngFor="let exercice of exerciceList" [nzValue]="exercice" [nzLabel]="exercice.libelle"></nz-option>
+                                </nz-select>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+                        </div>
+                        <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter" placeholder="Rechercher" aria-label="" aria-describedby="basic-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped border" style="width: 100%!important;" [svData]="appuibudgetaireList" #sv="svDataTable" [svRowsOnPage]="5">
+                        <thead>
+                            <tr>
+                                <th> N°Enreg</th>
+                                <th> Type</th>
+                                <th> Nature Financement</th>
+                                <th> PTF (Sigle)</th>
+                                <th> Montant FCFA</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="appuibudgetaireList.length == 0">
+                                <td colspan="7" class="text-center">Aucun Appui Budgétaire n'est afficher.</td>
+                            </tr>
+                            <tr *ngFor="let appuibudgetaire of sv.data | filter:filter">
+                                <td> {{ appuibudgetaire.id }}</td>
+                                <td> {{ appuibudgetaire.typeAppuiBudgetaire.libelle }}</td>
+                                <td> {{ appuibudgetaire.natureFinancement.libelle }}</td>
+                                <td> {{ appuibudgetaire.ptfBailleurFrs.sigleptf }}</td>
+                                <td> {{ appuibudgetaire.montant }}</td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="deleteProjet(appuibudgetaire)"><i class="ti-close"></i></button>
+                                    <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="ouvrirModifier(appuibudgetaire.id)"><i class="ti-pencil"></i></button>
+                                    <button type="button" class="btn btn-primary btn-circle  btn-sm" (click)="ouvrirDetail(appuibudgetaire.id)"><i class="ti-info"></i></button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                        <tfoot>
+
+                            <tr>
+                                <td colspan="7">
+                                    <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

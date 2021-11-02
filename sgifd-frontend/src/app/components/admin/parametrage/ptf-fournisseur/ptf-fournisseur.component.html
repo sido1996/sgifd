@@ -1,0 +1,273 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+
+  <div class="col-md-12 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Formulaire</h4>
+        <h6 class="card-subtitle">Enregistrement et modification des PTF ou Bailleurs ou Fournisseurs.</h6>
+        <form class="mt-4" [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <!-- Alert with rounded corner -->
+          <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+              <span>×</span></button>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Raison sociale ou dénomination<span class="text-danger">*</span></h5>
+                  <input nz-input formControlName="denominationPtf" id="denominationPtf" class="form-control"
+                    oninput="this.value = this.value.toUpperCase()">
+                  <nz-form-explain
+                    *ngIf="validateForm.get('denominationPtf')?.dirty && validateForm.get('denominationPtf')?.errors">
+                    Ce champs est obligatoire !
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Sigle </h5>
+                  <input nz-input formControlName="siglePtf" id="siglePtf" class="form-control"
+                    oninput="this.value = this.value.toUpperCase()">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Contact(s) </h5>
+                  <input nz-input formControlName="telPtf" id="telPtf" class="form-control"
+                    oninput="this.value = this.value.toUpperCase()">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Email </h5>
+                  <input nz-input formControlName="emailPtf" id="emailPtf" class="form-control"
+                    oninput="this.value = this.value.toUpperCase()">
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Categorie <span class="text-danger">*</span></h5>
+                  <nz-select nzShowSearch nzAllowClear id="categorieptf" formControlName="categorieptf">
+                    <nz-option *ngFor="let categorie of categorieptfList" [nzLabel]="categorie.libelle"
+                      [nzValue]="categorie.id"></nz-option>
+                  </nz-select>
+                  <nz-form-explain
+                    *ngIf="validateForm.get('categorieptf')?.dirty && validateForm.get('categorieptf')?.errors">
+                    Ce champs est obligatoire !
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Pays </h5>
+                  <nz-select nzShowSearch nzAllowClear id="pays" formControlName="pays">
+                    <nz-option *ngFor="let pays of paysList" [nzLabel]="pays.libelle" [nzValue]="pays.id"></nz-option>
+                  </nz-select>
+                  <nz-form-explain *ngIf="validateForm.get('pays')?.dirty && validateForm.get('pays')?.errors">
+                    Ce champs est obligatoire !
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Club de Regroupement <span class="text-danger">*</span></h5>
+                  <nz-select nzShowSearch nzAllowClear id="regroupementclubPtf" formControlName="regroupementclubPtf">
+                    <nz-option *ngFor="let regroupementclubPtf of regroupementClubPtfList"
+                      [nzLabel]="regroupementclubPtf.libelle" [nzValue]="regroupementclubPtf.id"></nz-option>
+                  </nz-select>
+                  <nz-form-explain
+                    *ngIf="validateForm.get('regroupementclubPtf')?.dirty && validateForm.get('regroupementclubPtf')?.errors">
+                    Ce champs est obligatoire !
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Domaines d'intervention <span class="text-danger">*</span></h5>
+                  <nz-select nzShowSearch nzAllowClear nzMode="multiple" id="domaineptfs" formControlName="domaineptfs">
+                    <nz-option *ngFor="let domaineptf of domaineptfList" [nzLabel]="domaineptf.libelle"
+                      [nzValue]="domaineptf.id"></nz-option>
+                  </nz-select>
+                  <nz-form-explain
+                    *ngIf="validateForm.get('domaineptfs')?.dirty && validateForm.get('domaineptfs')?.errors">
+                    Ce champs est obligatoire !
+                  </nz-form-explain>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Adresse en local </h5>
+                  <textarea rows="3" nz-input formControlName="adressePtf"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+            <div class="col-md-6">
+              <nz-form-item>
+                <nz-form-control>
+                  <h5> Adresse à l'étranger </h5>
+                  <textarea rows="3" nz-input formControlName="adresseptfEtrangere"></textarea>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+          </div>
+
+          <br>
+          <div style="float: right;margin-top: 15px;padding: 5px;">
+            <button type="button" (click)="cancelForm()" class="btn btn-inverse btn-sm"><i class="ti-close"> </i>
+              Annuler
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="validateForm.invalid"
+              style="margin-left: 10px;"><i class="ti-check"> </i> {{ btnTitle }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="col-md-12 col-sm-12">
+
+    <div class="material-card card">
+      <div class="card-body">
+        <h4 class="card-title"> PTF ou Bailleurs ou Fournisseurs</h4>
+        <h6 class="card-subtitle">
+          Liste des PTF ou Bailleurs ou Fournisseurs <br>
+          <hr>
+        </h6>
+
+        <div class="table-responsive">
+          <!-- Alert with rounded corner-->
+          <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+            <i class="ti-info-alt"></i> {{messageNotificationTable}}
+            <button type="button" class="close" (click)="closeNotificationTable()">
+              <span>×</span></button>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+            </div>
+            <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter" placeholder="Rechercher"
+              aria-label="" aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+            </div>
+          </div>
+
+          <!-- <table id="zero_config" class="table table-striped border" style="width: 100%!important;" [svData]="ptfList"
+            #sv="svDataTable" [svRowsOnPage]="5">
+            <thead>
+              <tr>
+                <th>
+                  <sv-default-sorter by="denominationPtf"> Dénomination</sv-default-sorter>
+                </th>
+                <th>
+                  <sv-default-sorter by="categorieptf"> Catégorie</sv-default-sorter>
+                </th>
+                <th>
+                  <sv-default-sorter by="pays"> Pays</sv-default-sorter>
+                </th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ptf of sv.data | filter:filter">
+                <td> {{ ptf.denominationptf }}</td>
+                <td> {{ ptf.categorieptf.libelle }}</td>
+                <td> {{ ptf.pays != null ? ptf.pays.libelle : 'N.A' }}</td>
+                <td style="text-align: center;">
+                  <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(ptf)">
+                    <i class="ti-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(ptf)">
+                    <i class="ti-close"></i>
+                  </button>
+                  <button type="button" class="btn btn-primary btn-circle  btn-sm" (click)="ouvrirDetail(ptf)">
+                    <i class="ti-info"></i></button>
+                </td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+
+              <tr>
+                <td colspan="3">
+                  <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                </td>
+              </tr>
+            </tfoot>
+
+          </table> -->
+
+          <nz-table #nzTable [nzData]="ptfList">
+            <thead>
+            <tr>
+              <th style="width: 65%;">Dénomination</th>
+              <th style="width: 10%;">Catégorie</th>
+              <th style="width: 10%;">Pays</th>
+              <th style="width: 15%;">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-template ngFor let-data [ngForOf]="nzTable.data | filter:filter">
+              <tr>
+                <td> {{ data.denominationptf }}</td>
+                <td> {{ data.categorieptf.libelle }}</td>
+                <td> {{ data.pays != null ? data.pays.libelle : 'N.A' }}</td>
+                <td>
+                  <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="openModification(ptf)">
+                    <i class="ti-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="error(ptf)">
+                    <i class="ti-close"></i>
+                  </button>
+                  <button type="button" class="btn btn-primary btn-circle  btn-sm" (click)="ouvrirDetail(ptf)">
+                    <i class="ti-info"></i></button>
+                </td>
+              </tr>
+            </ng-template>
+            </tbody>
+          </nz-table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

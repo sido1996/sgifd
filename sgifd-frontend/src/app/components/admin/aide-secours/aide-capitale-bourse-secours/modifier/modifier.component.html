@@ -1,0 +1,542 @@
+<!-- ============================================================== -->
+<!-- Start Page Content -->
+<!-- ============================================================== -->
+<div class="row">
+
+  <div class="col-md-1 col-sm-12"> </div>
+  <div class="col-md-10 col-sm-12">
+    <nz-card>
+      <h4 class="card-title">Formulaire de Modification des Aides Bourse </h4>
+      <h6 class="card-subtitle">Enregistrement des aides bourses.
+        <button type="button" (click)="gotoListAideCapitale()" class="btn btn-inverse btn-sm" style="float: right;">
+          <i class="ti-menu"> </i>
+          Consulter la Liste des Aides Bourses
+        </button>
+      </h6>
+
+      <hr>
+
+      <!-- <pre>{{ validateForm.value | json }}</pre> -->
+
+      <form class="mt-4" [formGroup]="validateForm">
+        <!-- Alert with rounded corner -->
+        <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+          <i class="ti-info-alt"></i> {{messageNotificationForm}}
+          <button type="button" class="close" (click)="closeNotificationForm()">
+            <span>×</span>
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Année
+                  <span class="text-danger">*</span>
+                </h5>
+                <nz-select nzShowSearch nzAllowClear id="annee" formControlName="exercice">
+                  <nz-option *ngFor="let exercice of exerciceList" [nzLabel]="exercice.libelle" [nzValue]="exercice.id">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain *ngIf="validateForm.get('exercice')?.dirty && validateForm.get('exercice')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> PTF
+                  <span class="text-danger">*</span>
+                </h5>
+                <nz-select nzShowSearch nzAllowClear id="ptf" formControlName="ptfBailleurFrs">
+                  <nz-option *ngFor="let ptf of ptfList" [nzLabel]="ptf.denominationptf" [nzValue]="ptf.id">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain
+                  *ngIf="validateForm.get('ptfBailleurFrs')?.dirty && validateForm.get('ptfBailleurFrs')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+
+          </div>
+
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Montant en Devise
+                  <span class="text-danger">*</span>
+                </h5>
+                <input nz-input type="number" formControlName="montantDevise" class="form-control"
+                  oninput="this.value= this.value.toUpperCase()">
+                <nz-form-explain
+                  *ngIf="validateForm.get('montantDevise')?.dirty && validateForm.get('montantDevise')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Devise </h5>
+                <nz-select nzShowSearch nzAllowClear formControlName="deviseMonnaie">
+                  <nz-option *ngFor="let devise of deviseMonaieList" [nzLabel]="devise.libelle" [nzValue]="devise.id">
+                  </nz-option>
+                </nz-select>
+                <nz-form-explain
+                  *ngIf="validateForm.get('deviseMonnaie')?.dirty && validateForm.get('deviseMonnaie')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Montant (F CFA) </h5>
+                <input type="number" nz-input formControlName="montant" id="montant" class="form-control">
+                <!-- style="width: 480px;"   oninput="this.value = this.value.toUpperCase()"-->
+                <nz-form-explain *ngIf="validateForm.get('montant')?.dirty && validateForm.get('montant')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <nz-card nzTitle="Informateur">
+              <div class="col-md-4 col-md-offset-1">
+                <!--     -->
+                <nz-modal [(nzVisible)]="isVisibleInformateur" nzTitle="Choix d'un Informateur"
+                  (nzOnCancel)="handleCancelInformateur()" [nzWidth]="700" [nzClosable]="false" [nzOkDisabled]="false"
+                  [nzOkText]="null" [nzCancelText]="'Fermer'">
+
+                  <div class="table-responsive">
+
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <button class="btn btn-info" type="button"><i class="ti-pencil"></i></button>
+                      </div>
+                      <input type="text" class="form-control" autocomplete="false" [(ngModel)]="filter"
+                        [ngModelOptions]="{standalone: true}" placeholder="Rechercher" aria-label=""
+                        aria-describedby="basic-addon1">
+                      <div class="input-group-append">
+                        <button class="btn btn-success" type="button"><i class="ti-search"></i></button>
+                      </div>
+                    </div>
+
+                    <table class="table table-striped border" style="width: 100%!important;" [svData]="informateurList"
+                      #sv="svDataTable" [svRowsOnPage]="5">
+                      <thead>
+                        <tr>
+                          <th>
+                            <sv-default-sorter by="nom"> Nom</sv-default-sorter>
+                          </th>
+                          <th>
+                            <sv-default-sorter by="prenom"> Prénom(s)</sv-default-sorter>
+                          </th>
+                          <th>
+                            Tél(s)
+                          </th>
+                          <th>
+                            Email
+                          </th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let informateur of sv.data | filter:filter">
+                          <td> {{ informateur.nom }}</td>
+                          <td> {{ informateur.prenom }}</td>
+                          <td> {{ informateur.tel }}</td>
+                          <td> {{ informateur.email }}</td>
+                          <td style="text-align: center;">
+                            <button type="button" class="btn btn-info btn-circle  btn-sm" (click)="select(informateur)">
+                              <i class="ti-check"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+
+                      <tfoot>
+
+                        <tr>
+                          <td colspan="5">
+                            <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                          </td>
+                        </tr>
+                      </tfoot>
+
+                    </table>
+                  </div>
+
+                </nz-modal>
+
+              </div>
+
+              <form class="mt-4" [formGroup]="validateFormInformateur">
+
+                <div class="alert {{'alert-'+typeNotificationFormInformateur}} alert-rounded"
+                  *ngIf="isNotificationFormInformateur == true">
+                  <i class="ti-info-alt"></i> {{messageNotificationFormInformateur}}
+                  <button type="button" class="close" (click)="closeNotificationFormInformateur()">
+                    <span>×</span>
+                  </button>
+                </div>
+
+                <div class="row">
+
+                  <div class="col-md-6 col-sm-12">
+                    <h5> Nom
+                      <span class="text-danger">*</span>
+                    </h5>
+                    <nz-form-item>
+                      <nz-form-control>
+                        <input nz-input formControlName="nom" class="form-control"
+                          oninput="this.value = this.value.toUpperCase()">
+                        <nz-form-explain
+                          *ngIf="validateFormInformateur.get('nom')?.dirty && validateFormInformateur.get('nom')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <button type="button" class="btn btn-warning btn-sm" (click)="showModalInformateur()"><i
+                        class="ti-arrow-circle-up"></i> Choisir
+                    </button>
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Prénom(s)
+                          <span class="text-danger">*</span>
+                        </h5>
+                        <input nz-input formControlName="prenom" class="form-control"
+                          oninput="this.value = this.value.toUpperCase()">
+                        <nz-form-explain
+                          *ngIf="validateFormInformateur.get('prenom')?.dirty && validateFormInformateur.get('prenom')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+
+                  <div class="col-md-6 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Tél(s)
+                          <span class="text-danger">*</span>
+                        </h5>
+                        <input nz-input formControlName="tel" class="form-control"
+                          oninput="this.value = this.value.toUpperCase()">
+                        <nz-form-explain
+                          *ngIf="validateFormInformateur.get('tel')?.dirty && validateFormInformateur.get('tel')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+
+                </div>
+                <div class="row">
+                  <div class="col-md-6 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Email
+                          <span class="text-danger">*</span>
+                        </h5>
+                        <input nz-input formControlName="email" class="form-control"
+                          oninput="this.value = this.value.toUpperCase()">
+                        <nz-form-explain
+                          *ngIf="validateFormInformateur.get('email')?.dirty && validateFormInformateur.get('email')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+                  <div class="col-md-6 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Profession
+                          <span class="text-danger">*</span>
+                        </h5>
+                        <input nz-input formControlName="profession" class="form-control"
+                          oninput="this.value = this.value.toUpperCase()">
+                        <nz-form-explain
+                          *ngIf="validateFormInformateur.get('profession')?.dirty && validateFormInformateur.get('profession')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+
+                </div>
+
+
+                <div class="row">
+                  <div class="col-md-12 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Source de l'information
+                          <span class="text-danger">*</span>
+                        </h5>
+                        <nz-select nzShowSearch nzAllowClear id="sourceInformation" formControlName="sourceInformation">
+                          <nz-option *ngFor="let sourceInformation of sourceInformationList"
+                            [nzLabel]="sourceInformation.denominationStructure" [nzValue]="sourceInformation.id">
+                          </nz-option>
+                        </nz-select>
+                        <nz-form-explain
+                          *ngIf="validateFormInformateur.get('sourceInformation')?.dirty && validateFormInformateur.get('sourceInformation')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+
+              </form>
+
+            </nz-card>
+          </div>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <nz-card nzTitle="Bourses">
+              <form class="mt-4" nz-form [formGroup]="validateFormBourse" (ngSubmit)="submitFormBourse()">
+                <!-- Alert with rounded corner -->
+                <div class="alert {{'alert-'+typeNotificationFormBourse}} alert-rounded"
+                  *ngIf="isNotificationFormBourse == true">
+                  <i class="ti-info-alt"></i> {{messageNotificationFormBourse}}
+                  <button type="button" class="close" (click)="closeNotificationForm()">
+                    <span>×</span></button>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Filière de formation <span class="text-danger">*</span></h5>
+                        <nz-select nzShowSearch nzAllowClear id="filiere" formControlName="filiere">
+                          <nz-option *ngFor="let filiere of filiereList" [nzLabel]="filiere.libelle"
+                            [nzValue]="filiere">
+                          </nz-option>
+                        </nz-select>
+                        <nz-form-explain
+                          *ngIf="validateForm.get('filiere')?.dirty && validateForm.get('cofilieremmune')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Cycle de formation <span class="text-danger">*</span></h5>
+                        <nz-select nzShowSearch nzAllowClear id="cycle" formControlName="cycle">
+                          <nz-option *ngFor="let cycle of cycleBourseList" [nzLabel]="cycle.libelle" [nzValue]="cycle">
+                          </nz-option>
+                        </nz-select>
+                        <nz-form-explain *ngIf="validateForm.get('cycle')?.dirty && validateForm.get('cycle')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Nbre Bourse <span class="text-danger">*</span></h5>
+                        <input nz-input formControlName="nombre" id="nombre" class="form-control"
+                          oninput="this.value = this.value.toUpperCase()">
+                        <nz-form-explain
+                          *ngIf="validateForm.get('nombre')?.dirty && validateForm.get('nombre')?.errors">
+                          Ce champs est obligatoire !
+                        </nz-form-explain>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Sexe </h5>
+                        <nz-select nzShowSearch nzAllowClear id="sexe" formControlName="sexe">
+                          <nz-option *ngFor="let sexe of sexeList" [nzLabel]="sexe.libelle" [nzValue]="sexe">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Département </h5>
+                        <nz-select nzShowSearch nzAllowClear id="departement" formControlName="departement"
+                          (ngModelChange)="departementChange($event)">
+                          <nz-option *ngFor="let departement of departementList" [nzLabel]="departement.libelle"
+                            [nzValue]="departement">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+
+                  </div>
+                  <div class="col-md-4 col-sm-12">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <h5> Commune </h5>
+                        <nz-select nzShowSearch nzAllowClear id="commune" formControlName="commune">
+                          <nz-option *ngFor="let commune of communeList" [nzLabel]="commune.libelle"
+                            [nzValue]="commune">
+                          </nz-option>
+                        </nz-select>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                </div>
+
+                <div nz-row class="example-input">
+
+
+                  <div nz-col nzSpan="8">
+
+                    <button nz-button [nzType]="'primary'"
+                      [disabled]="selectedListBourses.length >0 && validateForm.invalid">
+                      <i nz-icon type="plus" theme="outline"></i>
+                      <span>Ajouter</span>
+                    </button>
+
+                  </div>
+
+                </div>
+              </form>
+
+              <div class="table-responsive">
+
+                <!-- Alert with rounded corner -->
+                <div class="alert {{'alert-'+typeNotificationTable}} alert-rounded" *ngIf="isNotificationTable == true">
+                  <i class="ti-info-alt"></i> {{messageNotificationTable}}
+                  <button type="button" class="close" (click)="closeNotificationTable()">
+                    <span>×</span></button>
+                </div>
+
+                <table id="zero_config" class="table table-striped border" style="width: 100%!important;"
+                  [svData]="selectedListBourses" #sv="svDataTable" [svRowsOnPage]="5">
+                  <thead>
+                    <tr>
+                      <th>
+                        <sv-default-sorter by="filiereBourseEtude.libelle"> Filière</sv-default-sorter>
+                      </th>
+                      <th>
+                        <sv-default-sorter by="cycleBourseEtude.libelle"> Cycle</sv-default-sorter>
+                      </th>
+                      <th>
+                        <sv-default-sorter by="nombre"> Nbre Bourse</sv-default-sorter>
+                      </th>
+
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let bourse of sv.data | filter:filter">
+                      <td> {{ bourse.filiereBourseEtude.libelle }}</td>
+                      <td> {{ bourse.cycleBourseEtude.libelle }}</td>
+                      <td> {{ bourse.nombre }}</td>
+
+                      <td style="text-align: center;">
+                        <button type="button" class="btn btn-danger btn-circle  btn-sm" (click)="deleteIde(bourse)">
+                          <i class="ti-close"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+
+                  <tfoot>
+
+                    <tr>
+                      <td colspan="4">
+                        <sv-bootstrap-paginator [rowsOnPageSet]="[5,10,25,50,100]"></sv-bootstrap-paginator>
+                      </td>
+                    </tr>
+                  </tfoot>
+
+                </table>
+              </div>
+
+
+            </nz-card>
+          </div>
+        </div>
+
+        <br>
+        <br>
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <nz-form-item>
+              <nz-form-control>
+                <h5> Observations
+
+                </h5>
+                <textarea nz-input formControlName="observations" class="form-control"
+                  oninput="this.value = this.value.toUpperCase()" rows="4"></textarea>
+                <nz-form-explain
+                  *ngIf="validateForm.get('observations')?.dirty && validateForm.get('observations')?.errors">
+                  Ce champs est obligatoire !
+                </nz-form-explain>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div style="float: right;margin-top: 15px;padding: 5px;">
+          <button type="button" (click)="gotoListAide()" class="btn btn-inverse btn-sm">
+            <i class="ti-menu"> </i>
+            Consulter la Liste des Aides
+          </button>
+          <button class="btn btn-primary btn-sm" style="margin-left: 10px;" (click)="submitForm()"
+            [disabled]="validateForm.invalid || validateFormInformateur.invalid">
+            <i class="ti-check"> </i> <!-- {{ btnTitle }} -->
+            Modifier
+          </button>
+        </div>
+      </form>
+
+    </nz-card>
+  </div>
+
+
+
+</div>
+<!-- ============================================================== -->
+<!-- End PAge Content -->
+<!-- ============================================================== -->

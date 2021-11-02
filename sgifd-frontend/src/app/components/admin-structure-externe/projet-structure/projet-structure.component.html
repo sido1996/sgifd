@@ -1,0 +1,102 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" style="background: #2CA07A;overflow: auto;">
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+
+        <li class="sidebar-item" style="margin-top: 15px;">
+          <a [routerLink]="['enregistrer-projet']" class="sidebar-link">
+            <i nz-icon nzType="plus" nzTheme="outline"></i>
+            <span class="hide-menu"> Enregistrer projet</span></a>
+        </li>
+        <li class="sidebar-item">
+          <a class="sidebar-link" [routerLink]="['suivi-financier']">
+            <i nz-icon nzType="edit" nzTheme="outline"></i>
+            <span class="hide-menu" style="font-size: 15px!important;">Suivi financier</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a [routerLink]="['list-projet-en-cours']" class="sidebar-link">
+            <i nz-icon nzType="align-left" nzTheme="outline"></i>
+            <span class="hide-menu"> Projets en cours</span></a>
+        </li>
+        <li class="sidebar-item">
+          <a [routerLink]="['list-projet-cloturer']" class="sidebar-link">
+            <i nz-icon nzType="check" nzTheme="outline"></i>
+            <span class="hide-menu"> Projets clôturés</span></a>
+        </li>
+
+      </ul>
+
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+
+  <!-- ============================================================== -->
+  <!-- Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <div class="page-breadcrumb border-bottom">
+    <div class="row">
+      <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+        <h5 class="font-medium text-uppercase mb-0">gestion du suivi des projets</h5>
+      </div>
+      <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+        <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+          <ol class="breadcrumb mb-0 justify-content-end p-0">
+            <li class="breadcrumb-item"><a [routerLink]="['admin']">SGIFD</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Projet</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Bread crumb and right sidebar toggle -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Container fluid  -->
+  <!-- ============================================================== -->
+  <div class="page-content container-fluid">
+
+
+    <router-outlet>
+    </router-outlet>
+
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Container fluid  -->
+  <!-- ============================================================== -->
+
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">
+    © 2019 SGIFD. Designed and Developed by <a href="https://wrappixel.com/">FAVIEM</a>.
+  </footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
+
+  <img src="../../assets/images/footer_img.png" alt="">
+
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
