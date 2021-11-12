@@ -42,13 +42,28 @@ public class UserApi {
 
     @PostMapping(value = "/save")
     public User save(@RequestBody UserSaveRequest user) {
+      
+
         //System.out.println("id ptf ==> "+ user.getPtf().getId());
         if (userDao.existsByUsername(user.getUsername()) && userDao.findByUsername(user.getUsername()).get().getId() != user.getId()) {
-            return null;
+        	 
+        	// return null;
+        	User sydone2 = new User();
+        	
+        	sydone2.setUsername("sydone11");
+        	 
+        	return sydone2;
+        	// null;
         }
 
         if (userDao.existsByEmail(user.getEmail()) && userDao.findByEmail(user.getEmail()).get().getId() != user.getId()) {
-            return null;
+           
+        	// return null;
+        	User sydone1 = new User();
+        	
+        	sydone1.setEmail("TOTO@TOTO.COM");
+        	 
+        	return sydone1;
         }
         if (user.getId() == null && user.getPassword() == null) {
             return null;
@@ -113,7 +128,7 @@ public class UserApi {
             long delay = 5000L;
             //long period = 1000L;
             executor.schedule(task, delay, TimeUnit.MILLISECONDS);
-            //executor.scheduleAtFixedRate(repeatedTask, delay, period, TimeUnit.MILLISECONDS);
+            //executor.scheduleAtFixedRate(repeatedTask, delay, period, TimeUnit.MILLISECONDS); 
             //Thread.sleep(delay + period * 3);
             executor.shutdown();
         } catch (Exception e) {

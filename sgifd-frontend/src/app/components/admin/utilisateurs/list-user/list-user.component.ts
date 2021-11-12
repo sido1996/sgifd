@@ -45,6 +45,7 @@ export class ListUserComponent implements OnInit {
       });
   }
 
+
   ouvrirModifier(id: number): void {
     this.router.navigate(['admin/utilisateurs/modifier-user/'+id]);
   }

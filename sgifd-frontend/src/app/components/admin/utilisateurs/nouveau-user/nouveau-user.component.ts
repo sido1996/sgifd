@@ -80,6 +80,7 @@ export class NouveauUserComponent implements OnInit {
   submitForm(): void {
 
     if (this.validateFormUser.invalid) {
+
       this.modalService.error({
         nzTitle: 'Erreur',
         nzContent: '<p> Les informations renseignées sur le formulaire sont incomplètes. <br> ' +
@@ -90,6 +91,8 @@ export class NouveauUserComponent implements OnInit {
       });
     } else {
       const formData = this.validateFormUser.value;
+
+    
       if (formData.confirmationpwd != formData.password) {
         this.modalService.error({
           nzTitle: 'Erreur',
@@ -100,6 +103,7 @@ export class NouveauUserComponent implements OnInit {
         });
       } else {
         const newUser: UserSystem = formData;
+       
         newUser.roles = [formData.roles];
         newUser.structureBeneficiaire = formData.structureBeneficiaire;
         newUser.ptf = formData.ptf;
@@ -108,13 +112,37 @@ export class NouveauUserComponent implements OnInit {
 
         this.userService.save(newUser).subscribe(
           (data: User) => {
-            this.modalService.info({
-              nzTitle: 'Information',
-              nzContent: '<p> Enregistrement du compte de l\'utilisateur effectué avec succès.</p>',
-              nzOkText: 'Ok',
-              nzCancelText: null,
-              nzOnOk: () => this.initialiseForm()
+           if(data.email=="TOTO@TOTO.COM"){
+
+            this.modalService.error({
+              nzTitle: 'Erreur',
+              nzContent: "<p> L'email renseigné exite déjà </p>",
+              nzOkText: null,
+              nzCancelText: 'Ok',
+              nzOnCancel: () => console.log('cancel')
             });
+
+            }else if(data.username=="sydone11"){
+
+              this.modalService.error({
+                nzTitle: 'Erreur',
+                nzContent: "<p> Le login renseigné exite déjà </p>",
+                nzOkText: null,
+                nzCancelText: 'Ok',
+                nzOnCancel: () => console.log('cancel')
+              });
+  
+              }else {
+
+              this.modalService.info({
+                nzTitle: 'Information',
+                nzContent: '<p> Enregistrement du compte de l\'utilisateur effectué avec succès.</p>',
+                nzOkText: 'Ok',
+                nzCancelText: null,
+                nzOnOk: () => this.initialiseForm()
+              });
+            }
+           
           },
           (error: HttpErrorResponse) => {
             this.createMessage('error', 'Echec de l\'enregistrement de l\'utilisateur !');

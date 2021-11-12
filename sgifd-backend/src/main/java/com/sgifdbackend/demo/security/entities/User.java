@@ -55,7 +55,7 @@ public class User extends EntityBaseBean implements Serializable{
     @Column(name = "COM_TEL", unique = true)
     private String tel;
 
-    @NaturalId
+    /*@NaturalId*/
     @Column(name = "COM_EMAIL", unique = true)
     private String email;
 
